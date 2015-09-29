@@ -1,0 +1,11 @@
+Package: interfacer
+Type: Package
+Title: Create a simple web API from your R functions
+Version: 0.1.0
+Author: Bart Smeets
+Maintainer: Bart Smeets <bartsmeets86@gmail.com>
+Description: A set of convenience functions to build simple APIs
+License: MIT
+LazyData: TRUE
+Depends: httpuv, stringi, jsonlite
+Suggests: magrittr, testthat
