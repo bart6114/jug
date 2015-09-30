@@ -1,6 +1,3 @@
-.defaultReqHeaders = c("HTTP_ACCEPT","HTTP_ACCEPT_ENCODING","HTTP_ACCEPT_LANGUAGE","HTTP_CACHE_CONTROL","HTTP_CONNECTION","HTTP_HOST","HTTP_REFERER","HTTP_UPGRADE_INSECURE_REQUESTS","HTTP_USER_AGENT","httpuv.version","PATH_INFO","QUERY_STRING","REMOTE_ADDR","REMOTE_PORT","REQUEST_METHOD","rook.errors","rook.input","rook.url_scheme","rook.version","SCRIPT_NAME","SERVER_NAME","SERVER_PORT")
-
-
 setClass("interfacer",
          slots=list(
            funcs="list"
@@ -9,12 +6,12 @@ setClass("interfacer",
            funcs=list()
          ))
 
-setGeneric("add_func",
+setGeneric("add_path",
            def=function(obj, func, ...){
-             standardGeneric("add_func")
+             standardGeneric("add_path")
            })
 
-setMethod(f="add_func",
+setMethod(f="add_path",
           signature = "interfacer",
           definition = function(obj, func, path=deparse(substitute(func)), res_content_type="application/json"){}
 )
@@ -49,7 +46,7 @@ get_passed_params<-function(query_string){
 #' @param func the function to add
 #' @export
 #'
-add_func<-function(obj, func, path=deparse(substitute(func)), res_content_type="application/json"){
+add_path<-function(obj, path, func, res_content_type="application/json"){
 
   obj@funcs[[path]]<-list(
     func=func,
@@ -84,31 +81,30 @@ start_interface<-function(obj, host="127.0.0.1", port=8083, verbose=getOption("v
     call=function(req){
 
       # function called is based on path provided "/myfunc" will call "myfunc"
-      path<-stringr::str_match(req$PATH_INFO, "\\/(.*)")[,2]
+      path<-req$PATH_INFO
 
-      if(verbose) message(paste("Function called:", path))
+      if(verbose) message(paste("Path requested:", path))
 
       # get the query string parameters
       passed_params<-
         get_passed_params(req$QUERY_STRING)
 
       if(verbose) message(paste("Query params provided:", passed_params))
-
-      if(verbose) message(paste("Params provided in header:", setdiff(ls(req), .defaultReqHeaders)))
+      if(verbose) message(paste("Params provided in header:", names(ls(req))))
 
       # add header params to passed_params
-      req_list<-as.list(req)
-      req_list[names(req_list) %in% setdiff(ls(req), .defaultReqHeaders)]
       passed_params<-
-        modifyList(passed_params, req_list)
+        modifyList(passed_params, as.list(req))
 
       # check which parameters the function allows
       args_allowed<-
         names(formals(obj@funcs[[path]]$func))
-      message(args_allowed)
+
       # drop not requested params from query params
-      passed_params<-
-        passed_params[names(passed_params) %in% args_allowed]
+      if(!"..." %in% args_allowed){
+        passed_params<-
+          passed_params[names(passed_params) %in% args_allowed]
+      }
 
       # expose req obj if in function params
       if("req" %in% args_allowed){
