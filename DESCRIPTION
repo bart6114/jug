@@ -8,4 +8,4 @@ Description: A set of convenience functions to build simple APIs
 License: MIT
 LazyData: TRUE
 Depends: httpuv, stringi, jsonlite
-Suggests: magrittr, testthat
+Suggests: magrittr, testthat, R6

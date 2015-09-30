@@ -5,7 +5,7 @@ library(infuser)
 
 req<-list()
 
-showReq<-function(req){req<<-req;paste(ls(req), collapse=",<br>")}
+showReq<-function(req){req<<-req;print(req$REQUEST_METHOD);paste(ls(req), collapse=",<br>")}
 helloWorld<-function(x=6){paste("Hello world", x)}
 headerTest<-function(HTTP_TEST){paste("Hello world", HTTP_TEST)}
 
