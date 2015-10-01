@@ -22,14 +22,17 @@
 
 library(interfacer)
 library(magrittr)
+library(jsonlite)
 
+my_func<-function(x){ paste("hello world:",x)}
 
 beakr() %>%
   get("/",
       function(req, res){
+        print(req$query_params)
+        print(res$headers)
         res$set_header("my_val", "3")
-        # print(res$headers)
-        paste(ls(req), collapse="\n")
+        toJSON(res$headers, auto_unbox=T)
       }
   ) %>%
   get("/test",
@@ -37,6 +40,7 @@ beakr() %>%
         "3"
       }
   ) %>%
+  get("/myfunc", decorate(my_func)) %>%
   use(path = NULL, function(req, res){
     res$status=404L
     "no route bound to handler"

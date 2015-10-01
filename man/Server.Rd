@@ -4,7 +4,7 @@
 \name{Server}
 \alias{Server}
 \title{The Server class}
-\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x065cb608> 
+\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x065ab244> 
  - attr(*, "name")= chr "Server_generator"
 }}
 \usage{
