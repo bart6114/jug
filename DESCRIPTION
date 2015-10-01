@@ -7,5 +7,5 @@ Maintainer: Bart Smeets <bartsmeets86@gmail.com>
 Description: A set of convenience functions to build simple APIs
 License: MIT
 LazyData: TRUE
-Depends: httpuv, stringi, jsonlite
-Suggests: magrittr, testthat, R6
+Depends: httpuv, stringi, jsonlite, R6
+Suggests: magrittr, testthat
