@@ -2,13 +2,15 @@
 #'
 #' @param func the function to decorate
 #' @export
-decorate<-function(func){
+decorate<-function(func, content_type="text/html"){
   # check which parameters the function allows
   args_allowed<-
     names(formals(func))
 
   # create new function for it
   function(req, res){
+    res$content_type(content_type)
+
     passed_params<-
       modifyList(req$query_params, req$headers)
 

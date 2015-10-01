@@ -11,11 +11,16 @@ Request<-
             headers=NULL,
             path=NULL,
             method=NULL,
+            post=NULL,
             initialize=function(req){
               self$path<-req$PATH_INFO
               self$query_params<-get_passed_params(req$QUERY_STRING)
               self$headers<-as.list(req)
               self$method<-req$REQUEST_METHOD
+
+              if(self$method=="POST"){
+                self$post=get_passed_params(req$rook.input$read_lines())
+              }
             }
           )
   )
@@ -34,7 +39,6 @@ new_request<-function(req){
 #' @export
 #' @import stringi
 get_passed_params<-function(query_string){
-
   params<-
     matrix(
       stringi::stri_match_all(query_string, regex="([^?=&]+)(=([^&]*))?")[[1]][,c(2,4)],

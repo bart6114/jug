@@ -4,10 +4,10 @@
 \alias{add_middleware}
 \title{Internal function to add middleware}
 \usage{
-add_middleware(server, func, path = NULL, method = NULL)
+add_middleware(jug, func, path = NULL, method = NULL)
 }
 \arguments{
-\item{server}{the server instance}
+\item{jug}{the jug instance}
 
 \item{func}{the function to bind}
 

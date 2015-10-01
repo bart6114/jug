@@ -4,10 +4,10 @@
 \alias{use}
 \title{Function to add request method insensitive middleware}
 \usage{
-use(server, path, func)
+use(jug, path, func)
 }
 \arguments{
-\item{server}{the server object}
+\item{jug}{the jug object}
 
 \item{path}{the path to bind to}
 

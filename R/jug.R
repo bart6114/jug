@@ -1,7 +1,7 @@
-#' The Server class
+#' The Jug class
 #'
-#' @import httpuv R6
-Server<-R6Class("Server",
+#' @import httpuv R6 magrittr
+Jug<-R6Class("Jug",
                 public=list(
                   middleware_handler=NULL,
                   app_definition=function(){
@@ -22,12 +22,13 @@ Server<-R6Class("Server",
 #' New beakr instance
 #'
 #' @export
-beakr<-function(){
-  Server$new()
+jug<-function(){
+  Jug$new()
 }
 
 
 #' @export
-serve_it<-function(server, host="127.0.0.1", port=8080){
-  server$start(host, port)
+serve_it<-function(jug, host="127.0.0.1", port=8080){
+  message(paste0("Serving the jug at http://",host,":",port))
+  jug$start(host, port)
 }

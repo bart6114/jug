@@ -4,7 +4,7 @@
 \alias{decorate}
 \title{Convenience function to decorate existing functions}
 \usage{
-decorate(func)
+decorate(func, content_type = "text/html")
 }
 \arguments{
 \item{func}{the function to decorate}

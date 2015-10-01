@@ -60,47 +60,47 @@ Middleware<-
 
 #' Internal function to add middleware
 #'
-#' @param server the server instance
+#' @param jug the jug instance
 #' @param func the function to bind
 #' @param path the path to bind to
 #' @param method the method to bind to
-add_middleware<-function(server, func, path=NULL, method=NULL){
+add_middleware<-function(jug, func, path=NULL, method=NULL){
   mw<-Middleware$new(func, path, method)
 
-  server$middleware_handler$add_middleware(mw)
+  jug$middleware_handler$add_middleware(mw)
 
-  server
+  jug
 }
 
 #' Function to add GET middleware
 #'
-#' @param server the server object
+#' @param jug the jug object
 #' @param path the path to bind to
 #' @param func the function to bind to the path (will receive the params \code{req} and \code{res})
 #'
 #' @export
-get<-function(server, path, func){
-  add_middleware(server, func, path, method="GET")
+gett<-function(jug, path, func){
+  add_middleware(jug, func, path, method="GET")
 }
 
 #' Function to add POST middleware
 #'
-#' @param server the server object
+#' @param jug the jug object
 #' @param path the path to bind to
 #' @param func the function to bind to the path (will receive the params \code{req} and \code{res})
 #'
 #' @export
-post<-function(server, path, func){
-  add_middleware(server, func, path, method="POST")
+postt<-function(jug, path, func){
+  add_middleware(jug, func, path, method="POST")
 }
 
 #' Function to add request method insensitive middleware
 #'
-#' @param server the server object
+#' @param jug the jug object
 #' @param path the path to bind to
 #' @param func the function to bind to the path (will receive the params \code{req} and \code{res})
 #'
 #' @export
-use<-function(server, path, func){
-  add_middleware(server, func, path, method=NULL)
+use<-function(jug, path, func){
+  add_middleware(jug, func, path, method=NULL)
 }

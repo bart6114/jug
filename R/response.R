@@ -8,6 +8,9 @@ Response<-
             set_header=function(key, value){
               self$headers[[key]]<-value
             },
+            content_type=function(type){
+              self$headers[['Content-Type']]=type
+            },
             status=NULL,
             set_status=function(status){
               self$status=status
