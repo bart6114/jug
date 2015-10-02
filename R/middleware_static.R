@@ -10,7 +10,7 @@
 #' @import mime
 #' @export
 serve_static_files<-function(jug, path=NULL, root_path=getwd()){
-  gett(jug, path = NULL, function(req, res, err){
+  get(jug, path = NULL, function(req, res, err){
     file_path <- gsub("^(\\/)", "", req$path)
 
     if(file.exists(file_path)){

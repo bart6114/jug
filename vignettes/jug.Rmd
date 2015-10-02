@@ -1,0 +1,45 @@
+---
+title: "Jug"
+author: "Bart Smeets"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Hello World!
+
+```{r, eval=FALSE}
+library(jug)
+
+jug() %>%
+  get("/", function(req, res, err){
+    "Hello World!"
+  }) %>%
+  serve_it()
+```
+```
+Serving the jug at http://127.0.0.1:8080
+```
+
+## What is Jug?
+
+Jug is a webdevelopment framework for R which relies heavily upon the ```httpuv``` package.
+
+Jug is not supposed to be either an especially performant nor an uber stable framework. Other tools (and languages) might be more suited for that. Nevertheless, it tries to make available a set of functions which allow you to easily create APIs for your R code. The flexibility of Jug means that, in theory, you could built an extensive web framework with it (but I don't especially recommend it).
+
+## The basics
+
+### The Jug instance
+
+### Middleware
+
+### Predefined middleware
+
+### Easily using your own functions
+
+### Serving
+
+

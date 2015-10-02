@@ -4,22 +4,23 @@ library(jsonlite)
 my_func<-function(x){ paste("hello world:",x)}
 
 jug() %>%
-  gett("/",
+  get("/",
       function(req, res, err){
-        print(req$query_params)
-        print(res$headers)
+        # print(req$query_params)
+        # print(res$headers)
         res$set_header("my_val", "3")
+        res$set_header("Set-Cookie", "theme=3")
         toJSON(res$headers, auto_unbox=T)
         stop(simpleError("fdsfds"))
       }
   ) %>%
-  gett("/test",
+  get("/test",
       function(req, res, err){
         "3"
       }
   ) %>%
-  gett("/myfunc", decorate(my_func, content_type="application/json")) %>%
-  postt("/", function(req, res, err){"33"}) %>%
+  get("/myfunc", decorate(my_func, content_type="application/json")) %>%
+  post("/", function(req, res, err){"33"}) %>%
   serve_static_files() %>%
   simple_error_handler() %>%
   serve_it()

@@ -2,11 +2,11 @@
 % Please edit documentation in R/jug.R
 \name{jug}
 \alias{jug}
-\title{New beakr instance}
+\title{New jug instance}
 \usage{
 jug()
 }
 \description{
-New beakr instance
+New jug instance
 }
 

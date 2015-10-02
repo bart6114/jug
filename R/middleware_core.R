@@ -86,6 +86,13 @@ add_middleware<-function(jug, func, path=NULL, method=NULL){
   jug
 }
 
+#' Set up generic method (otherwise base::get is masked)
+#'
+#' @export
+get<-function(x, ...){
+  UseMethod("get", x)
+}
+
 #' Function to add GET middleware
 #'
 #' @param jug the jug object
@@ -93,7 +100,7 @@ add_middleware<-function(jug, func, path=NULL, method=NULL){
 #' @param func the function to bind to the path (will receive the params \code{req} and \code{res})
 #'
 #' @export
-gett<-function(jug, path, func){
+get.Jug<-function(jug, path, func){
   add_middleware(jug, func, path, method="GET")
 }
 
@@ -104,7 +111,7 @@ gett<-function(jug, path, func){
 #' @param func the function to bind to the path (will receive the params \code{req} and \code{res})
 #'
 #' @export
-postt<-function(jug, path, func){
+post<-function(jug, path, func){
   add_middleware(jug, func, path, method="POST")
 }
 
