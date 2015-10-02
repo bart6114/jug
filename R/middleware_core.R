@@ -15,6 +15,8 @@ MiddlewareHandler<-
             invoke=function(req){
               res<-new_response()
               req<-new_request(req)
+              err<-new_error()
+
               path<-req$path
               method<-req$method
 
@@ -27,7 +29,15 @@ MiddlewareHandler<-
                    (is.null(mw$method) && is.null(mw$path))
                 ){
 
-                  body<-mw$func(req=req, res=res)
+                  body<-try(
+                      mw$func(req=req, res=res, err=err)
+                    )
+
+                  if('try-error' %in% class(body)){
+                    # process it further (will be catched by errorhandler)
+                    err$set(as.character(body))
+                    body<-NULL
+                  }
 
                   if(!is.null(body)){
                     res$set_body(body)
@@ -57,6 +67,10 @@ Middleware<-
               self$method=method
             }
           ))
+
+
+
+
 
 #' Internal function to add middleware
 #'

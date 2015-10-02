@@ -8,7 +8,7 @@ decorate<-function(func, content_type="text/html"){
     names(formals(func))
 
   # create new function for it
-  function(req, res){
+  function(req, res, err){
     res$content_type(content_type)
 
     passed_params<-
