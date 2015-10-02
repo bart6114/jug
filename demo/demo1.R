@@ -19,6 +19,7 @@ jug() %>%
       }
   ) %>%
   gett("/myfunc", decorate(my_func, content_type="application/json")) %>%
-  postt("/", function(req,res){"33"}) %>%
+  postt("/", function(req, res, err){"33"}) %>%
+  serve_static_files() %>%
   simple_error_handler() %>%
   serve_it()
