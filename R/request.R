@@ -12,15 +12,18 @@ Request<-
             path=NULL,
             method=NULL,
             post=NULL,
+            post_data=NULL,
             initialize=function(req){
               self$path<-req$PATH_INFO
-              self$query_params<-get_passed_params(req$QUERY_STRING)
+
+              query_string<-req$QUERY_STRING
+              if(length(query_string)>0) self$query_params<-get_passed_params(query_string)
+
               self$headers<-as.list(req)
               self$method<-req$REQUEST_METHOD
 
-              if(self$method=="POST"){
-                self$post=get_passed_params(req$rook.input$read_lines())
-              }
+              ## TODO: fix for binary posts/puts
+              self$post_data<-get_passed_params(req$rook.input$read_lines())
             }
           )
   )
@@ -39,16 +42,20 @@ new_request<-function(req){
 #' @export
 #' @import stringi
 get_passed_params<-function(query_string){
-  params<-
-    matrix(
-      stringi::stri_match_all(query_string, regex="([^?=&]+)(=([^&]*))?")[[1]][,c(2,4)],
-      ncol=2)
+  params_list<-NULL
 
-  params_list<-
-    as.list(params[,2])
+  try({
+    params<-
+      matrix(
+        stringi::stri_match_all(query_string, regex="([^?=&]+)(=([^&]*))?")[[1]][,c(2,4)],
+        ncol=2)
 
-  names(params_list)<-
-    params[,1]
+    params_list<-
+      as.list(params[,2])
+
+    names(params_list)<-
+      params[,1]
+  })
 
   params_list
 }

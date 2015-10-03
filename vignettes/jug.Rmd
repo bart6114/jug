@@ -182,6 +182,9 @@ hello Bart !
 
 #### ```req```
 
+The ```req``` object contains the request specifications. 
+
+
 #### ```res```
 
 #### ```err```
