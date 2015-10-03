@@ -2,7 +2,7 @@
 % Please edit documentation in R/middleware_core.R
 \name{get.Jug}
 \alias{get.Jug}
-\title{Function to add GET middleware}
+\title{Function to add GET-binding middleware}
 \usage{
 \method{get}{Jug}(jug, path, func)
 }
@@ -14,6 +14,6 @@
 \item{func}{the function to bind to the path (will receive the params \code{req} and \code{res})}
 }
 \description{
-Function to add GET middleware
+Function to add GET-binding middleware
 }
 

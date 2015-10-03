@@ -93,7 +93,7 @@ get<-function(x, ...){
   UseMethod("get", x)
 }
 
-#' Function to add GET middleware
+#' Function to add GET-binding middleware
 #'
 #' @param jug the jug object
 #' @param path the path to bind to
@@ -104,7 +104,7 @@ get.Jug<-function(jug, path, func){
   add_middleware(jug, func, path, method="GET")
 }
 
-#' Function to add POST middleware
+#' Function to add POST-binding middleware
 #'
 #' @param jug the jug object
 #' @param path the path to bind to
@@ -114,6 +114,29 @@ get.Jug<-function(jug, path, func){
 post<-function(jug, path, func){
   add_middleware(jug, func, path, method="POST")
 }
+
+#' Function to add PUT-binding middleware
+#'
+#' @param jug the jug object
+#' @param path the path to bind to
+#' @param func the function to bind to the path (will receive the params \code{req} and \code{res})
+#'
+#' @export
+put<-function(jug, path, func){
+  add_middleware(jug, func, path, method="PUT")
+}
+
+#' Function to add DELETE-binding middleware
+#'
+#' @param jug the jug object
+#' @param path the path to bind to
+#' @param func the function to bind to the path (will receive the params \code{req} and \code{res})
+#'
+#' @export
+delete<-function(jug, path, func){
+  add_middleware(jug, func, path, method="DELETE")
+}
+
 
 #' Function to add request method insensitive middleware
 #'

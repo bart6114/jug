@@ -34,7 +34,59 @@ Jug is not supposed to be either an especially performant nor an uber stable fra
 
 ### The Jug instance
 
+Everything starts with a Jug instance. This instance is created by simply calling ```jug()```:
+
+```{r, warning=FALSE, message=FALSE}
+library(jug)
+jug()
+```
+
+Jug is made to work closely with the piping functionality of ```magrittr``` (```%>%```). The rest of the Jug instance is built up by piping the instance through various functions explained below.
+
 ### Middleware
+
+In terms of middleware Jug somewhat follows the specification of middleware by ```Express```. In Jug, middleware is a function with access to the __request__ (```req```), __response__ (```res```) and __error__ (```err```) object.
+
+Multiple middlewares can be defined. Order in which the middlewares are added matters. A request will start with being passed through the first middleware added. It will continue to be passed through the added middlewares until a middleware does not return ```NULL```. Whatever will be passed by the middleware will be set as the response body.
+
+#### Method insensitive middleware
+
+The ```use``` function is a method insensitive middleware specifier. While it is method insensitive, it can be bound to a specific path. If the ```path``` argument is set to ```NULL``` it also becomes path insensitive and will process _every_ request.
+
+A path insensitive example:
+
+```{r, eval=FALSE}
+jug() %>%
+  use(path = NULL, function(req, res, err){
+    "test 1,2,3!"
+    }) %>%
+  serve_it()
+```
+
+```
+$ curl 127.0.0.1:8080/xyz
+test 1,2,3!
+```
+The same example, but path sensitive:
+
+```{r, eval=FALSE}
+jug() %>%
+  use(path = "/", function(req, res, err){
+    "test 1,2,3!"
+    }) %>%
+  serve_it()
+```
+
+```
+$ curl 127.0.0.1:8080/xyz
+curl: (52) Empty reply from server
+
+$ curl 127.0.0.1:8080
+test 1,2,3!
+```
+
+Note that in the above error / missing route handling is missing, more on that later.
+
 
 ### Predefined middleware
 

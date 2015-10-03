@@ -2,10 +2,12 @@
 
 S3method(get,Jug)
 export(decorate)
+export(delete)
 export(get)
 export(get_passed_params)
 export(jug)
 export(post)
+export(put)
 export(serve_it)
 export(serve_static_files)
 export(simple_error_handler)

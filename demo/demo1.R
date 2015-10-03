@@ -21,6 +21,7 @@ jug() %>%
   ) %>%
   get("/myfunc", decorate(my_func, content_type="application/json")) %>%
   post("/", function(req, res, err){"33"}) %>%
+  put("/puttest", function(req,res, err){print(req$method)}) %>%
   serve_static_files() %>%
   simple_error_handler() %>%
   serve_it()
