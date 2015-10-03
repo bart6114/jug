@@ -4,7 +4,7 @@
 \name{Middleware}
 \alias{Middleware}
 \title{Middleware class}
-\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x0654c7a8> 
+\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x0654a878> 
  - attr(*, "name")= chr "Middleware_generator"
 }}
 \usage{

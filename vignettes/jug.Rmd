@@ -47,7 +47,9 @@ Jug is made to work closely with the piping functionality of ```magrittr``` (```
 
 In terms of middleware Jug somewhat follows the specification of middleware by ```Express```. In Jug, middleware is a function with access to the __request__ (```req```), __response__ (```res```) and __error__ (```err```) object.
 
-Multiple middlewares can be defined. Order in which the middlewares are added matters. A request will start with being passed through the first middleware added. It will continue to be passed through the added middlewares until a middleware does not return ```NULL```. Whatever will be passed by the middleware will be set as the response body.
+Multiple middlewares can be defined. Order in which the middlewares are added matters. A request will start with being passed through the first middleware added (more specifically the ```func``` specified in it - see next paragraph). It will continue to be passed through the added middlewares until a middleware does not return ```NULL```. Whatever will be passed by the middleware will be set as the response body.
+
+Most middleware will accept a ```func``` argument to which a function should be passed. To this function the ```req```, ```res``` and ```err``` objects wwill be passed (and thus should accept them). The result of evaluation the specified function will be used as the response body.
 
 #### Method insensitive middleware
 
@@ -88,9 +90,101 @@ test 1,2,3!
 Note that in the above error / missing route handling is missing, more on that later.
 
 
+#### Method sensitive middleware
+
+In the same style ass the request method insensitive middleware, there is request method sensitive middleware available. More specifically, you can use the ```get```, ```post```, ```put``` and ```delete``` functions.
+
+This type of middleware is bound to a path using the ```path``` argument. If ```path``` is set to ```NULL``` it will bind to every request to the path, given that it is of the corresponding request type. 
+
+```{r, eval=FALSE}
+jug() %>%
+  get(path = "/", function(req, res, err){
+    "get test 1,2,3!"
+    }) %>%
+  serve_it()
+```
+
+```
+$ curl 127.0.0.1:8080
+get test 1,2,3!
+```
+
+Middlewares are meant to be chained, so to bind different functions to different paths:
+
+```{r, eval=FALSE}
+jug() %>%
+  get(path = "/", function(req, res, err){
+    "get test 1,2,3 on path /"
+    }) %>%
+  get(path = "/my_path", function(req, res, err){
+    "get test 1,2,3 on path /my_path"
+    }) %>%
+  serve_it()
+```
+
+```
+$ curl 127.0.0.1:8080
+get test 1,2,3 on path /
+
+$ curl 127.0.0.1:8080/my_path
+get test 1,2,3 on path /my_path
+```
+
 ### Predefined middleware
 
+#### Error handling
+
+A simple error handling middleware (```simple_error_handler```) which catches unbound paths and ```func``` evaluation errors. If no custom error handler is implemented I suggest you add this to your Jug instance.
+
+```{r, eval=FALSE}
+jug() %>%
+  simple_error_handler() %>%
+  serve_it()
+```
+
+```
+$ curl 127.0.0.1:8080
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Not found</title>
+  </head>
+  <body>
+    <p>No handler bound to path</p>
+  </body>
+</html>
+```
+If you want to implement your own custom error handling just have a look at the ```jug::simple_error_handler()``` function.
+
 ### Easily using your own functions
+
+The main reason I created Jug was to easily allow access to some custom R function I created. The convenience function ```decorate``` is built with this in mind.
+
+If you ```decorate``` your own function it will translate all arguments passed in the query string of the request as arguments to your function. It will also pass all headers to the function as arguments. Note that for the passed headers they will be capitalized and prefixed by ```HTTP_``` as per ```httpuv```'s internals. 
+
+If your function does not accept a ```...``` argument, all query/header parameters that are nor explicitly requested by your function are dropped. If your function requests a ```req```, ```res``` or ```err``` argument (or ```...```) the corresponding objects will be passed. 
+
+```{r, eval=FALSE}
+say_hello<-function(name){paste("hello",name,"!")}
+
+jug() %>%
+  get("/", decorate(say_hello)) %>%
+  serve_it()
+```
+
+```
+$ curl 127.0.0.1:8080/?name=Bart
+hello Bart !
+```
+
+### The ```req```, ```res``` & ```err``` objects
+
+#### ```req```
+
+#### ```res```
+
+#### ```err```
 
 ### Serving
 
