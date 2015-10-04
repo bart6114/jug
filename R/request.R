@@ -11,9 +11,11 @@ Request<-
             headers=NULL,
             path=NULL,
             method=NULL,
-            post=NULL,
             post_data=NULL,
+            raw=NULL,
             initialize=function(req){
+              self$raw<-req
+
               self$path<-req$PATH_INFO
 
               query_string<-req$QUERY_STRING

@@ -178,17 +178,35 @@ $ curl 127.0.0.1:8080/?name=Bart
 hello Bart !
 ```
 
-### The ```req```, ```res``` & ```err``` objects
+### The request, response and error objects
 
-#### ```req```
+#### Request (```req```) object
 
-The ```req``` object contains the request specifications. 
+The ```req``` object contains the request specifications. It has different attributes:
 
+- ```req$query_params``` a list of the query parameters contained in the URL
+- ```req$path``` the requested path
+- ```req$method``` the request method
+- ```req$raw``` the raw request object as passsed by ```httpuv```
+- ```req$post_data``` the post data (has some limitations for now...)
 
-#### ```res```
+#### Response (```res```) object
 
-#### ```err```
+The ```res``` object contains the response specifications. It has different attributes:
 
-### Serving
+- ```res$headers``` a named list of the set headers
+- ```res$status``` the status of the response (defaults to 200)
+- ```res$body``` the body of the response (is automatically set by the content of the not ```NULL``` returning middleware)
+
+It also has a set of functions:
+
+- ```res$set_header(key, value)``` set a custom header
+- ```res$content_type(type)``` set your own content type
+- ```res$set_status(status)``` set the status of the response
+- ```res$set_body(body)``` set the body of the response
+
+#### Error (```err```) object
+
+### Serving the Jug
 
 
