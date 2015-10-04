@@ -9,6 +9,8 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+> __Jug is under development and NOT production ready__
+
 ## Hello World!
 
 ```{r, eval=FALSE}
@@ -20,6 +22,7 @@ jug() %>%
   }) %>%
   serve_it()
 ```
+
 ```
 Serving the jug at http://127.0.0.1:8080
 ```
