@@ -53,7 +53,7 @@ Most middleware will accept a ```func``` argument to which a function should be 
 
 #### Method insensitive middleware
 
-The ```use``` function is a method insensitive middleware specifier. While it is method insensitive, it can be bound to a specific path. If the ```path``` argument is set to ```NULL``` it also becomes path insensitive and will process _every_ request.
+The ```use``` function is a method insensitive middleware specifier. While it is method insensitive, it can be bound to a specific path. If the ```path``` argument (accepts a regex string with ```grepl``` setting ```perl=TRUE```) is set to ```NULL``` it also becomes path insensitive and will process _every_ request.
 
 A path insensitive example:
 
