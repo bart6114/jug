@@ -6,7 +6,7 @@ Error<-
           public=list(
             errors=c(),
             set=function(err){
-              self$errors<-c(self$errors, err)
+              self$errors<-c(self$errors, as.character(err))
             }
           ),
           active=list(

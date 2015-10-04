@@ -159,7 +159,7 @@ If you want to implement your own custom error handling just have a look at the 
 
 ### Easily using your own functions
 
-The main reason I created Jug was to easily allow access to some custom R function I created. The convenience function ```decorate``` is built with this in mind.
+The main reason Jug was created is to easily allow access to your own custom R functions. The convenience function ```decorate``` is built with this in mind.
 
 If you ```decorate``` your own function it will translate all arguments passed in the query string of the request as arguments to your function. It will also pass all headers to the function as arguments. Note that for the passed headers they will be capitalized and prefixed by ```HTTP_``` as per ```httpuv```'s internals. 
 
@@ -207,6 +207,12 @@ It also has a set of functions:
 
 #### Error (```err```) object
 
+The ```err``` object contains a list of errors, accessible through ```err$errrors```. You can add an error to this list by calling ```err$set(error)```. The error will be converted to a character.
+
+Have a look at the ```simple_error_handler``` middleware function see how an error handler is implemented.
+
 ### Serving the Jug
+
+Simple call ```serve_it()``` at the end of your piping chain (see Hello World! example).
 
 

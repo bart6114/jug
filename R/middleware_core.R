@@ -24,7 +24,7 @@ MiddlewareHandler<-
 
               for(mw in self$middlewares){
 
-                if((mw$path==path && (mw$method == method || is.null(mw$method))) ||
+                if((grepl(path,mw$path, perl = TRUE) && (mw$method == method || is.null(mw$method))) ||
                    (mw$method==method && is.null(mw$path)) ||
                    (is.null(mw$method) && is.null(mw$path))
                 ){
@@ -40,7 +40,7 @@ MiddlewareHandler<-
                   }
 
                   if(!is.null(body)){
-                    res$set_body(body)
+                    if(is.null(res$body)) res$set_body(body) # explicitly set body will prevail
                     break
                   }
                 }
