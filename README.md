@@ -14,8 +14,9 @@ Hello World!
 What is Jug?
 ------------
 
-Jug is a webdevelopment framework for R which relies heavily upon the
-`httpuv` package.
+Jug is a small web development framework for R which relies heavily upon
+the `httpuv` package. It's main focus is to make building APIs for your
+code as easy as possible.
 
 Jug is not supposed to be either an especially performant nor an uber
 stable framework. Other tools (and languages) might be more suited for

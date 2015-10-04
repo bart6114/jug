@@ -26,7 +26,7 @@ Serving the jug at http://127.0.0.1:8080
 
 ## What is Jug?
 
-Jug is a webdevelopment framework for R which relies heavily upon the ```httpuv``` package.
+Jug is a small web development framework for R which relies heavily upon the ```httpuv``` package. It's main focus is to make building APIs for your code as easy as possible.
 
 Jug is not supposed to be either an especially performant nor an uber stable framework. Other tools (and languages) might be more suited for that. Nevertheless, it tries to make available a set of functions which allow you to easily create APIs for your R code. The flexibility of Jug means that, in theory, you could built an extensive web framework with it (but I don't especially recommend it).
 
