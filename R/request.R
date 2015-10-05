@@ -15,11 +15,8 @@ Request<-
             raw=NULL,
 
             ## inspired by https://github.com/nteetor/dull/blob/master/R/request.R
-            get_header=function(key){
-              key<-paste0("HTTP_",toupper(key))
-
-              self$headers[[key]]
-            },
+            get_header=function(key) self$headers[[paste0("HTTP_",toupper(key))]],
+            set_header=function(key, value) self$headers[[paste0("HTTP_",toupper(key))]],
 
             initialize=function(req){
               self$raw<-req

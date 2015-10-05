@@ -12,6 +12,9 @@ Jug<-R6Class("Jug",
                    }
                  )
                },
+               add_collected_middelware=function(collector){
+                 self$middleware_handler$add_middleware(collector$middleware_handler$middlewares)
+               },
                initialize=function(){
                  self$middleware_handler=MiddlewareHandler$new()
                },

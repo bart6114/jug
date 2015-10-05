@@ -5,15 +5,13 @@ Response<-
   R6Class("Response",
           public=list(
             headers=list("Content-Type"="text/html"),
-            set_header=function(key, value){
-              self$headers[[key]]<-value
-            },
-            content_type=function(type){
-              self$headers[['Content-Type']]=type
-            },
+            set_header=function(key, value) self$headers[[key]]<-value,
+            content_type=function(type) self$headers[['Content-Type']]=type,
             status=NULL,
-            set_status=function(status){
-              self$status=status
+            set_status=function(status) self$status=status,
+            redirect=function(url){
+              self$status=302L
+              self$set_header("Location", url)
             },
             body=NULL,
             set_body=function(body){
