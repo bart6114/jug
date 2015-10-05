@@ -13,8 +13,8 @@ MiddlewareHandler<-
 
             },
             invoke=function(req){
-              res<-new_response()
-              req<-new_request(req)
+              res<-Response$new()
+              req<-Request$new(req)
               err<-new_error()
 
               path<-req$path

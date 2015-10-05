@@ -4,6 +4,7 @@
 Jug<-R6Class("Jug",
              public=list(
                middleware_handler=NULL,
+               daemon_obj=NULL,
                app_definition=function(){
                  list(
                    call=function(req){
@@ -16,7 +17,8 @@ Jug<-R6Class("Jug",
                },
                start=function(host, port, daemonized){
                  if(daemonized){
-                   httpuv::startDaemonizedServer(host, port, self$app_definition())
+                   self$daemon_obj<-
+                     httpuv::startDaemonizedServer(host, port, self$app_definition())
                  } else {
                    httpuv::runServer(host, port, self$app_definition())
                  }
@@ -47,6 +49,8 @@ jug<-function(){
 serve_it<-function(jug, host="127.0.0.1", port=8080, daemonized=FALSE){
   message(paste0("Serving the jug at http://",host,":",port))
   jug$start(host, port, daemonized)
+
+  jug
 }
 
 #' Stop daemonized server
@@ -55,5 +59,7 @@ serve_it<-function(jug, host="127.0.0.1", port=8080, daemonized=FALSE){
 #'
 #' @export
 stop_daemon<-function(jug){
-  httpuv::stopDaemonizedServer(jug)
+  httpuv::stopDaemonizedServer(jug$daemon_obj)
+
+  jug
 }

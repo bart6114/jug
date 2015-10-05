@@ -3,34 +3,27 @@ library(httr)
 
 context("testing get requests")
 
+
+test_req<-RawTestRequest$new()
+
 test_that("A status 404 is returned for a request to an undefined path",{
-  j<-jug() %>%
+  res<-jug() %>%
     simple_error_handler() %>%
-    serve_it(daemonized=TRUE)
+    process_test_request(test_req$req)
 
-  res<-
-    GET("http://127.0.0.1:8080/")
-
-  stop_daemon(j)
-
-  expect_equal(status_code(res), 404)
+  expect_equal(res$status, 404)
 
 })
 
 
 test_that("A status 500 is returned for a request with an error in processing",{
-  j<-jug() %>%
+  res<-jug() %>%
     get('/', function(req, res, err){
       stop("an error occurred")
     }) %>%
     simple_error_handler() %>%
-    serve_it(daemonized=TRUE)
+    process_test_request(test_req$req)
 
-  res<-
-    GET("http://127.0.0.1:8080/")
-
-  stop_daemon(j)
-
-  expect_equal(status_code(res), 500)
+  expect_equal(res$status, 500)
 
 })

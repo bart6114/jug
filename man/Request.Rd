@@ -4,7 +4,7 @@
 \name{Request}
 \alias{Request}
 \title{Request class}
-\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x06d8ab28> 
+\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x06da61cc> 
  - attr(*, "name")= chr "Request_generator"
 }}
 \usage{

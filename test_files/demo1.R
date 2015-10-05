@@ -3,6 +3,8 @@ library(jsonlite)
 
 my_func<-function(x){ paste("hello world:",x)}
 
+testreq<-NULL
+
 jug() %>%
   get("/",
       function(req, res, err){
@@ -16,6 +18,7 @@ jug() %>%
   ) %>%
   get("/test",
       function(req, res, err){
+        testreq<<-as.list(req$raw)
         "3"
       }
   ) %>%
@@ -31,3 +34,13 @@ jug() %>%
   serve_static_files() %>%
   simple_error_handler() %>%
   serve_it()
+
+
+
+
+
+jug() %>%
+  get("/", function(req, res, err){
+    "test"
+  }) %>%
+  process_test_request(RawTestRequest$new()$req)

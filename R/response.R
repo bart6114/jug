@@ -28,9 +28,3 @@ Response<-
               )
             }
           ))
-
-#' Create response instance
-#'
-new_response<-function(){
-  Response$new()
-}

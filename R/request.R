@@ -36,13 +36,6 @@ Request<-
   )
 
 
-#' Create request instance
-#'
-#' @param req the raw request object
-new_request<-function(req){
-  Request$new(req)
-}
-
 #' Helper function to deparse query params
 #'
 #' @param query_string the request object
