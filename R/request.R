@@ -57,7 +57,7 @@ get_passed_params<-function(query_string){
 
     names(params_list)<-
       params[,1]
-  })
+  }, silent = TRUE)
 
   params_list
 }
