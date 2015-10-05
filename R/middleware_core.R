@@ -89,19 +89,24 @@ add_middleware<-function(jug, func, path=NULL, method=NULL){
 
 #' Set up generic method (otherwise base::get is masked)
 #'
+#' @param object the object to pass to get
+#' @param ... other arguments passed to get
+#'
 #' @export
-get<-function(x, ...){
-  UseMethod("get", x)
-}
+get<-function(object, ...) UseMethod("get")
+
+#' @export
+get.default <- function(object, ...) base::get(object)
 
 #' Function to add GET-binding middleware
 #'
 #' @param jug the jug object
 #' @param path the path to bind to
 #' @param func the function to bind to the path (will receive the params \code{req} and \code{res})
+#' @param ... other arguments passed to get
 #'
 #' @export
-get.Jug<-function(jug, path, func){
+get.Jug<-function(jug, path, func, ...){
   add_middleware(jug, func, path, method="GET")
 }
 

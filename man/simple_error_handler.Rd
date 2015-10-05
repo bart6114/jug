@@ -9,9 +9,9 @@ simple_error_handler(jug, path = NULL, to_cat_or_not_to_cat = "cat")
 \arguments{
 \item{jug}{the jug instance}
 
-\item{to_cat_or_not_to_cat}{the argument says it all}
+\item{path}{the path to bind to, default = NULL (all paths)}
 
-\item{the}{path to bind to, default = NULL (all paths)}
+\item{to_cat_or_not_to_cat}{the argument says it all}
 }
 \description{
 An error handler middleware

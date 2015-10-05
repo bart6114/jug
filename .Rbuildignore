@@ -1,4 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\var
-README
+README.md
+^\test_files$
+^\.travis\.yml$

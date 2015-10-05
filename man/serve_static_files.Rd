@@ -9,9 +9,9 @@ serve_static_files(jug, path = NULL, root_path = getwd())
 \arguments{
 \item{jug}{the jug instance}
 
-\item{root_path}{}
+\item{path}{the path to bind to, default = NULL (all paths)}
 
-\item{the}{path to bind to, default = NULL (all paths)}
+\item{root_path}{the file path to set as root for the file server}
 }
 \description{
 Binds to get requests that aren't handled by specified paths.

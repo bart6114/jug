@@ -1,7 +1,7 @@
 #' An error handler middleware
 #'
 #' @param jug the jug instance
-#' @param the path to bind to, default = NULL (all paths)
+#' @param path the path to bind to, default = NULL (all paths)
 #' @param to_cat_or_not_to_cat the argument says it all
 #'
 #' @export

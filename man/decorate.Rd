@@ -8,6 +8,8 @@ decorate(func, content_type = "text/html")
 }
 \arguments{
 \item{func}{the function to decorate}
+
+\item{content_type}{the content type to set on the response object}
 }
 \description{
 Convenience function to decorate existing functions

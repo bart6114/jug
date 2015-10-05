@@ -36,13 +36,23 @@ jug<-function(){
   Jug$new()
 }
 
-
+#' Start serving the jug instance
+#'
+#' @param jug the jug instance
+#' @param host the host address
+#' @param port the port to host on
+#' @param daemonized whether or not to start a daemonized server (experimental)
+#'
 #' @export
 serve_it<-function(jug, host="127.0.0.1", port=8080, daemonized=FALSE){
   message(paste0("Serving the jug at http://",host,":",port))
   jug$start(host, port, daemonized)
 }
 
+#' Stop daemonized server
+#'
+#' @param jug the jug instance
+#'
 #' @export
 stop_daemon<-function(jug){
   httpuv::stopDaemonizedServer(jug)

@@ -4,8 +4,8 @@
 #' Currently only works/tested for text files
 #'
 #' @param jug the jug instance
-#' @param the path to bind to, default = NULL (all paths)
-#' @param root_path
+#' @param path the path to bind to, default = NULL (all paths)
+#' @param root_path the file path to set as root for the file server
 #'
 #' @import mime
 #' @export

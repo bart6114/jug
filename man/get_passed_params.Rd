@@ -7,7 +7,7 @@
 get_passed_params(query_string)
 }
 \arguments{
-\item{req}{the request object}
+\item{query_string}{the request object}
 }
 \description{
 Helper function to deparse query params

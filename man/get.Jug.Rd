@@ -4,7 +4,7 @@
 \alias{get.Jug}
 \title{Function to add GET-binding middleware}
 \usage{
-\method{get}{Jug}(jug, path, func)
+\method{get}{Jug}(jug, path, func, ...)
 }
 \arguments{
 \item{jug}{the jug object}
@@ -12,6 +12,8 @@
 \item{path}{the path to bind to}
 
 \item{func}{the function to bind to the path (will receive the params \code{req} and \code{res})}
+
+\item{...}{other arguments passed to get}
 }
 \description{
 Function to add GET-binding middleware

@@ -4,7 +4,12 @@
 \alias{get}
 \title{Set up generic method (otherwise base::get is masked)}
 \usage{
-get(x, ...)
+get(object, ...)
+}
+\arguments{
+\item{object}{the object to pass to get}
+
+\item{...}{other arguments passed to get}
 }
 \description{
 Set up generic method (otherwise base::get is masked)

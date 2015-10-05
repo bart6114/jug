@@ -1,16 +1,16 @@
 Package: jug
 Type: Package
-Title: Create a simple web API from your R functions
+Title: Create a Simple Web API from your R Functions
 Version: 0.1.0
 Author: Bart Smeets
 Maintainer: Bart Smeets <bartsmeets86@gmail.com>
-Description: A set of convenience functions to build simple APIs
+Description: A set of convenience functions to build simple APIs.
 License: MIT + file LICENSE
 LazyData: TRUE
 Depends:
+  mime,
   httpuv,
   stringi,
-  jsonlite,
   R6,
   magrittr
 Suggests:

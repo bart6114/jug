@@ -6,6 +6,9 @@
 \usage{
 new_request(req)
 }
+\arguments{
+\item{req}{the raw request object}
+}
 \description{
 Create request instance
 }
