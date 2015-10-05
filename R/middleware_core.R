@@ -30,7 +30,8 @@ MiddlewareHandler<-
                 ){
 
                   body<-try(
-                      mw$func(req=req, res=res, err=err)
+                      mw$func(req=req, res=res, err=err),
+                      silent = TRUE
                     )
 
                   if('try-error' %in% class(body)){

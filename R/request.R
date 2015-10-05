@@ -13,14 +13,19 @@ Request<-
             method=NULL,
             post_data=NULL,
             raw=NULL,
+
+            ## inspired by https://github.com/nteetor/dull/blob/master/R/request.R
+            get_header=function(key){
+              key<-paste0("HTTP_",toupper(key))
+
+              self$headers[[key]]
+            },
+
             initialize=function(req){
               self$raw<-req
-
               self$path<-req$PATH_INFO
-
               query_string<-req$QUERY_STRING
-              if(length(query_string)>0) self$query_params<-get_passed_params(query_string)
-
+              self$query_params<-get_passed_params(query_string)
               self$headers<-as.list(req)
               self$method<-req$REQUEST_METHOD
 

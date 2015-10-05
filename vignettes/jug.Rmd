@@ -193,6 +193,10 @@ The ```req``` object contains the request specifications. It has different attri
 - ```req$raw``` the raw request object as passsed by ```httpuv```
 - ```req$post_data``` the post data (has some limitations for now...)
 
+It has the following functions attached to it:
+
+- ```req$get_header(key)``` returns the value associated to the specified key in the request (no need to worry about the ```HTTP_``` prefix)
+
 #### Response (```res```) object
 
 The ```res``` object contains the response specifications. It has different attributes:

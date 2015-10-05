@@ -5,10 +5,17 @@ Version: 0.1.0
 Author: Bart Smeets
 Maintainer: Bart Smeets <bartsmeets86@gmail.com>
 Description: A set of convenience functions to build simple APIs
-License: MIT
+License: MIT + file LICENSE
 LazyData: TRUE
-Depends: httpuv, stringi, jsonlite, R6, magrittr
-Suggests: testthat,
+Depends:
+  httpuv,
+  stringi,
+  jsonlite,
+  R6,
+  magrittr
+Suggests:
+    testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    httr
 VignetteBuilder: knitr
