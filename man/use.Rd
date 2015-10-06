@@ -4,7 +4,7 @@
 \alias{use}
 \title{Function to add request method insensitive middleware}
 \usage{
-use(jug, path, func)
+use(jug, path, ...)
 }
 \arguments{
 \item{jug}{the jug object}

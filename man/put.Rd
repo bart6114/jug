@@ -4,7 +4,7 @@
 \alias{put}
 \title{Function to add PUT-binding middleware}
 \usage{
-put(jug, path, func)
+put(jug, path, ...)
 }
 \arguments{
 \item{jug}{the jug object}

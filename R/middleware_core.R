@@ -30,9 +30,9 @@ MiddlewareHandler<-
                 ){
 
                   body<-try(
-                      mw$func(req=req, res=res, err=err),
-                      silent = TRUE
-                    )
+                    mw$func(req=req, res=res, err=err),
+                    silent = TRUE
+                  )
 
                   if('try-error' %in% class(body)){
                     # process it further (will be catched by errorhandler)
@@ -102,12 +102,13 @@ get.default <- function(object, ...) base::get(object)
 #'
 #' @param jug the jug object
 #' @param path the path to bind to
-#' @param func the function to bind to the path (will receive the params \code{req} and \code{res})
-#' @param ... other arguments passed to get
+#' @param ... functions (order matters) to bind to the path (will receive the params \code{req}, \code{res} and \code{err})
 #'
 #' @export
-get.Jug<-function(jug, path, func, ...){
-  add_middleware(jug, func, path, method="GET")
+get.Jug<-function(jug, path, ...){
+  lapply(list(...), function(mw_func) add_middleware(jug, mw_func, path, method="GET"))
+
+  jug
 }
 
 #' Function to add POST-binding middleware
@@ -117,8 +118,10 @@ get.Jug<-function(jug, path, func, ...){
 #' @param func the function to bind to the path (will receive the params \code{req} and \code{res})
 #'
 #' @export
-post<-function(jug, path, func){
-  add_middleware(jug, func, path, method="POST")
+post<-function(jug, path, ...){
+  lapply(list(...), function(mw_func) add_middleware(jug, mw_func, path, method="POST"))
+
+  jug
 }
 
 #' Function to add PUT-binding middleware
@@ -128,8 +131,10 @@ post<-function(jug, path, func){
 #' @param func the function to bind to the path (will receive the params \code{req} and \code{res})
 #'
 #' @export
-put<-function(jug, path, func){
-  add_middleware(jug, func, path, method="PUT")
+put<-function(jug, path, ...){
+  lapply(list(...), function(mw_func) add_middleware(jug, mw_func, path, method="PUT"))
+
+  jug
 }
 
 #' Function to add DELETE-binding middleware
@@ -139,8 +144,10 @@ put<-function(jug, path, func){
 #' @param func the function to bind to the path (will receive the params \code{req} and \code{res})
 #'
 #' @export
-delete<-function(jug, path, func){
-  add_middleware(jug, func, path, method="DELETE")
+delete<-function(jug, path, ...){
+  lapply(list(...), function(mw_func) add_middleware(jug, mw_func, path, method="DELETE"))
+
+  jug
 }
 
 
@@ -151,6 +158,8 @@ delete<-function(jug, path, func){
 #' @param func the function to bind to the path (will receive the params \code{req} and \code{res})
 #'
 #' @export
-use<-function(jug, path, func){
-  add_middleware(jug, func, path, method=NULL)
+use<-function(jug, path, ...){
+  lapply(list(...), function(mw_func) add_middleware(jug, mw_func, path, method=NULL))
+
+  jug
 }

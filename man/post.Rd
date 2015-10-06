@@ -4,7 +4,7 @@
 \alias{post}
 \title{Function to add POST-binding middleware}
 \usage{
-post(jug, path, func)
+post(jug, path, ...)
 }
 \arguments{
 \item{jug}{the jug object}

@@ -4,16 +4,14 @@
 \alias{get.Jug}
 \title{Function to add GET-binding middleware}
 \usage{
-\method{get}{Jug}(jug, path, func, ...)
+\method{get}{Jug}(jug, path, ...)
 }
 \arguments{
 \item{jug}{the jug object}
 
 \item{path}{the path to bind to}
 
-\item{func}{the function to bind to the path (will receive the params \code{req} and \code{res})}
-
-\item{...}{other arguments passed to get}
+\item{...}{functions (order matters) to bind to the path (will receive the params \code{req}, \code{res} and \code{err})}
 }
 \description{
 Function to add GET-binding middleware

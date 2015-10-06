@@ -4,6 +4,8 @@
 #' Request class
 #'
 #' @import R6 stringi
+#'
+#' @export
 Request<-
   R6Class("Request",
           public=list(
@@ -14,9 +16,12 @@ Request<-
             post_data=NULL,
             raw=NULL,
 
+            attached=list(),
+            attach=function(key, value) self$attached[[key]]<-value,
+
             ## inspired by https://github.com/nteetor/dull/blob/master/R/request.R
             get_header=function(key) self$headers[[paste0("HTTP_",toupper(key))]],
-            set_header=function(key, value) self$headers[[paste0("HTTP_",toupper(key))]],
+            set_header=function(key, value) self$headers[[paste0("HTTP_",toupper(key))]]<-value,
 
             initialize=function(req){
               self$raw<-req

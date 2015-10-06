@@ -4,7 +4,7 @@
 \alias{delete}
 \title{Function to add DELETE-binding middleware}
 \usage{
-delete(jug, path, func)
+delete(jug, path, ...)
 }
 \arguments{
 \item{jug}{the jug object}

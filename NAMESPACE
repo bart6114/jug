@@ -3,6 +3,7 @@
 S3method(get,Jug)
 S3method(get,default)
 export(RawTestRequest)
+export(Request)
 export(collector)
 export(decorate)
 export(delete)
