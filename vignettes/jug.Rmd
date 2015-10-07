@@ -224,7 +224,16 @@ It also has a set of functions:
 
 The ```err``` object contains a list of errors, accessible through ```err$errrors```. You can add an error to this list by calling ```err$set(error)```. The error will be converted to a character.
 
-Have a look at the ```simple_error_handler``` middleware function see how an error handler is implemented.
+Have a look at the ```simple_error_handler``` middleware function see how you can implement a custom error handler.
+
+### Url dispatching
+
+The path parameter in the ```get```, ```post```, ... functions is intepreted as a regex pattern.
+
+If there are named capture groups in the path definition, they will be attached to the ```req$params``` object. For example the pattern ```/test/(?<id>.*)/(?<id2>.*)``` will result in the variables ```id``` and ```id2``` (with their respective values) being bound to the ```req$params``` object.
+
+If a path pattern is not started with a start of string ```^``` regex token __or__ ended with an end of string token ```$```, these will be explicitely inserted at respectively the beginning and end of the path pattern specification. For example the path pattern ```/``` will be converted to ```^/$```.
+
 
 ### Serving the Jug
 

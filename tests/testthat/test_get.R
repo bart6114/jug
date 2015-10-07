@@ -19,7 +19,27 @@ test_that("The correct response is returned for a (bare) GET request",{
 
 })
 
+test_that("The correct response is returned for a (bare) GET request to non-root paths if root is specified",{
+
+  test_req$path("/test")
+
+  res<-jug() %>%
+    get("/", function(req,res,err){
+      return("test")
+    }) %>%
+    get("/test", function(req,res,err){
+      return("test2")
+    }) %>%
+    process_test_request(test_req$req)
+
+  expect_equal(res$body, "test2")
+
+})
+
 test_that("The correct response is returned for a GET request with query params",{
+
+  test_req$path("/")
+
   res<-jug() %>%
     get("/", function(req,res,err){
       return(req$params$x)

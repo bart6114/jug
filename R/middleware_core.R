@@ -26,11 +26,12 @@ MiddlewareHandler<-
               for(mw in self$middlewares){
 
                 # if there are named capture groups in the path, add them to req$params
-                match_path<-re_capture(mw$path, path)
+                path_processed<-match_path(mw$path, path)
 
-                if(length(match_path$names)>0) req$add_params(match_path$names)
+                # if(length(path_processed$params)>0)
+                req$add_params(path_processed$params)
 
-                if((match_path$match && (mw$method == method || is.null(mw$method))) ||
+                if((path_processed$match && (mw$method == method || is.null(mw$method))) ||
                    (mw$method==method && is.null(mw$path)) ||
                    (is.null(mw$method) && is.null(mw$path))
                 ){

@@ -7,15 +7,15 @@ rmarkdown::render("vignettes/jug.Rmd",
 file.copy("index.html", "../jug-gh-pages/index.html", overwrite = TRUE)
 unlink("index.html")
 
+proceed<-readline("push? (y/n)")
+if(proceed=="y"){
 
-cwd<-getwd()
+  cwd<-getwd()
 
-setwd("../jug-gh-pages")
-system("git a")
-system('git commit -am "copied vignette to gh-pages"')
-system('git push')
+  setwd("../jug-gh-pages")
+  system("git a")
+  system('git commit -am "copied vignette to gh-pages"')
+  system('git push')
 
-setwd(cwd)
-
-
-
+  setwd(cwd)
+}

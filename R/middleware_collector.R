@@ -8,19 +8,21 @@ collector<-function(){
 }
 
 
-#' Join elsewhere constructed middleware with primary jug instance
+#' Include elsewhere constructed middleware with primary jug instance
 #'
 #' @param jug the primary jug instance
 #' @param collector the variable containing the external middleware
+#' @param source_file provide (relative) path if collector variable is located in another .R file
 #'
 #' @export
-require_middleware<-function(jug, collector, file_to_source=NULL){
-  if(is.null(file_to_source)){
-    collector_obj<-get(deparse(substitute(collector)))
+include<-function(jug, collector, source_file=NULL){
+
+  if(is.null(source_file)){
+    collector_obj<-eval(quote(collector))
   } else {
-    external_env<-new.env()
-    source(file_to_source, local = external_env)
-    collector_obj<-external_env[[deparse(substitute(collector))]]
+    # TODO: should source to a temporary environment variable
+    source(source_file)
+    collector_obj<-eval(quote(collector))
   }
 
   jug$add_collected_middelware(collector_obj)

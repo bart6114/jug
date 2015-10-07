@@ -6,7 +6,7 @@ my_func<-function(x){ paste("hello world:",x)}
 testreq<-NULL
 
 jug() %>%
-  get("/",
+  get("/$",
       function(req, res, err){
         # print(req$params)
         # print(res$headers)

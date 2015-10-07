@@ -1,6 +1,3 @@
-## Having an additional req object might be significantly hinder peformance...
-
-
 #' Request class
 #'
 #' @import R6 stringi
@@ -10,7 +7,7 @@ Request<-
   R6Class("Request",
           public=list(
             params=list(),
-            headers=NULL,
+            headers=list(),
             path=NULL,
             method=NULL,
             post_data=NULL,
