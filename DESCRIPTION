@@ -12,7 +12,8 @@ Depends:
   httpuv,
   stringi,
   R6,
-  magrittr
+  magrittr,
+  infuser
 Suggests:
     testthat,
     knitr,
