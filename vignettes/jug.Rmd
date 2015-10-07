@@ -41,9 +41,7 @@ For now, Jug is not available on CRAN. To install it, use ```devtools```:
 devtools::install_github("Bart6114/jug")
 ```
 
-## The basics
-
-### The Jug instance
+## The Jug instance
 
 Everything starts with a Jug instance. This instance is created by simply calling ```jug()```:
 
@@ -54,7 +52,7 @@ jug()
 
 Jug is made to work closely with the piping functionality of ```magrittr``` (```%>%```). The rest of the Jug instance is built up by piping the instance through various functions explained below.
 
-### Middleware
+## Middleware
 
 In terms of middleware Jug somewhat follows the specification of middleware by ```Express```. In Jug, middleware is a function with access to the __request__ (```req```), __response__ (```res```) and __error__ (```err```) object.
 
@@ -62,7 +60,7 @@ Multiple middlewares can be defined. Order in which the middlewares are added ma
 
 Most middleware will accept a ```func``` or ```...``` argument to which respectively a function or multiple functions can be passed. If multiple functions are passed; passing order will be respected. To each function the ```req```, ```res``` and ```err``` objects will be passed (and thus should accept them). The result of evaluating the function will be used as the response body (if the returned object is not null).
 
-#### Method insensitive middleware
+### Method insensitive middleware
 
 The ```use``` function is a method insensitive middleware specifier. While it is method insensitive, it can be bound to a specific path. If the ```path``` argument (accepts a regex string with ```grepl``` setting ```perl=TRUE```) is set to ```NULL``` it also becomes path insensitive and will process _every_ request.
 
@@ -101,7 +99,7 @@ test 1,2,3!
 Note that in the above error / missing route handling is missing, more on that later.
 
 
-#### Method sensitive middleware
+### Method sensitive middleware
 
 In the same style ass the request method insensitive middleware, there is request method sensitive middleware available. More specifically, you can use the ```get```, ```post```, ```put``` and ```delete``` functions.
 
@@ -141,9 +139,49 @@ $ curl 127.0.0.1:8080/my_path
 get test 1,2,3 on path /my_path
 ```
 
-### Predefined middleware
+### Including elsewhere defined middleware
 
-#### Error handling
+You can include middleware that has been defined elsewhere within your current R environment or in a different R file. To do this you can use a ```collector```
+
+Below a ```collector``` is defined locally and ```include```d.
+
+```{r, eval=FALSE}
+ collected_mw<-
+    collector() %>%
+    get("/", function(req,res,err){
+      return("test")
+    })
+
+  res<-jug() %>%
+    include(collected_mw) %>%
+    serve_it()
+```
+
+However, it is also possible to ```include``` a ```collector``` that is defined in another .R file.
+
+Let's say below is the file ```my_middlewares.R```:
+
+```{r, eval=FALSE}
+library(jug)
+
+collected_mw<-
+  collector() %>%
+  get("/", function(req,res,err){
+    return("test2")
+  })
+```
+
+We can include it as follows:
+
+```{r, eval=FALSE}
+res<-jug() %>%
+  include(collected_mw, "my_middlewares.R") %>%
+  serve_it()
+```
+
+## Predefined middleware
+
+### Error handling
 
 A simple error handling middleware (```simple_error_handler```) which catches unbound paths and ```func``` evaluation errors. If no custom error handler is implemented I suggest you add this to your Jug instance.
 
@@ -189,9 +227,9 @@ $ curl 127.0.0.1:8080/?name=Bart
 hello Bart !
 ```
 
-### The request, response and error objects
+## The request, response and error objects
 
-#### Request (```req```) object
+### Request (```req```) object
 
 The ```req``` object contains the request specifications. It has different attributes:
 
@@ -205,7 +243,7 @@ It has the following functions attached to it:
 
 - ```req$get_header(key)``` returns the value associated to the specified key in the request (no need to worry about the ```HTTP_``` prefix)
 
-#### Response (```res```) object
+### Response (```res```) object
 
 The ```res``` object contains the response specifications. It has different attributes:
 
@@ -220,13 +258,13 @@ It also has a set of functions:
 - ```res$set_status(status)``` set the status of the response
 - ```res$set_body(body)``` set the body of the response
 
-#### Error (```err```) object
+### Error (```err```) object
 
 The ```err``` object contains a list of errors, accessible through ```err$errrors```. You can add an error to this list by calling ```err$set(error)```. The error will be converted to a character.
 
 Have a look at the ```simple_error_handler``` middleware function see how you can implement a custom error handler.
 
-### Url dispatching
+## URL dispatching 
 
 The path parameter in the ```get```, ```post```, ... functions is intepreted as a regex pattern.
 
@@ -234,15 +272,7 @@ If there are named capture groups in the path definition, they will be attached 
 
 If a path pattern is not started with a start of string ```^``` regex token __or__ ended with an end of string token ```$```, these will be explicitely inserted at respectively the beginning and end of the path pattern specification. For example the path pattern ```/``` will be converted to ```^/$```.
 
-
-### Serving the Jug
+## Serving the Jug
 
 Simple call ```serve_it()``` at the end of your piping chain (see Hello World! example).
-
-## Extra concepts
-
-### Multiple middleware functions
-
-TODO
-
 
