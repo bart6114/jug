@@ -33,6 +33,10 @@ RawTestRequest<-R6Class("RawTestRequest", public=list(
   query_string=function(qstring) self$req$QUERY_STRING<-qstring,
   set_header=function(key, value){
     self$req[[paste0("HTTP_", toupper(key))]]<-value
+  },
+  print=function(...){
+    cat("A RawTestRequest instance\n")
+    invisible(self$req)
   }
 )
 )

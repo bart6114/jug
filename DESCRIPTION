@@ -16,6 +16,5 @@ Depends:
 Suggests:
     testthat,
     knitr,
-    rmarkdown,
-    httr
+    rmarkdown
 VignetteBuilder: knitr

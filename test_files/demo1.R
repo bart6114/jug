@@ -8,7 +8,7 @@ testreq<-NULL
 jug() %>%
   get("/",
       function(req, res, err){
-        # print(req$query_params)
+        # print(req$params)
         # print(res$headers)
         res$set_header("my_val", "3")
         res$set_header("Set-Cookie", "theme=3")

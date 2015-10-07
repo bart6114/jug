@@ -22,9 +22,15 @@ MiddlewareHandler<-
 
               body<-NULL
 
+
               for(mw in self$middlewares){
 
-                if((grepl(path,mw$path, perl = TRUE) && (mw$method == method || is.null(mw$method))) ||
+                # if there are named capture groups in the path, add them to req$params
+                match_path<-re_capture(mw$path, path)
+
+                if(length(match_path$names)>0) req$add_params(match_path$names)
+
+                if((match_path$match && (mw$method == method || is.null(mw$method))) ||
                    (mw$method==method && is.null(mw$path)) ||
                    (is.null(mw$method) && is.null(mw$path))
                 ){
@@ -163,3 +169,4 @@ use<-function(jug, path, ...){
 
   jug
 }
+

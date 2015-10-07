@@ -9,7 +9,7 @@
 Request<-
   R6Class("Request",
           public=list(
-            query_params=NULL,
+            params=list(),
             headers=NULL,
             path=NULL,
             method=NULL,
@@ -22,12 +22,14 @@ Request<-
             ## inspired by https://github.com/nteetor/dull/blob/master/R/request.R
             get_header=function(key) self$headers[[paste0("HTTP_",toupper(key))]],
             set_header=function(key, value) self$headers[[paste0("HTTP_",toupper(key))]]<-value,
+            add_params=function(named_list) self$params<-modifyList(self$params, named_list),
 
             initialize=function(req){
+              self$params<-list()
               self$raw<-req
               self$path<-req$PATH_INFO
               query_string<-req$QUERY_STRING
-              self$query_params<-get_passed_params(query_string)
+              self$params<-get_passed_params(query_string)
               self$headers<-as.list(req)
               self$method<-req$REQUEST_METHOD
 
@@ -62,6 +64,5 @@ get_passed_params<-function(query_string){
 
   params_list
 }
-
 
 

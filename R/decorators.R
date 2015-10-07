@@ -14,7 +14,7 @@ decorate<-function(func, content_type="text/html"){
     res$content_type(content_type)
 
     passed_params<-
-      modifyList(req$query_params, req$headers)
+      modifyList(req$params, req$headers)
 
     passed_params$req<-req
     passed_params$res<-res

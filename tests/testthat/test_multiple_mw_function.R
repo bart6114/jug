@@ -1,5 +1,4 @@
 library(jug)
-library(httr)
 
 context("testing get requests")
 

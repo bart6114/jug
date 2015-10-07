@@ -195,7 +195,7 @@ hello Bart !
 
 The ```req``` object contains the request specifications. It has different attributes:
 
-- ```req$query_params``` a list of the query parameters contained in the URL
+- ```req$params``` a list of the query parameters contained in the URL
 - ```req$path``` the requested path
 - ```req$method``` the request method
 - ```req$raw``` the raw request object as passsed by ```httpuv```

@@ -1,5 +1,4 @@
 library(jug)
-library(httr)
 
 context("testing get requests")
 
@@ -20,11 +19,10 @@ test_that("The correct response is returned for a (bare) GET request",{
 
 })
 
-
 test_that("The correct response is returned for a GET request with query params",{
   res<-jug() %>%
     get("/", function(req,res,err){
-      return(req$query_params$x)
+      return(req$params$x)
     }) %>%
     process_test_request(test_req$req)
 
@@ -41,5 +39,21 @@ test_that("The correct response is returned for a GET request with headers",{
     process_test_request(test_req$req)
 
   expect_equal(res$body, "test")
+
+})
+
+
+test_that("The correct response is returned for a (bare) GET request to a 'parameterised' path",{
+
+  test_req$path("/test/abc/123")
+
+  res<-jug() %>%
+    get("/test/(?<id>.*)/(?<id2>.*)", function(req,res,err){
+      paste0(req$params$id,req$params$id2)
+    }) %>%
+    simple_error_handler() %>%
+    process_test_request(test_req$req)
+
+  expect_equal(res$body, "abc123")
 
 })

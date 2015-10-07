@@ -27,8 +27,9 @@ Jug<-R6Class("Jug",
                  }
 
                },
-               print=function(){
-                 print(paste0("A Jug instance with ",length(self$middleware_handler$middlewares)," middlewares attached"))
+               print=function(...){
+                 cat("A Jug instance with ",length(self$middleware_handler$middlewares)," middlewares attached\n", sep="")
+                 invisible(self)
                }
              )
 )
