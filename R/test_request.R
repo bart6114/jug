@@ -23,7 +23,7 @@ RawTestRequest<-R6Class("RawTestRequest", public=list(
     CONTENT_TYPE = "application/x-www-form-urlencoded",
     rook.url_scheme = "http",
     rook.input = list(
-      read_lines = function() ""
+      read_lines = function() return("")
     ),
     HTTP_ACCEPT_ENCODING = "gzip, deflate, sdch",
     HTTP_COOKIE = "",
@@ -36,6 +36,9 @@ RawTestRequest<-R6Class("RawTestRequest", public=list(
   query_string=function(qstring) self$req$QUERY_STRING<-qstring,
   set_header=function(key, value){
     self$req[[paste0("HTTP_", toupper(key))]]<-value
+  },
+  initialize=function(post_data=""){
+    self$req$rook.input$read_lines=function() return(post_data)
   },
   print=function(...){
     cat("A RawTestRequest instance\n")

@@ -19,6 +19,19 @@ test_that("The correct response is returned for a (bare) GET request",{
 
 })
 
+test_that("The correct response is returned for a GET request with JSON returned",{
+
+  res<-jug() %>%
+    get("/", function(req,res,err){
+      res$json(list(a=3))
+    }) %>%
+    process_test_request(test_req$req)
+
+  expect_equal(as.character(res$body), '{"a":[3]}')
+
+})
+
+
 test_that("The correct response is returned for a (bare) GET request to non-root paths if root is specified",{
 
   test_req$path("/test")
