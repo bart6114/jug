@@ -22,6 +22,9 @@ RawTestRequest<-R6Class("RawTestRequest", public=list(
     REMOTE_ADDR = "127.0.0.1",
     CONTENT_TYPE = "application/x-www-form-urlencoded",
     rook.url_scheme = "http",
+    rook.input = list(
+      read_lines = function() ""
+    ),
     HTTP_ACCEPT_ENCODING = "gzip, deflate, sdch",
     HTTP_COOKIE = "",
     REQUEST_METHOD = "GET",

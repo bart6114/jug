@@ -25,10 +25,10 @@ match_path = function(pattern, path, ...) {
     ## extract capture groups
     for (.name in attr(rex, 'capture.name')) {
       result$params[[.name]] = substr(result$src,
-                                  attr(rex, 'capture.start')[,.name],
-                                  attr(rex, 'capture.start')[,.name]
-                                  + attr(rex, 'capture.length')[,.name]
-                                  - 1)
+                                      attr(rex, 'capture.start')[,.name],
+                                      attr(rex, 'capture.start')[,.name]
+                                      + attr(rex, 'capture.length')[,.name]
+                                      - 1)
     }
 
     result$match=ifelse(rex[[1]]>-1, TRUE, FALSE)
@@ -37,3 +37,35 @@ match_path = function(pattern, path, ...) {
 
   result
 }
+
+
+#' Helper function to deparse query params
+#'
+#' @param query_string the request object
+#'
+#' @export
+#' @import stringi
+get_passed_params<-function(query_string){
+  query_string<-gsub("^\\?", "", query_string, perl=TRUE)
+
+  params_list<-list()
+
+  if(isClass("character", query_string) &
+     nchar(query_string)>0){
+
+    params<-
+      matrix(
+        stringi::stri_match_all(query_string, regex="([^?=&]+)(=([^&]*))?")[[1]][,c(2,4)],
+        ncol=2)
+
+    params_list<-
+      as.list(params[,2])
+
+    names(params_list)<-
+      params[,1]
+
+  }
+
+  params_list
+}
+
