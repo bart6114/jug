@@ -11,7 +11,10 @@
 #' @export
 serve_static_files<-function(jug, path=NULL, root_path=getwd()){
   get(jug, path = NULL, function(req, res, err){
-    file_path <- paste0(root_path, gsub("^(\\/)", "", req$path))
+
+    if(req$path == "/") req$path<-"index.html"
+
+    file_path <- paste0(root_path, req$path)
 
     if(file.exists(file_path)){
       res$content_type(mime::guess_type(file_path))
