@@ -26,12 +26,13 @@ Request<-
               self$path<-req$PATH_INFO
               self$method<-req$REQUEST_METHOD
 
-              self$params<-get_passed_params(req$QUERY_STRING)
-              self$post_data<-get_passed_params(req$rook.input$read_lines())
+              ## TODO: fix for binary posts/puts
+              self$params<-c(get_passed_params(req$QUERY_STRING),
+                             get_passed_params(req$rook.input$read_lines()))
 
               self$headers<-as.list(req)
 
-              ## TODO: fix for binary posts/puts
+
 
             }
           )

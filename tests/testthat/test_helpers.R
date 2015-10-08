@@ -14,4 +14,7 @@ test_that("get_passed_params returns correctly",{
   expect_equal(get_passed_params(""),
                list())
 
+  expect_equal(get_passed_params(character(0)),
+               list())
+
 })

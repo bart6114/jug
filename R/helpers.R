@@ -46,23 +46,24 @@ match_path = function(pattern, path, ...) {
 #' @export
 #' @import stringi
 get_passed_params<-function(query_string){
-  query_string<-gsub("^\\?", "", query_string, perl=TRUE)
-
   params_list<-list()
 
-  if(isClass("character", query_string) &
-     nchar(query_string)>0){
+  if(length(query_string)>0){
+    query_string<-gsub("^\\?", "", query_string, perl=TRUE)
 
-    params<-
-      matrix(
-        stringi::stri_match_all(query_string, regex="([^?=&]+)(=([^&]*))?")[[1]][,c(2,4)],
-        ncol=2)
+    rex_res<-
+      stringi::stri_match_all(query_string, regex="([^?=&]+)(=([^&]*))?")[[1]]
 
-    params_list<-
-      as.list(params[,2])
+    if(!any(is.na(rex_res))){
+      params<-matrix(rex_res[,c(2,4)], ncol=2)
 
-    names(params_list)<-
-      params[,1]
+      params_list<-
+        as.list(params[,2])
+
+      names(params_list)<-
+        params[,1]
+
+    }
 
   }
 
