@@ -4,7 +4,8 @@
 \alias{serve_it}
 \title{Start serving the jug instance}
 \usage{
-serve_it(jug, host = "127.0.0.1", port = 8080, daemonized = FALSE)
+serve_it(jug, host = "127.0.0.1", port = 8080, daemonized = FALSE,
+  verbose = FALSE)
 }
 \arguments{
 \item{jug}{the jug instance}

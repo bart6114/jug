@@ -54,6 +54,10 @@ MiddlewareHandler<-
                 }
               }
 
+              if(getOption("jug.verbose")){
+                cat(path,"-", method, "-", res$status, "\n" ,sep = " ")
+              }
+
               res$structured()
             }
           )

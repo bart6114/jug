@@ -17,6 +17,7 @@ Jug<-R6Class("Jug",
                },
                initialize=function(){
                  self$middleware_handler=MiddlewareHandler$new()
+                 options("jug.verbose"=FALSE) # set early for testing purposes were serve_it isn't called
                },
                start=function(host, port, daemonized){
                  if(daemonized){
@@ -50,7 +51,9 @@ jug<-function(){
 #' @param daemonized whether or not to start a daemonized server (experimental)
 #'
 #' @export
-serve_it<-function(jug, host="127.0.0.1", port=8080, daemonized=FALSE){
+serve_it<-function(jug, host="127.0.0.1", port=8080, daemonized=FALSE, verbose=FALSE){
+  options("jug.verbose"=verbose)
+
   message(paste0("Serving the jug at http://",host,":",port))
   jug$start(host, port, daemonized)
 
