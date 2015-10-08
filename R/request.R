@@ -1,6 +1,6 @@
 #' Request class
 #'
-#' @import R6 stringi
+#' @import R6 stringi jsonlite
 #'
 #' @export
 Request<-
@@ -12,6 +12,7 @@ Request<-
             method=NULL,
             post_data=NULL,
             raw=NULL,
+            content_type="",
 
             attached=list(),
             attach=function(key, value) self$attached[[key]]<-value,
@@ -26,13 +27,22 @@ Request<-
               self$path<-req$PATH_INFO
               self$method<-req$REQUEST_METHOD
 
+              if(length(req$CONTENT_TYPE)>0) self$content_type<-req$CONTENT_TYPE
+
+
+              self$params<-get_passed_params(req$QUERY_STRING)
+
               ## TODO: fix for binary posts/puts
-              self$params<-c(get_passed_params(req$QUERY_STRING),
-                             get_passed_params(req$rook.input$read_lines()))
+              if(grepl("json", self$content_type)){
+                self$params<-c(self$params, fromJSON(req$rook.input$read_lines()))
+
+              } else {
+                self$params<-c(self$params,
+                               get_passed_params(req$rook.input$read_lines()))
+
+              }
 
               self$headers<-as.list(req)
-
-
 
             }
           )
