@@ -11,10 +11,13 @@ simple_error_handler<-function(jug, path=NULL, to_cat_or_not_to_cat="cat"){
     res$content_type("text/html")
 
     if(err$occurred){
-      res$status=500L
+      res$status<-500L
+      errs_string<-paste(err$errors, collapse="\n")
+
+      if(getOption("jug.verbose")) cat("ERROR:\n", err_string, "\n")
 
       infuse(system.file("html_templates", "500.html", package="jug"),
-             errs=paste(err$errors, collapse="\n"))
+             errs=errs_string)
     } else {
       res$status=404L
 
