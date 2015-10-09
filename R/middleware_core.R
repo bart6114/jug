@@ -47,8 +47,9 @@ MiddlewareHandler<-
                     body<-NULL
                   }
 
+                  # if return values is not NULL, use it as body (unless set explicitely)
                   if(!is.null(body)){
-                    if(is.null(res$body)) res$set_body(body) # explicitly set body will prevail
+                    if(is.null(res$body)) res$set_body(body)
                     break
                   }
                 }

@@ -14,7 +14,7 @@ simple_error_handler<-function(jug, path=NULL, to_cat_or_not_to_cat="cat"){
       res$status<-500L
       errs_string<-paste(err$errors, collapse="\n")
 
-      if(getOption("jug.verbose")) cat("ERROR:\n", err_string, "\n")
+      if(getOption("jug.verbose")) cat("ERROR:\n", errs_string, "\n")
 
       infuse(system.file("html_templates", "500.html", package="jug"),
              errs=errs_string)

@@ -19,7 +19,7 @@ Response<-
             },
             json=function(obj){
               self$body<-jsonlite::toJSON(obj, auto_unbox = TRUE)
-              self$content_type<-"application/json"
+              self$content_type("application/json")
             },
             structured=function(){
               list(

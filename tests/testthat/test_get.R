@@ -27,7 +27,7 @@ test_that("The correct response is returned for a GET request with JSON returned
     }) %>%
     process_test_request(test_req$req)
 
-  expect_equal(as.character(res$body), '{"a":[3]}')
+  expect_equal(as.character(res$body), '{"a":3}')
 
 })
 
