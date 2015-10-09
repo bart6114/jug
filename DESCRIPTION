@@ -13,7 +13,8 @@ Depends:
   stringi,
   R6,
   magrittr,
-  infuser
+  infuser,
+  jsonlite
 Suggests:
     testthat,
     knitr,
