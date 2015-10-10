@@ -3,11 +3,16 @@ library(jsonlite)
 
 my_func<-function(x){ paste("hello world:",x)}
 
-testreq<-NULL
+# testreq<-NULL
 
 jug() %>%
+  post("/posttest", function(req, res, err){
+    print(req$params)
+    "33"
+  }) %>%
   get("/$",
       function(req, res, err){
+
         # print(req$params)
         # print(res$headers)
         res$set_header("my_val", "3")
@@ -36,11 +41,11 @@ jug() %>%
   serve_it()
 
 
-
-
-
-jug() %>%
-  get("/", function(req, res, err){
-    "test"
-  }) %>%
-  process_test_request(RawTestRequest$new()$req)
+#
+#
+#
+# jug() %>%
+#   get("/", function(req, res, err){
+#     "test"
+#   }) %>%
+#   process_test_request(RawTestRequest$new()$req)

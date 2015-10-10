@@ -227,6 +227,18 @@ $ curl 127.0.0.1:8080/?name=Bart
 hello Bart !
 ```
 
+### Static file server
+
+The ```serve_static_file``` middleware allows for serving static files.
+
+```{r, eval=FALSE}
+jug() %>%
+  serve_static_files() %>%
+  serve_it()
+```
+
+The default root directory is the one returned by ```getwd()``` but can be specified by providing a ```root_path``` argument to the ```serve_static_files``` middleware. It transforms a bare ```/``` path to ```index.html```.
+
 ## The request, response and error objects
 
 ### Request (```req```) object
@@ -242,6 +254,7 @@ The ```req``` object contains the request specifications. It has different attri
 It has the following functions attached to it:
 
 - ```req$get_header(key)``` returns the value associated to the specified key in the request (no need to worry about the ```HTTP_``` prefix)
+- ```req$attach(key, value)``` attach a variable to ```req$params```
 
 ### Response (```res```) object
 
@@ -277,3 +290,6 @@ If a path pattern is not started with a start of string ```^``` regex token __or
 
 Simple call ```serve_it()``` at the end of your piping chain (see Hello World! example).
 
+## Further examples
+
+[Minimal CRUD TODO app](https://github.com/Bart6114/jug-crud-example)

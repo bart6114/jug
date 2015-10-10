@@ -16,7 +16,7 @@ if(proceed=="y"){
   cwd<-getwd()
 
   setwd("../jug-gh-pages")
-  system("git a")
+  system("git add .")
   system('git commit -am "copied vignette to gh-pages"')
   system('git push')
 

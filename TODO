@@ -1,6 +1,1 @@
-res$json()
-res$text()
-
 testing for rook.input$read_lines (and form/binary posts)
-
-...
