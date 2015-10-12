@@ -78,7 +78,7 @@ parse_query<-function(query_string){
 #' @param ... parameters passed to the png device
 #'
 #' @export
-web_plot<-function(plot_obj, res, ...){
+plot_response<-function(res, plot_obj, ...){
   res$content_type("image/png")
 
   plot_file<-tempfile(pattern="web_plot")

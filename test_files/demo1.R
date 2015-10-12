@@ -17,9 +17,9 @@ jug() %>%
 
   }) %>%
   get("/plottest", function(req, res, err){
-    web_plot({
+    plot_response(res, {
       plot(3)
-    }, res)
+    })
   }) %>%
   get("/$",
       function(req, res, err){
