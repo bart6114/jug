@@ -4,7 +4,7 @@
 \name{RawTestRequest}
 \alias{RawTestRequest}
 \title{Generate request for testing purposes}
-\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x04dfa670> 
+\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x04bcb310> 
  - attr(*, "name")= chr "RawTestRequest_generator"
 }}
 \usage{

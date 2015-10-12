@@ -70,3 +70,21 @@ parse_query<-function(query_string){
   params_list
 }
 
+
+#' Convenience function to return plots in a response (as a PNG image)
+#'
+#' @param plot_obj the plot object
+#' @param res the response instance
+#' @param ... parameters passed to the png device
+#'
+#' @export
+web_plot<-function(plot_obj, res, ...){
+  res$content_type("image/png")
+
+  plot_file<-tempfile(pattern="web_plot")
+  png(filename = plot_file)
+  print(plot_obj)
+  dev.off()
+
+  readBin(file(plot_file, "rb"), what="raw", n=1e6)
+}

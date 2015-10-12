@@ -16,6 +16,11 @@ jug() %>%
     readBin(file("test_files/testimg.jpg", "rb"), what="raw", n=1e6)
 
   }) %>%
+  get("/plottest", function(req, res, err){
+    web_plot({
+      plot(3)
+    }, res)
+  }) %>%
   get("/$",
       function(req, res, err){
 
