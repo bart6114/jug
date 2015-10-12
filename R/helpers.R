@@ -41,11 +41,11 @@ match_path = function(pattern, path, ...) {
 
 #' Helper function to deparse query params
 #'
-#' @param query_string the request object
+#' @param query_string the query string
 #'
 #' @export
 #' @import stringi
-get_passed_params<-function(query_string){
+parse_query<-function(query_string){
   params_list<-list()
 
   if(length(query_string)>0){

@@ -3,18 +3,18 @@ library(jug)
 context("testing get requests")
 
 
-test_that("get_passed_params returns correctly",{
+test_that("parse_query returns correctly",{
 
-  expect_equal(get_passed_params("?a=b&c=d"),
+  expect_equal(parse_query("?a=b&c=d"),
                list(a="b", c="d"))
 
-  expect_equal(get_passed_params("?"),
+  expect_equal(parse_query("?"),
                list())
 
-  expect_equal(get_passed_params(""),
+  expect_equal(parse_query(""),
                list())
 
-  expect_equal(get_passed_params(character(0)),
+  expect_equal(parse_query(character(0)),
                list())
 
 })

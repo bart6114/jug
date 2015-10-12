@@ -7,8 +7,14 @@ my_func<-function(x){ paste("hello world:",x)}
 
 jug() %>%
   post("/posttest", function(req, res, err){
+    print(req$content_type)
     print(req$params)
     "33"
+  }) %>%
+  get("/pictest", function(req, res, err){
+    res$content_type("image/jpeg")
+    readBin(file("test_files/testimg.jpg", "rb"), what="raw", n=1e6)
+
   }) %>%
   get("/$",
       function(req, res, err){

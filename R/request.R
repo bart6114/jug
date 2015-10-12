@@ -1,6 +1,6 @@
 #' Request class
 #'
-#' @import R6 stringi jsonlite
+#' @import R6 stringi jsonlite mime
 #'
 #' @export
 Request<-
@@ -27,9 +27,9 @@ Request<-
 
               if(length(req$CONTENT_TYPE)>0) self$content_type<-req$CONTENT_TYPE
 
-              self$params<-get_passed_params(req$QUERY_STRING)
+              self$params<-parse_query(req$QUERY_STRING)
 
-              post_input<-paste0(req$rook.input$read_lines(), collapse="")
+              post_input<-paste(req$rook.input$read_lines(), collapse="")
               ## TODO: fix for binary posts/puts
 
               if(length(post_input)>0){
@@ -37,8 +37,12 @@ Request<-
                 if(grepl("json", self$content_type)){
                   self$params<-c(self$params,jsonlite::fromJSON(post_input))
                 } else if(grepl("x-www-form-urlencoded", self$content_type)) {
-                  self$params<-c(self$params,get_passed_params(post_input))
-                } ## TODO: multipart/form-data
+                  self$params<-c(self$params,
+                                 parse_query(post_input))
+                } else if(grepl("multipart/form-data", self$content_type)) {
+                  self$params<-c(self$params,
+                                 mime::parse_multipart(self$raw))
+                }
 
               }
 
