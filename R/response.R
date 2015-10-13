@@ -1,6 +1,6 @@
 #' Response class
 #'
-#' @import R6 jsonlite
+#' @import R6 jsonlite base64enc
 Response<-
   R6Class("Response",
           public=list(
@@ -20,6 +20,27 @@ Response<-
             json=function(obj){
               self$body<-jsonlite::toJSON(obj, auto_unbox = TRUE)
               self$content_type("application/json")
+            },
+            plot=function(plot_obj, base64=TRUE, ...){
+
+              plot_file<-tempfile(pattern="jug")
+              png(filename = plot_file)
+              print(plot_obj)
+              dev.off()
+
+              file_conn<-file(plot_file, "rb")
+              binary_img<-readBin(file_conn, what="raw", n=1e6)
+
+              if(base64){
+                self$content_type("application/base64")
+                self$body<-base64enc::base64encode(binary_img)
+              } else {
+                self$content_type("image/png")
+                self$body<-binary_img
+              }
+
+              close(file_conn)
+              self$body
             },
             structured=function(){
               list(

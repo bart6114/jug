@@ -71,20 +71,30 @@ parse_query<-function(query_string){
 }
 
 
-#' Convenience function to return plots in a response (as a PNG image)
-#'
-#' @param plot_obj the plot object
-#' @param res the response instance
-#' @param ... parameters passed to the png device
-#'
-#' @export
-plot_response<-function(res, plot_obj, ...){
-  res$content_type("image/png")
 
-  plot_file<-tempfile(pattern="web_plot")
-  png(filename = plot_file)
-  print(plot_obj)
-  dev.off()
+#' Parse the post data
+#'
+#' @param env the rook req environment
+#' @param content_type the mime type
+#' @import jsonlite
+parse_post_data<-function(env, content_type){
 
-  readBin(file(plot_file, "rb"), what="raw", n=1e6)
+  if(grepl("json", content_type)){
+    post_data<-env$rook.input$read_lines()
+
+    if(length(post_data)>0) {
+      jsonlite::fromJSON(post_data)
+
+    }
+  } else if(grepl("x-www-form-urlencoded", content_type)) {
+    parse_query(env$rook.input$read_lines())
+
+  } else if(grepl("multipart/form-data", content_type)) {
+    mime::parse_multipart(self$raw)
+
+  }
+
+
 }
+
+

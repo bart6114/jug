@@ -29,22 +29,8 @@ Request<-
 
               self$params<-parse_query(req$QUERY_STRING)
 
-              post_input<-paste(req$rook.input$read_lines(), collapse="")
-              ## TODO: fix for binary posts/puts
-
-              if(length(post_input)>0){
-
-                if(grepl("json", self$content_type)){
-                  self$params<-c(self$params,jsonlite::fromJSON(post_input))
-                } else if(grepl("x-www-form-urlencoded", self$content_type)) {
-                  self$params<-c(self$params,
-                                 parse_query(post_input))
-                } else if(grepl("multipart/form-data", self$content_type)) {
-                  self$params<-c(self$params,
-                                 mime::parse_multipart(self$raw))
-                }
-
-              }
+              self$params<-c(self$params,
+                             parse_post_data(req, self$content_type))
 
               self$headers<-as.list(req)
 
