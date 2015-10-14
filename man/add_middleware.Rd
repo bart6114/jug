@@ -4,7 +4,7 @@
 \alias{add_middleware}
 \title{Internal function to add middleware}
 \usage{
-add_middleware(jug, func, path = NULL, method = NULL)
+add_middleware(jug, func, path = NULL, method = NULL, websocket = FALSE)
 }
 \arguments{
 \item{jug}{the jug instance}
@@ -14,6 +14,8 @@ add_middleware(jug, func, path = NULL, method = NULL)
 \item{path}{the path to bind to}
 
 \item{method}{the method to bind to}
+
+\item{websocket}{should the middleware bind to the websocket protocol}
 }
 \description{
 Internal function to add middleware

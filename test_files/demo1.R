@@ -47,9 +47,13 @@ jug() %>%
     print(req$method)
 
     }) %>%
+  ws("/", function(binary, message, res, err){
+    print(message)
+    message
+  }) %>%
   serve_static_files() %>%
   simple_error_handler() %>%
-  serve_it()
+  serve_it(verbose=T)
 
 
 #

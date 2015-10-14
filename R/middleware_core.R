@@ -12,13 +12,14 @@ MiddlewareHandler<-
               self$middlewares<-c(self$middlewares, mw)
 
             },
-            invoke=function(req){
+            invoke=function(req, ws_message = NULL, ws_binary = NULL){
               res<-Response$new()
               req<-Request$new(req)
               err<-new_error()
 
               path<-req$path
               method<-req$method
+              protocol<-req$protocol
 
               body<-NULL
 
@@ -30,15 +31,24 @@ MiddlewareHandler<-
 
                 req$add_params(path_processed$params)
 
+                # REFACTOR!!
                 if((path_processed$match && (mw$method == method || is.null(mw$method))) ||
                    (mw$method==method && is.null(mw$path)) ||
-                   (is.null(mw$method) && is.null(mw$path))
+                   (is.null(mw$method) && is.null(mw$path)) ||
+                   (mw$protocol==protocol && protocol=="websocket" && path_processed$match) ||
+                   (mw$protocol==protocol && protocol=="websocket" && is.null(mw$path))
                 ){
 
-                  body<-try(
-                    mw$func(req=req, res=res, err=err),
-                    silent = TRUE
-                  )
+
+                  body<-
+                    try(
+                      switch(protocol,
+                         "http"=mw$func(req=req, res=res, err=err),
+                         "websocket"=mw$func(binary=ws_binary, message=ws_message, res=res, err=err)
+                         ),
+                      silent=TRUE
+                    )
+
 
                   if('try-error' %in% class(body)){
                     # process it further (will be catched by errorhandler)
@@ -55,10 +65,10 @@ MiddlewareHandler<-
               }
 
               if(getOption("jug.verbose")){
-                cat(path,"-", method, "-", res$status, "\n" ,sep = " ")
+                cat(toupper(protocol), "|", path,"-", method, "-", res$status, "\n" ,sep = " ")
               }
 
-              res$structured()
+              res$structured(protocol)
             }
           )
   )
@@ -73,10 +83,12 @@ Middleware<-
             path=NULL,
             func=NULL,
             method=NULL,
-            initialize=function(func, path, method){
+            protocol=NULL,
+            initialize=function(func, path, method, websocket){
               self$func=func
               self$path=path
               self$method=method
+              self$protocol=if(websocket) "websocket" else "http"
             }
           ))
 
@@ -90,8 +102,9 @@ Middleware<-
 #' @param func the function to bind
 #' @param path the path to bind to
 #' @param method the method to bind to
-add_middleware<-function(jug, func, path=NULL, method=NULL){
-  mw<-Middleware$new(func, path, method)
+#' @param websocket should the middleware bind to the websocket protocol
+add_middleware<-function(jug, func, path=NULL, method=NULL, websocket=FALSE){
+  mw<-Middleware$new(func, path, method, websocket)
 
   jug$middleware_handler$add_middleware(mw)
 
@@ -126,7 +139,7 @@ get.Jug<-function(jug, path, ...){
 #'
 #' @param jug the jug object
 #' @param path the path to bind to
-#' @param func the function to bind to the path (will receive the params \code{req} and \code{res})
+#' @param func the function to bind to the path (will receive the params \code{req}, \code{res} and \code{err})
 #'
 #' @export
 post<-function(jug, path, ...){
@@ -139,7 +152,7 @@ post<-function(jug, path, ...){
 #'
 #' @param jug the jug object
 #' @param path the path to bind to
-#' @param func the function to bind to the path (will receive the params \code{req} and \code{res})
+#' @param func the function to bind to the path (will receive the params \code{req}, \code{res} and \code{err})
 #'
 #' @export
 put<-function(jug, path, ...){
@@ -152,7 +165,7 @@ put<-function(jug, path, ...){
 #'
 #' @param jug the jug object
 #' @param path the path to bind to
-#' @param func the function to bind to the path (will receive the params \code{req} and \code{res})
+#' @param func the function to bind to the path (will receive the params \code{req}, \code{res} and \code{err})
 #'
 #' @export
 delete<-function(jug, path, ...){
@@ -166,11 +179,24 @@ delete<-function(jug, path, ...){
 #'
 #' @param jug the jug object
 #' @param path the path to bind to
-#' @param func the function to bind to the path (will receive the params \code{req} and \code{res})
+#' @param func the function to bind to the path (will receive the params \code{req}, \code{res} and \code{err})
 #'
 #' @export
 use<-function(jug, path, ...){
   lapply(list(...), function(mw_func) add_middleware(jug, mw_func, path, method=NULL))
+
+  jug
+}
+
+#' Function to add websocket handling middleware
+#'
+#' @param jug the jug object
+#' @param path the path to bind to
+#' @param func the function to bind to the path (will receive the params \code{binary}, \code{msg}, \code{res} and \code{err}.
+#'
+#' @export
+ws<-function(jug, path, ...){
+  lapply(list(...), function(mw_func) add_middleware(jug, mw_func, path, method=NULL, websocket=TRUE))
 
   jug
 }

@@ -12,6 +12,7 @@ Request<-
             method=NULL,
             raw=NULL,
             content_type="",
+            protocol="http",
 
             attach=function(key, value) self$params[[key]]<-value,
 
@@ -25,6 +26,7 @@ Request<-
               self$path<-req$PATH_INFO
               self$method<-req$REQUEST_METHOD
 
+
               if(length(req$CONTENT_TYPE)>0) self$content_type<-req$CONTENT_TYPE
 
               self$params<-parse_query(req$QUERY_STRING)
@@ -33,6 +35,10 @@ Request<-
                              parse_post_data(req, self$content_type))
 
               self$headers<-as.list(req)
+
+              if(any(tolower(self$get_header("upgrade"))=="websocket")){
+                self$protocol<-"websocket"
+              }
 
             }
           )

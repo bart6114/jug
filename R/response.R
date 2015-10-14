@@ -42,11 +42,12 @@ Response<-
               close(file_conn)
               self$body
             },
-            structured=function(){
-              list(
-                status=self$status,
-                headers=self$headers,
-                body=self$body
-              )
+            structured=function(protocol){
+              switch(protocol,
+                     "http"=list(
+                       status=self$status,
+                       headers=self$headers,
+                       body=self$body),
+                     "websocket"=self$body)
             }
           ))

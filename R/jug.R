@@ -9,6 +9,14 @@ Jug<-R6Class("Jug",
                  list(
                    call=function(req){
                      self$middleware_handler$invoke(req)
+                   },
+                   onWSOpen=function(ws){
+                     ws$onMessage(function(binary, message) {
+                       ws$send(self$middleware_handler$invoke(ws$request,
+                                                              ws_message=message,
+                                                              ws_binary=binary)
+                       )
+                     })
                    }
                  )
                },
