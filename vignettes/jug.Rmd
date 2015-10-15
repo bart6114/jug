@@ -269,7 +269,7 @@ It also has a set of functions:
 - ```res$set_header(key, value)``` set a custom header
 - ```res$content_type(type)``` set your own content type (MIME)
 - ```res$set_status(status)``` set the status of the response
-- ```res$set_body(body)``` to explicitely set the body of the response
+- ```res$text(body)``` to explicitely set the body of the response
 - ```res$json(obj)``` converts an object to JSON, sets it as the body and set the correct content type
 
 ### Error (```err```) object

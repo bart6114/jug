@@ -31,21 +31,27 @@ MiddlewareHandler<-
 
                 req$add_params(path_processed$params)
 
-                # REFACTOR!!
-                if((path_processed$match && (mw$method == method || is.null(mw$method))) ||
-                   (mw$method==method && is.null(mw$path)) ||
-                   (is.null(mw$method) && is.null(mw$path)) ||
-                   (mw$protocol==protocol && protocol=="websocket" && path_processed$match) ||
-                   (mw$protocol==protocol && protocol=="websocket" && is.null(mw$path))
-                ){
+                # REFACTOR!
+
+                if(any(
+                  (protocol=="http" && any(
+                    path_processed$match && (mw$method == method),
+                    path_processed$match && is.null(mw$method),
+                    is.null(mw$path) && (mw$method == method),
+                    is.null(mw$path) && is.null(mw$method)
+                  )),
+                  (protocol=="websocket" && any(
+                    path_processed$match,
+                    is.null(mw$path)
+                  ))
+                )){
 
 
                   body<-
                     try(
                       switch(protocol,
-                         "http"=mw$func(req=req, res=res, err=err),
-                         "websocket"=mw$func(binary=ws_binary, message=ws_message, res=res, err=err)
-                         ),
+                             "http"=mw$func(req=req, res=res, err=err),
+                             "websocket"=mw$func(binary=ws_binary, message=ws_message, res=res, err=err)),
                       silent=TRUE
                     )
 
@@ -57,7 +63,7 @@ MiddlewareHandler<-
                   }
 
                   # if return values is not NULL, use it as body (unless set explicitely)
-                  if(!is.null(body)){
+                  if(!is.null(body) || !is.null(res$body)){
                     if(is.null(res$body)) res$set_body(body)
                     break
                   }
@@ -111,10 +117,10 @@ add_middleware<-function(jug, func, path=NULL, method=NULL, websocket=FALSE){
   jug
 }
 
-#' Set up generic method (otherwise base::get is masked)
+#' Function to add GET-binding middleware
 #'
-#' @param object the object to pass to get
-#' @param ... other arguments passed to get
+#' @param object the jug object
+#' @param ... functions (order matters) to bind to the path (will receive the params \code{req}, \code{res} and \code{err})
 #'
 #' @export
 get<-function(object, ...) UseMethod("get")
@@ -139,7 +145,7 @@ get.Jug<-function(jug, path, ...){
 #'
 #' @param jug the jug object
 #' @param path the path to bind to
-#' @param func the function to bind to the path (will receive the params \code{req}, \code{res} and \code{err})
+#' @param ... functions (order matters) to bind to the path (will receive the params \code{req}, \code{res} and \code{err})
 #'
 #' @export
 post<-function(jug, path, ...){
@@ -152,7 +158,7 @@ post<-function(jug, path, ...){
 #'
 #' @param jug the jug object
 #' @param path the path to bind to
-#' @param func the function to bind to the path (will receive the params \code{req}, \code{res} and \code{err})
+#' @param ... functions (order matters) to bind to the path (will receive the params \code{req}, \code{res} and \code{err})
 #'
 #' @export
 put<-function(jug, path, ...){
@@ -165,7 +171,7 @@ put<-function(jug, path, ...){
 #'
 #' @param jug the jug object
 #' @param path the path to bind to
-#' @param func the function to bind to the path (will receive the params \code{req}, \code{res} and \code{err})
+#' @param ... functions (order matters) to bind to the path (will receive the params \code{req}, \code{res} and \code{err})
 #'
 #' @export
 delete<-function(jug, path, ...){
@@ -179,7 +185,7 @@ delete<-function(jug, path, ...){
 #'
 #' @param jug the jug object
 #' @param path the path to bind to
-#' @param func the function to bind to the path (will receive the params \code{req}, \code{res} and \code{err})
+#' @param ... functions (order matters) to bind to the path (will receive the params \code{req}, \code{res} and \code{err})
 #'
 #' @export
 use<-function(jug, path, ...){
@@ -192,7 +198,7 @@ use<-function(jug, path, ...){
 #'
 #' @param jug the jug object
 #' @param path the path to bind to
-#' @param func the function to bind to the path (will receive the params \code{binary}, \code{msg}, \code{res} and \code{err}.
+#' @param ... functions (order matters) to bind to the path (will receive the params \code{req}, \code{res} and \code{err})
 #'
 #' @export
 ws<-function(jug, path, ...){

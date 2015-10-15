@@ -8,13 +8,15 @@ Description: A set of convenience functions to build simple APIs.
 License: MIT + file LICENSE
 LazyData: TRUE
 Depends:
+  magrittr,
+  R6
+Imports:
   mime,
   httpuv,
   stringi,
-  R6,
-  magrittr,
   infuser,
-  jsonlite
+  jsonlite,
+  base64enc
 Suggests:
     testthat,
     knitr,

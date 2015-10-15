@@ -11,7 +11,7 @@ delete(jug, path, ...)
 
 \item{path}{the path to bind to}
 
-\item{func}{the function to bind to the path (will receive the params \code{req}, \code{res} and \code{err})}
+\item{...}{functions (order matters) to bind to the path (will receive the params \code{req}, \code{res} and \code{err})}
 }
 \description{
 Function to add DELETE-binding middleware

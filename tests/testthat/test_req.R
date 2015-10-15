@@ -1,6 +1,6 @@
 library(jug)
 
-context("testing req functions")
+context("testing Request class")
 
 jug_req<-Request$new(RawTestRequest$new()$req)
 

@@ -47,9 +47,12 @@ jug() %>%
     print(req$method)
 
     }) %>%
-  ws("/", function(binary, message, res, err){
+  ws("/$", function(binary, message, res, err){
     print(message)
     message
+  }) %>%
+  ws("/test", function(binary, message, res, err){
+    "bladibla"
   }) %>%
   serve_static_files() %>%
   simple_error_handler() %>%

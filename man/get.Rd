@@ -2,16 +2,16 @@
 % Please edit documentation in R/middleware_core.R
 \name{get}
 \alias{get}
-\title{Set up generic method (otherwise base::get is masked)}
+\title{Function to add GET-binding middleware}
 \usage{
 get(object, ...)
 }
 \arguments{
-\item{object}{the object to pass to get}
+\item{object}{the jug object}
 
-\item{...}{other arguments passed to get}
+\item{...}{functions (order matters) to bind to the path (will receive the params \code{req}, \code{res} and \code{err})}
 }
 \description{
-Set up generic method (otherwise base::get is masked)
+Function to add GET-binding middleware
 }
 

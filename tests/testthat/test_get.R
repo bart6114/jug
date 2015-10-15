@@ -90,3 +90,17 @@ test_that("The correct response is returned for a (bare) GET request to a 'param
   expect_equal(res$body, "abc123")
 
 })
+
+test_that("The correct response is returned for a (bare) GET request with an explicitely set body",{
+
+  test_req<-RawTestRequest$new()
+  res<-jug() %>%
+    get("/", function(req,res,err){
+      res$text("test")
+      return(NULL)
+    }) %>%
+    process_test_request(test_req$req)
+
+  expect_equal(res$body, "test")
+
+})

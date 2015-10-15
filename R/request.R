@@ -1,6 +1,6 @@
 #' Request class
 #'
-#' @import R6 stringi jsonlite mime
+#' @import R6
 #'
 #' @export
 Request<-
