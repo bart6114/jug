@@ -139,6 +139,20 @@ $ curl 127.0.0.1:8080/my_path
 get test 1,2,3 on path /my_path
 ```
 
+### Protocol sensitive middleware
+
+By default all middleware convenience function bind to the http protocol. You can however access the jug server through websocket by using the websocket sensitive middleware function ```ws```. Below an example echo'ing the incoming message.
+
+```{r, eval=FALSE}
+jug() %>%
+   ws("/echo_message", function(binary, message, res, err){
+    message
+  }) %>%
+  serve_it()
+```
+
+Opening a connection to ```ws://127.0.0.1:8080/echo_message``` and sending e.g. the message ```test``` to it will then return the value ```test```.
+
 ### Including elsewhere defined middleware
 
 You can include middleware that has been defined elsewhere within your current R environment or in a different R file. To do this you can use a ```collector```
@@ -250,6 +264,7 @@ The ```req``` object contains the request specifications. It has different attri
 - ```req$method``` the request method
 - ```req$raw``` the raw request object as passsed by ```httpuv```
 - ```req$post_data``` the post data (has some limitations for now...)
+- ```req$protocol``` either ```http``` or ```websocket```
 
 It has the following functions attached to it:
 
