@@ -17,30 +17,26 @@ MiddlewareHandler<-
               req<-Request$new(req)
               err<-new_error()
 
-              path<-req$path
-              method<-req$method
-              protocol<-req$protocol
-
               body<-NULL
 
 
               for(mw in self$middlewares){
 
                 # if there are named capture groups in the path, add them to req$params
-                path_processed<-match_path(mw$path, path)
+                path_processed<-match_path(mw$path, req$path)
 
                 req$add_params(path_processed$params)
 
                 # REFACTOR!
 
                 if(any(
-                  (protocol=="http" && any(
-                    path_processed$match && (mw$method == method),
+                  (req$protocol=="http" && any(
+                    path_processed$match && (mw$method == req$method),
                     path_processed$match && is.null(mw$method),
-                    is.null(mw$path) && (mw$method == method),
+                    is.null(mw$path) && (mw$method == req$method),
                     is.null(mw$path) && is.null(mw$method)
                   )),
-                  (protocol=="websocket" && any(
+                  (req$protocol=="websocket" && any(
                     path_processed$match,
                     is.null(mw$path)
                   ))
@@ -49,7 +45,7 @@ MiddlewareHandler<-
 
                   body<-
                     try(
-                      switch(protocol,
+                      switch(req$protocol,
                              "http"=mw$func(req=req, res=res, err=err),
                              "websocket"=mw$func(binary=ws_binary, message=ws_message, res=res, err=err)),
                       silent=TRUE
@@ -71,10 +67,10 @@ MiddlewareHandler<-
               }
 
               if(getOption("jug.verbose")){
-                cat(toupper(protocol), "|", path,"-", method, "-", res$status, "\n" ,sep = " ")
+                cat(toupper(req$protocol), "|", req$path,"-", req$method, "-", res$status, "\n" ,sep = " ")
               }
 
-              res$structured(protocol)
+              res$structured(req$protocol)
             }
           )
   )
@@ -110,6 +106,7 @@ Middleware<-
 #' @param method the method to bind to
 #' @param websocket should the middleware bind to the websocket protocol
 add_middleware<-function(jug, func, path=NULL, method=NULL, websocket=FALSE){
+  method<-if(!is.null(method)) toupper(method) else NULL
   mw<-Middleware$new(func, path, method, websocket)
 
   jug$middleware_handler$add_middleware(mw)

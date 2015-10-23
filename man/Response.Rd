@@ -4,7 +4,7 @@
 \name{Response}
 \alias{Response}
 \title{Response class}
-\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x072b9ab0> 
+\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x074ee5b8> 
  - attr(*, "name")= chr "Response_generator"
 }}
 \usage{

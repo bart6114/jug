@@ -24,7 +24,7 @@ Request<-
             initialize=function(req){
               self$raw<-req
               self$path<-req$PATH_INFO
-              self$method<-req$REQUEST_METHOD
+              self$method<-toupper(req$REQUEST_METHOD)
 
 
               if(length(req$CONTENT_TYPE)>0) self$content_type<-req$CONTENT_TYPE
