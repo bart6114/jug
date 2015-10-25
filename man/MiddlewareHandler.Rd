@@ -4,7 +4,7 @@
 \name{MiddlewareHandler}
 \alias{MiddlewareHandler}
 \title{MiddlewareHandler R6 class definition}
-\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x06754904> 
+\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x067542c4> 
  - attr(*, "name")= chr "MiddlewareHandler_generator"
 }}
 \usage{

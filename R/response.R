@@ -17,7 +17,12 @@ Response<-
             },
             body=NULL,
             set_body=function(body){
-              self$body<-body
+              # hack avoid numeric response not working
+              if(self$headers[['Content-Type']]=="text/html"){
+                self$text(body)
+              } else {
+                self$body<-body
+              }
             },
             json=function(obj){
               self$body<-toJSON(obj, auto_unbox = TRUE)
