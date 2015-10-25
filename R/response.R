@@ -30,7 +30,7 @@ Response<-
             plot=function(plot_obj, base64=TRUE, ...){
 
               plot_file<-tempfile(pattern="jug")
-              png(filename = plot_file)
+              png(filename = plot_file, ...)
               print(plot_obj)
               dev.off()
 
