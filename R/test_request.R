@@ -33,6 +33,7 @@ RawTestRequest<-R6Class("RawTestRequest", public=list(
     HTTP_HOST = "127.0.0.1:8080"),
 
   path=function(path) self$req$PATH_INFO<-path,
+  method=function(method) self$req$REQUEST_METHOD<-method,
   query_string=function(qstring) self$req$QUERY_STRING<-qstring,
   post_data=function(post_data){
     self$req$rook.input$read_lines=function() return(post_data)

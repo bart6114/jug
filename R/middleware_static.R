@@ -14,7 +14,7 @@ serve_static_files<-function(jug, path=NULL, root_path=getwd()){
 
     if(req$path == "/") req$path<-"index.html"
 
-    file_path <- paste0(root_path, req$path)
+    file_path <- paste0(root_path, '/', req$path)
 
     if(file.exists(file_path)){
       res$content_type(guess_type(file_path))

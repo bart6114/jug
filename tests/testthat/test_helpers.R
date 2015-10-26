@@ -1,6 +1,6 @@
 library(jug)
 
-context("testing get requests")
+context("testing helper funcs")
 
 
 test_that("parse_query returns correctly",{
