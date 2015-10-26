@@ -2,5 +2,6 @@
 ^\.Rproj\.user$
 ^\var
 README.md
-^\test_files$
+test_files
 ^\.travis\.yml$
+var

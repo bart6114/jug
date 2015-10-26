@@ -15,6 +15,8 @@ serve_it(jug, host = "127.0.0.1", port = 8080, daemonized = FALSE,
 \item{port}{the port to host on}
 
 \item{daemonized}{whether or not to start a daemonized server (experimental)}
+
+\item{verbose}{verbose output?}
 }
 \description{
 Start serving the jug instance

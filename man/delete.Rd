@@ -16,4 +16,7 @@ delete(jug, path, ...)
 \description{
 Function to add DELETE-binding middleware
 }
+\seealso{
+\code{\link{post}}, \code{\link{put}}, \code{\link{get}}, \code{\link{use}}, \code{\link{ws}}
+}
 

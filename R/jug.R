@@ -57,6 +57,7 @@ jug<-function(){
 #' @param host the host address
 #' @param port the port to host on
 #' @param daemonized whether or not to start a daemonized server (experimental)
+#' @param verbose verbose output?
 #'
 #' @export
 serve_it<-function(jug, host="127.0.0.1", port=8080, daemonized=FALSE, verbose=FALSE){

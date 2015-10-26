@@ -16,4 +16,7 @@ use(jug, path, ...)
 \description{
 Function to add request method insensitive middleware
 }
+\seealso{
+\code{\link{post}}, \code{\link{put}}, \code{\link{delete}}, \code{\link{get}}, \code{\link{ws}}
+}
 

@@ -9,7 +9,7 @@ jug() %>%
     my_last_name<<-req$post$last_name
     return(TRUE)
   }) %>%
-  get("/", function(req, res, err){
-    paste("Hello",my_first_name, my_last_name)
-  }) %>%
+#   get("/", function(req, res, err){
+#     paste("Hello",my_first_name, my_last_name)
+#   }) %>%
   serve_it()

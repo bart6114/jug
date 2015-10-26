@@ -20,9 +20,9 @@ include<-function(jug, collector, source_file=NULL){
   if(is.null(source_file)){
     collector_obj<-eval(quote(collector))
   } else {
-    # TODO: should source to a temporary environment variable
-    source(source_file)
-    collector_obj<-eval(quote(collector))
+    tempenv=new.env()
+    source(source_file, local=tempenv)
+    collector_obj<-eval(quote(collector), envir = tempenv)
   }
 
   jug$add_collected_middelware(collector_obj)

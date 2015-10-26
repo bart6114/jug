@@ -3,11 +3,11 @@
 #' adapted from: http://oddhypothesis.blogspot.be/2012/05/regex-named-capture-in-r.html
 #'
 #' @param pattern regex pattern
-#' @param string the string to test the regex pattern against
+#' @param path the path to test the regex pattern against
 #' @param ... arguments passed to \code{regexpr}
 #'
 #' @export
-match_path = function(pattern, path, ...) {
+match_path<-function(pattern, path, ...) {
   result = list(match=FALSE,
                 src=path,
                 params=list())
@@ -91,7 +91,7 @@ parse_post_data<-function(env, content_type){
     parse_query(env$rook.input$read_lines())
 
   } else if(grepl("multipart/form-data", content_type)) {
-    parse_multipart(self$raw)
+    parse_multipart(env)
 
   }
 

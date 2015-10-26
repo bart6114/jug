@@ -2,16 +2,26 @@
 % Please edit documentation in R/middleware_core.R
 \name{get}
 \alias{get}
+\alias{get.Jug}
 \title{Function to add GET-binding middleware}
 \usage{
 get(object, ...)
+
+\method{get}{Jug}(object, ...)
 }
 \arguments{
 \item{object}{the jug object}
 
-\item{...}{functions (order matters) to bind to the path (will receive the params \code{req}, \code{res} and \code{err})}
+\item{...}{first argument should be the \code{path} followed by middelware functions (order matters) to bind to the path (will receive the params \code{req}, \code{res} and \code{err})}
 }
 \description{
-Function to add GET-binding middleware
+The params to this function are slightly different from \code{post}, \code{put} and the like due to \code{get} being a base function.
+}
+\section{Methods (by class)}{
+\itemize{
+\item \code{Jug}: 
+}}
+\seealso{
+\code{\link{post}}, \code{\link{put}}, \code{\link{delete}}, \code{\link{use}}, \code{\link{ws}}
 }
 

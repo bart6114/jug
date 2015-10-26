@@ -116,26 +116,25 @@ add_middleware<-function(jug, func, path=NULL, method=NULL, websocket=FALSE){
 
 #' Function to add GET-binding middleware
 #'
-#' @param object the jug object
-#' @param ... functions (order matters) to bind to the path (will receive the params \code{req}, \code{res} and \code{err})
+#' The params to this function are slightly different from \code{post}, \code{put} and the like due to \code{get} being a base function.
 #'
+#' @param object the jug object
+#' @param ... first argument should be the \code{path} followed by middelware functions (order matters) to bind to the path (will receive the params \code{req}, \code{res} and \code{err})
+#'
+#' @seealso \code{\link{post}}, \code{\link{put}}, \code{\link{delete}}, \code{\link{use}}, \code{\link{ws}}
 #' @export
 get<-function(object, ...) UseMethod("get")
 
+#' @describeIn get
 #' @export
-get.default <- function(object, ...) base::get(object)
+get.Jug<-function(object, ...){
+  funcs<-list(...)
+  path<-funcs[[1]]
+  funcs<-funcs[-1]
 
-#' Function to add GET-binding middleware
-#'
-#' @param jug the jug object
-#' @param path the path to bind to
-#' @param ... functions (order matters) to bind to the path (will receive the params \code{req}, \code{res} and \code{err})
-#'
-#' @export
-get.Jug<-function(jug, path, ...){
-  lapply(list(...), function(mw_func) add_middleware(jug, mw_func, path, method="GET"))
+  lapply(funcs, function(mw_func) add_middleware(object, mw_func, path, method="GET"))
 
-  jug
+  object
 }
 
 #' Function to add POST-binding middleware
@@ -144,6 +143,7 @@ get.Jug<-function(jug, path, ...){
 #' @param path the path to bind to
 #' @param ... functions (order matters) to bind to the path (will receive the params \code{req}, \code{res} and \code{err})
 #'
+#' @seealso \code{\link{get}}, \code{\link{put}}, \code{\link{delete}}, \code{\link{use}}, \code{\link{ws}}
 #' @export
 post<-function(jug, path, ...){
   lapply(list(...), function(mw_func) add_middleware(jug, mw_func, path, method="POST"))
@@ -157,6 +157,7 @@ post<-function(jug, path, ...){
 #' @param path the path to bind to
 #' @param ... functions (order matters) to bind to the path (will receive the params \code{req}, \code{res} and \code{err})
 #'
+#' @seealso \code{\link{post}}, \code{\link{get}}, \code{\link{delete}}, \code{\link{use}}, \code{\link{ws}}
 #' @export
 put<-function(jug, path, ...){
   lapply(list(...), function(mw_func) add_middleware(jug, mw_func, path, method="PUT"))
@@ -170,6 +171,7 @@ put<-function(jug, path, ...){
 #' @param path the path to bind to
 #' @param ... functions (order matters) to bind to the path (will receive the params \code{req}, \code{res} and \code{err})
 #'
+#' @seealso \code{\link{post}}, \code{\link{put}}, \code{\link{get}}, \code{\link{use}}, \code{\link{ws}}
 #' @export
 delete<-function(jug, path, ...){
   lapply(list(...), function(mw_func) add_middleware(jug, mw_func, path, method="DELETE"))
@@ -184,6 +186,7 @@ delete<-function(jug, path, ...){
 #' @param path the path to bind to
 #' @param ... functions (order matters) to bind to the path (will receive the params \code{req}, \code{res} and \code{err})
 #'
+#' @seealso \code{\link{post}}, \code{\link{put}}, \code{\link{delete}}, \code{\link{get}}, \code{\link{ws}}
 #' @export
 use<-function(jug, path, ...){
   lapply(list(...), function(mw_func) add_middleware(jug, mw_func, path, method=NULL))
@@ -197,6 +200,7 @@ use<-function(jug, path, ...){
 #' @param path the path to bind to
 #' @param ... functions (order matters) to bind to the path (will receive the params \code{req}, \code{res} and \code{err})
 #'
+#' @seealso \code{\link{post}}, \code{\link{put}}, \code{\link{delete}}, \code{\link{get}}, \code{\link{get}}
 #' @export
 ws<-function(jug, path, ...){
   lapply(list(...), function(mw_func) add_middleware(jug, mw_func, path, method=NULL, websocket=TRUE))

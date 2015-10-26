@@ -24,7 +24,7 @@ test_that("A local collector is correctly included",{
 test_that("An external collector is correctly included",{
 
   res<-jug() %>%
-    include(collected_mw2, "../helpers/collected_mw2.R") %>%
+    include(collected_mw2, "helper_collected_mw2.R") %>%
     process_test_request(test_req$req)
 
   expect_equal(res$body, "test2")

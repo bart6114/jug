@@ -16,4 +16,7 @@ post(jug, path, ...)
 \description{
 Function to add POST-binding middleware
 }
+\seealso{
+\code{\link{get}}, \code{\link{put}}, \code{\link{delete}}, \code{\link{use}}, \code{\link{ws}}
+}
 

@@ -9,9 +9,9 @@ match_path(pattern, path, ...)
 \arguments{
 \item{pattern}{regex pattern}
 
-\item{...}{arguments passed to \code{regexpr}}
+\item{path}{the path to test the regex pattern against}
 
-\item{string}{the string to test the regex pattern against}
+\item{...}{arguments passed to \code{regexpr}}
 }
 \description{
 adapted from: http://oddhypothesis.blogspot.be/2012/05/regex-named-capture-in-r.html
