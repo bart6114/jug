@@ -232,7 +232,7 @@ The main reason Jug was created is to easily allow access to your own custom R f
 
 If you ```decorate``` your own function it will translate all arguments passed in the query string of the request as arguments to your function. It will also pass all headers to the function as arguments. Note that for the passed headers they will be capitalized and prefixed by ```HTTP_``` as per ```httpuv```'s internals. 
 
-If your function does not accept a ```...``` argument, all query/header parameters that are nor explicitly requested by your function are dropped. If your function requests a ```req```, ```res``` or ```err``` argument (or ```...```) the corresponding objects will be passed. 
+If your function does not accept a ```...``` argument, all query/header parameters that are not explicitly requested by your function are dropped. If your function requests a ```req```, ```res``` or ```err``` argument (or ```...```) the corresponding objects will be passed. 
 
 ```{r, eval=FALSE}
 say_hello<-function(name){paste("hello",name,"!")}
