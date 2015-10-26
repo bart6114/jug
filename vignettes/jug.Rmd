@@ -9,7 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-> __Jug is under development and NOT production ready__
+> __Use with care: Jug is still under heavy development and syntax/logic can change often__
 
 ## Hello World!
 
@@ -35,10 +35,16 @@ Jug is not supposed to be either an especially performant nor an uber stable fra
 
 ## Getting started
 
-For now, Jug is not available on CRAN. To install it, use ```devtools```:
+To install the latest version use ```devtools```:
 
 ```{r, eval=FALSE}
 devtools::install_github("Bart6114/jug")
+```
+
+Or install the CRAN version:
+
+```{r, eval=FALSE}
+install.packags("jug")
 ```
 
 ## The Jug instance
