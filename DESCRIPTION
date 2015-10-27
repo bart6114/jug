@@ -1,7 +1,7 @@
 Package: jug
 Type: Package
 Title: Create a Simple Web API for your R Functions
-Version: 0.1.1
+Version: 0.1.2
 Author: Bart Smeets
 Maintainer: Bart Smeets <bartsmeets86@gmail.com>
 Description: A set of convenience functions to build simple APIs.

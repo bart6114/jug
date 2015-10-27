@@ -4,7 +4,7 @@
 \name{Error}
 \alias{Error}
 \title{Response class}
-\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x067a2924> 
+\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x04122984> 
  - attr(*, "name")= chr "Error_generator"
 }}
 \usage{
