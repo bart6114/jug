@@ -3,6 +3,7 @@
 #' @param func the function to decorate
 #' @param content_type the content type to set on the response object
 #'
+#' @importFrom utils modifyList
 #' @export
 decorate<-function(func, content_type="text/html"){
   # check which parameters the function allows
