@@ -102,7 +102,7 @@ $ curl 127.0.0.1:8080
 test 1,2,3!
 ```
 
-Note that in the above error / missing route handling is missing, more on that later.
+Note that in the above error / missing route handling is missing (the server will crash), more on that later.
 
 
 ### Method sensitive middleware

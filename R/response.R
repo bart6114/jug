@@ -27,10 +27,14 @@ Response<-
             json=function(obj){
               self$body<-toJSON(obj, auto_unbox = TRUE)
               self$content_type("application/json")
+
+              self$body
             },
             text=function(text){
               self$body<-as.character(text)
               self$content_type("text/html")
+
+              self$body
             },
             plot=function(plot_obj, base64=TRUE, ...){
 

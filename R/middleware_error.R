@@ -8,6 +8,7 @@
 #' @import infuser
 simple_error_handler<-function(jug, path=NULL, to_cat_or_not_to_cat="cat"){
   use(jug, path = NULL, function(req, res, err){
+    print("err")
     res$content_type("text/html")
 
     if(err$occurred){

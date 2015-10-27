@@ -51,7 +51,6 @@ MiddlewareHandler<-
                       silent=TRUE
                     )
 
-
                   if('try-error' %in% class(body)){
                     # process it further (will be catched by errorhandler)
                     err$set(as.character(body))
@@ -59,8 +58,9 @@ MiddlewareHandler<-
                   }
 
                   # if return values is not NULL, use it as body (unless set explicitely)
-                  if(!is.null(body) || !is.null(res$body)){
-                    if(is.null(res$body)) res$set_body(body)
+                  if(is.null(res$body) && !is.null(body)) res$set_body(body)
+
+                  if(!is.null(res$body)){
                     break
                   }
                 }
