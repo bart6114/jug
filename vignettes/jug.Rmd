@@ -108,7 +108,7 @@ Note that in the above error / missing route handling is missing (the server wil
 
 ### Method sensitive middleware
 
-In the same style ass the request method insensitive middleware, there is request method sensitive middleware available. More specifically, you can use the ```get```, ```post```, ```put``` and ```delete``` functions.
+In the same style as the request method insensitive middleware, there is request method sensitive middleware available. More specifically, you can use the ```get```, ```post```, ```put``` and ```delete``` functions.
 
 This type of middleware is bound to a path using the ```path``` argument. If ```path``` is set to ```NULL``` it will bind to every request to the path, given that it is of the corresponding request type. 
 
