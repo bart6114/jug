@@ -125,7 +125,7 @@ add_middleware<-function(jug, func, path=NULL, method=NULL, websocket=FALSE){
 #' @export
 get<-function(object, ...) UseMethod("get")
 
-#' @describeIn get
+#' @describeIn get Function to add GET-binding middleware
 #' @export
 get.Jug<-function(object, ...){
   funcs<-list(...)

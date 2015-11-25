@@ -293,6 +293,7 @@ It also has a set of functions:
 - ```res$set_status(status)``` set the status of the response
 - ```res$text(body)``` to explicitely set the body of the response
 - ```res$json(obj)``` converts an object to JSON, sets it as the body and set the correct content type
+- ```res$plot(plot_obj, base64=TRUE)``` return a plot object (default to returning a base64 representation, otherwise returns the actual image)
 
 ### Error (```err```) object
 

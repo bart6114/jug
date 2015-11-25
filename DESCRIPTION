@@ -8,18 +8,19 @@ Description: A set of convenience functions to build simple APIs.
 License: MIT + file LICENSE
 LazyData: TRUE
 Depends:
-  R (>= 3.1.0),
-  magrittr,
-  R6
+    R (>= 3.1.0),
+    magrittr,
+    R6
 Imports:
-  mime,
-  httpuv,
-  stringi,
-  infuser,
-  jsonlite,
-  base64enc
+    mime,
+    httpuv,
+    stringi,
+    infuser,
+    jsonlite,
+    base64enc
 Suggests:
     testthat,
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+RoxygenNote: 5.0.1
