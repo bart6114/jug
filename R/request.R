@@ -1,10 +1,6 @@
 #' Request class
-#'
-#' @import R6
-#'
-#' @export
 Request<-
-  R6Class("Request",
+  R6::R6Class("Request",
           public=list(
             params=list(),
             headers=list(),

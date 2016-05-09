@@ -15,6 +15,6 @@ serve_static_files(jug, path = NULL, root_path = getwd())
 }
 \description{
 Binds to get requests that aren't handled by specified paths.
-Currently only works/tested for text files
+Should support all filetypes; returns image and octet-stream types as a raw string.
 }
 

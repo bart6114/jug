@@ -1,10 +1,8 @@
 #' Response class
 #'
-#' @import R6
-#' @importFrom jsonlite toJSON
 #' @importFrom base64enc base64encode
 Response<-
-  R6Class("Response",
+  R6::R6Class("Response",
           public=list(
             headers=list("Content-Type"="text/html"),
             set_header=function(key, value) self$headers[[key]]<-value,
@@ -25,16 +23,12 @@ Response<-
               }
             },
             json=function(obj){
-              self$body<-toJSON(obj, auto_unbox = TRUE)
+              self$body<-jsonlite::toJSON(obj, auto_unbox = TRUE)
               self$content_type("application/json")
-
-              self$body
             },
             text=function(text){
               self$body<-as.character(text)
               self$content_type("text/html")
-
-              self$body
             },
             plot=function(plot_obj, base64=TRUE, ...){
 
@@ -48,14 +42,13 @@ Response<-
 
               if(base64){
                 self$content_type("application/base64")
-                self$body<-base64encode(binary_img)
+                self$body<-base64enc::base64encode(binary_img)
               } else {
                 self$content_type("image/png")
                 self$body<-binary_img
               }
 
               close(file_conn)
-              self$body
             },
             structured=function(protocol){
               switch(protocol,

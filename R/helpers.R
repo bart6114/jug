@@ -44,7 +44,6 @@ match_path<-function(pattern, path, ...) {
 #' @param query_string the query string
 #'
 #' @export
-#' @importFrom stringi stri_match_all
 parse_query<-function(query_string){
   params_list<-list()
 
@@ -52,7 +51,7 @@ parse_query<-function(query_string){
     query_string<-gsub("^\\?", "", query_string, perl=TRUE)
 
     rex_res<-
-      stri_match_all(query_string, regex="([^?=&]+)(=([^&]*))?")[[1]]
+      stringi::stri_match_all(query_string, regex="([^?=&]+)(=([^&]*))?")[[1]]
 
     if(!any(is.na(rex_res))){
       params<-matrix(rex_res[,c(2,4)], ncol=2)
@@ -76,22 +75,20 @@ parse_query<-function(query_string){
 #'
 #' @param env the rook req environment
 #' @param content_type the mime type
-#' @importFrom jsonlite fromJSON
-#' @importFrom mime parse_multipart
 parse_post_data<-function(env, content_type){
 
   if(grepl("json", content_type)){
     post_data<-env$rook.input$read_lines()
 
     if(length(post_data)>0) {
-      fromJSON(post_data)
+      jsonlite::fromJSON(post_data)
 
     }
   } else if(grepl("x-www-form-urlencoded", content_type)) {
     parse_query(env$rook.input$read_lines())
 
   } else if(grepl("multipart/form-data", content_type)) {
-    parse_multipart(env)
+    mime::parse_multipart(env)
 
   }
 

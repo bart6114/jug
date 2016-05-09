@@ -9,9 +9,9 @@ License: MIT + file LICENSE
 LazyData: TRUE
 Depends:
     R (>= 3.1.0),
-    magrittr,
-    R6
+    magrittr
 Imports:
+    R6,
     mime,
     httpuv,
     stringi,
@@ -20,7 +20,6 @@ Imports:
     base64enc
 Suggests:
     testthat,
-    knitr,
-    rmarkdown
+    knitr
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1

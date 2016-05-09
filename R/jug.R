@@ -1,7 +1,7 @@
 #' The Jug class
 #'
-#' @import httpuv R6 magrittr
-Jug<-R6Class("Jug",
+#' @importFrom magrittr %>%
+Jug<-R6::R6Class("Jug",
              public=list(
                middleware_handler=NULL,
                daemon_obj=NULL,
