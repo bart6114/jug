@@ -18,7 +18,6 @@ RawTestRequest<-R6Class("RawTestRequest", public=list(
     SERVER_PORT = "8080",
     REMOTE_PORT = "60144",
     PATH_INFO = "/",
-    HTTP_CONTENT_TYPE = "application/x-www-form-urlencoded",
     REMOTE_ADDR = "127.0.0.1",
     CONTENT_TYPE = "application/x-www-form-urlencoded",
     rook.url_scheme = "http",
@@ -40,6 +39,9 @@ RawTestRequest<-R6Class("RawTestRequest", public=list(
     },
   set_header=function(key, value, prefix = "HTTP_"){
     self$req[[paste0(prefix, toupper(key))]]<-value
+  },
+  get_header=function(key, prefix = "HTTP_"){
+    self$req[[paste0(prefix, toupper(key))]]
   },
   print=function(...){
     cat("A RawTestRequest instance\n")

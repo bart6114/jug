@@ -7,7 +7,7 @@ Request<-
             path=NULL,
             method=NULL,
             raw=NULL,
-            content_type="",
+            content_type=NULL,
             protocol="http",
             body=NULL,
             attach=function(key, value) self$params[[key]]<-value,

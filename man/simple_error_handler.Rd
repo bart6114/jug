@@ -2,7 +2,7 @@
 % Please edit documentation in R/middleware_error.R
 \name{simple_error_handler}
 \alias{simple_error_handler}
-\title{An error handler middleware}
+\title{An error handler middleware which returns a error description in HTML format}
 \usage{
 simple_error_handler(jug, path = NULL, to_cat_or_not_to_cat = "cat")
 }
@@ -14,6 +14,9 @@ simple_error_handler(jug, path = NULL, to_cat_or_not_to_cat = "cat")
 \item{to_cat_or_not_to_cat}{the argument says it all}
 }
 \description{
-An error handler middleware
+An error handler middleware which returns a error description in HTML format
+}
+\seealso{
+simple_error_handler_json
 }
 
