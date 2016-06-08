@@ -268,7 +268,7 @@ The ```req``` object contains the request specifications. It has different attri
 - ```req$path``` the requested path
 - ```req$method``` the request method
 - ```req$raw``` the raw request object as passsed by ```httpuv```
-- ```req$post_data``` the post data (has some limitations for now...)
+- ```req$body``` the request body (has some limitations for now...)
 - ```req$protocol``` either ```http``` or ```websocket```
 
 It has the following functions attached to it:

@@ -9,7 +9,7 @@ Request<-
             raw=NULL,
             content_type="",
             protocol="http",
-
+            body=NULL,
             attach=function(key, value) self$params[[key]]<-value,
 
             ## inspired by https://github.com/nteetor/dull/blob/master/R/request.R
@@ -23,12 +23,14 @@ Request<-
               self$method<-toupper(req$REQUEST_METHOD)
 
 
-              if(length(req$CONTENT_TYPE)>0) self$content_type<-req$CONTENT_TYPE
+              if(length(req$CONTENT_TYPE)>0) self$content_type<-tolower(req$CONTENT_TYPE)
 
-              self$params<-parse_query(req$QUERY_STRING)
 
-              self$params<-c(self$params,
-                             parse_post_data(req, self$content_type))
+              self$body<-paste0(req$rook.input$read_lines(),collapse = "")
+
+              self$params<-parse_params(self$body, req$QUERY_STRING, self$content_type)
+
+
 
               self$headers<-as.list(req)
 

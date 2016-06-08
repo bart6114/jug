@@ -71,28 +71,23 @@ parse_query<-function(query_string){
 
 
 
-#' Parse the post data
+#' Parse the params passed by the request
 #'
 #' @param env the rook req environment
 #' @param content_type the mime type
-parse_post_data<-function(env, content_type){
+parse_params<-function(body, query_string=NULL, content_type){
+  params<-list()
+  if(!is.null(query_string)) params <- c(params, webutils::parse_query(query_string))
 
   if(grepl("json", content_type)){
-    post_data<-env$rook.input$read_lines()
-
-    if(length(post_data)>0) {
-      jsonlite::fromJSON(post_data)
-
+    if(length(body)>0) {
+      params <- c(params, jsonlite::fromJSON(body, simplifyDataFrame = FALSE))
     }
-  } else if(grepl("x-www-form-urlencoded", content_type)) {
-    parse_query(env$rook.input$read_lines())
 
-  } else if(grepl("multipart/form-data", content_type)) {
-    mime::parse_multipart(env)
-
+  } else if(any(sapply(c("x-www-form-urlencoded", "multipart/form-data"), grepl, content_type))) {
+    params <- c(params, webutils::parse_http(body, content_type))
   }
-
-
+  params
 }
 
 
