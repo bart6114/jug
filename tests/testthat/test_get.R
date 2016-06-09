@@ -104,3 +104,17 @@ test_that("The correct response is returned for a (bare) GET request with an exp
   expect_equal(res$body, "test")
 
 })
+
+
+test_that("The correct response is returned for a (bare) GET request with a content type of NULL",{
+  test_req<-RawTestRequest$new()
+  test_req$set_header("content_type", NULL)
+  res<-jug() %>%
+    get("/", function(req,res,err){
+      return("test")
+    }) %>%
+    process_test_request(test_req$req)
+
+  expect_equal(res$body, "test")
+
+})
