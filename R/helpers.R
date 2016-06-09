@@ -39,38 +39,6 @@ match_path<-function(pattern, path, ...) {
 }
 
 
-#' Helper function to deparse query params
-#'
-#' @param query_string the query string
-#'
-#' @export
-parse_query<-function(query_string){
-  params_list<-list()
-
-  if(length(query_string)>0){
-    query_string<-gsub("^\\?", "", query_string, perl=TRUE)
-
-    rex_res<-
-      stringi::stri_match_all(query_string, regex="([^?=&]+)(=([^&]*))?")[[1]]
-
-    if(!any(is.na(rex_res))){
-      params<-matrix(rex_res[,c(2,4)], ncol=2)
-
-      params_list<-
-        as.list(params[,2])
-
-      names(params_list)<-
-        params[,1]
-
-    }
-
-  }
-
-  params_list
-}
-
-
-
 #' Parse the params passed by the request
 #'
 #' @param env the rook req environment
