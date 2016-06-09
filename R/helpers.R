@@ -79,6 +79,8 @@ parse_params<-function(body, query_string=NULL, content_type){
   params<-list()
   if(!is.null(query_string)) params <- c(params, webutils::parse_query(query_string))
 
+  if (is.null(content_type)) { return(params) }
+
   if(grepl("json", content_type)){
     if(length(body)>0) {
       params <- c(params, jsonlite::fromJSON(body, simplifyDataFrame = FALSE))
