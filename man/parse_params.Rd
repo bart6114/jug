@@ -4,7 +4,7 @@
 \alias{parse_params}
 \title{Parse the params passed by the request}
 \usage{
-parse_params(req, body, query_string = NULL, content_type)
+parse_params(req, body, query_string, content_type)
 }
 \arguments{
 \item{req}{the rook req environment}
