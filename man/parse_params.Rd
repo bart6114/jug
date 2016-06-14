@@ -4,12 +4,14 @@
 \alias{parse_params}
 \title{Parse the params passed by the request}
 \usage{
-parse_params(body, query_string = NULL, content_type)
+parse_params(req, body, query_string = NULL, content_type)
 }
 \arguments{
-\item{content_type}{the mime type}
+\item{req}{the rook req environment}
 
-\item{env}{the rook req environment}
+\item{body}{the parsed body}
+
+\item{content_type}{the mime type}
 }
 \description{
 Parse the params passed by the request

@@ -41,22 +41,21 @@ match_path<-function(pattern, path, ...) {
 
 #' Parse the params passed by the request
 #'
-#' @param env the rook req environment
+#' @param req the rook req environment
+#' @param body the parsed body
 #' @param content_type the mime type
-parse_params<-function(body, query_string=NULL, content_type){
-  params<-list()
-  if(!is.null(query_string)) params <- c(params, webutils::parse_query(query_string))
+parse_params<-function(req, body, query_string=NULL, content_type){
+  if (is.null(content_type)) { return(list()) }
 
-  if (is.null(content_type)) { return(params) }
+  params <- list()
+  params <- c(params, webutils::parse_query(query_string))
 
-  if(grepl("json", content_type)){
-    if(length(body)>0) {
-      params <- c(params, jsonlite::fromJSON(body, simplifyDataFrame = FALSE))
-    }
-
-  } else if(any(sapply(c("x-www-form-urlencoded", "multipart/form-data"), grepl, content_type))) {
+  if(grepl("multipart", content_type)){
+    params <- c(params, mime::parse_multipart(req))
+  } else {
     params <- c(params, webutils::parse_http(body, content_type))
   }
+
   params
 }
 

@@ -28,7 +28,7 @@ Request<-
 
               self$body<-paste0(req$rook.input$read_lines(),collapse = "")
 
-              self$params<-parse_params(self$body, req$QUERY_STRING, self$content_type)
+              self$params<-parse_params(req, self$body, req$QUERY_STRING, self$content_type)
 
 
 
