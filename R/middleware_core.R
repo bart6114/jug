@@ -188,8 +188,8 @@ delete<-function(jug, path, ...){
 #'
 #' @seealso \code{\link{post}}, \code{\link{put}}, \code{\link{delete}}, \code{\link{get}}, \code{\link{ws}}
 #' @export
-use<-function(jug, path, ...){
-  lapply(list(...), function(mw_func) add_middleware(jug, mw_func, path, method=NULL))
+use<-function(jug, path, ..., method=NULL){
+  lapply(list(...), function(mw_func) add_middleware(jug, mw_func, path, method=method))
 
   jug
 }

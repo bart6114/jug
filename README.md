@@ -14,6 +14,7 @@ See [http://bart6114.github.io/jug](http://bart6114.github.io/jug) for more info
 
 ### v0.1.3
 
+- Possible to specify `method` for `use` middleware
 - Refactoring of param parsing
 - New error handling middleware (JSON response)
 - Additional / refined testing
