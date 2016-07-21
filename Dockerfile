@@ -19,8 +19,6 @@ RUN Rscript /tmp/packages.R
 RUN echo 'devtools::install_github("Bart6114/jug", force=TRUE)' > /tmp/packages.R
 RUN Rscript /tmp/packages.R
 
-COPY server /server
-WORKDIR /server
 CMD [ "Rscript", "index.r" ]
 
 EXPOSE 8080
