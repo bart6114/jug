@@ -11,6 +11,8 @@ parse_params(req, body, query_string, content_type)
 
 \item{body}{the parsed body}
 
+\item{query_string}{a query string}
+
 \item{content_type}{the mime type}
 }
 \description{

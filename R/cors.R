@@ -12,16 +12,6 @@
 #' @param max_age in seconds
 #' @param expose_headers a vector of exposed headers
 #'
-#' @examples
-#' # the below example enables CORS functionality on path "/"
-#' # this allows to send an OPTIONS request to "/"
-#' # but also sets the CORS-related headers for other requests to "/"
-#' jug() %>%
-#'  cors("/") %>%
-#'  get("/") %>%
-#'  simple_error_handler_json() %>%
-#'  serve_it()
-#'
 #' @export
 cors<-function(
   jug,

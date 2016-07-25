@@ -43,6 +43,7 @@ match_path<-function(pattern, path, ...) {
 #'
 #' @param req the rook req environment
 #' @param body the parsed body
+#' @param query_string a query string
 #' @param content_type the mime type
 parse_params<-function(req, body, query_string, content_type){
   params <- list()

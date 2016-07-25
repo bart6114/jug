@@ -185,6 +185,7 @@ delete<-function(jug, path, ...){
 #' @param jug the jug object
 #' @param path the path to bind to
 #' @param ... functions (order matters) to bind to the path (will receive the params \code{req}, \code{res} and \code{err})
+#' @param method the method to bind to, defauts to \code{NULL}
 #'
 #' @seealso \code{\link{post}}, \code{\link{put}}, \code{\link{delete}}, \code{\link{get}}, \code{\link{ws}}
 #' @export

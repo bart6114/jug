@@ -12,6 +12,8 @@ use(jug, path, ..., method = NULL)
 \item{path}{the path to bind to}
 
 \item{...}{functions (order matters) to bind to the path (will receive the params \code{req}, \code{res} and \code{err})}
+
+\item{method}{the method to bind to, defauts to \code{NULL}}
 }
 \description{
 Function to add request method insensitive middleware
