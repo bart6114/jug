@@ -4,8 +4,7 @@
 Response<-
   R6::R6Class("Response",
           public=list(
-            headers=list("Content-Type"="text/html",
-                         "Access-Control-Allow-Origin"="*"),
+            headers=list("Content-Type"="text/html"),
             set_header=function(key, value) self$headers[[key]]<-value,
             content_type=function(type) self$headers[['Content-Type']]=type,
             status=200L,
