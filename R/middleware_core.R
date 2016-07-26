@@ -52,7 +52,7 @@ MiddlewareHandler<-
                     )
 
                   if('try-error' %in% class(body)){
-                    # process it further (will be catched by errorhandler)
+                    # process it further (should be catched by errorhandler)
                     err$set(as.character(body))
                     body<-NULL
                   }
@@ -69,6 +69,9 @@ MiddlewareHandler<-
               if(getOption("jug.verbose")){
                 cat(toupper(req$protocol), "|", req$path,"-", req$method, "-", res$status, "\n" ,sep = " ")
               }
+
+              # check for empty body after full processing and do a clean stop
+              if(is.null(res$body)) stop("Request not handled or no body set by any middleware")
 
               res$structured(req$protocol)
             }

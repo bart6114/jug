@@ -7,8 +7,9 @@ test_req<-RawTestRequest$new()
 test_that("Access-Control-Allow-Origin default is set to permissive",{
 
   res<-jug() %>%
-    cors() %>%
+    cors("/") %>%
     get("/", function(req,res,err){
+      "foo"
     }) %>%
     process_test_request(test_req$req)
 
