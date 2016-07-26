@@ -14,7 +14,7 @@ Imports:
     R6,
     webutils,
     httpuv,
-    stringi,
+    mime,
     infuser,
     jsonlite,
     base64enc
