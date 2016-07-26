@@ -18,7 +18,7 @@ jug() %>%
   get("/", function(req, res, err){
     "Hello World!"
   }) %>%
-  simple_error_handler() %>%
+  simple_error_handler_json() %>%
   serve_it()
 ```
 
@@ -30,7 +30,7 @@ Serving the jug at http://127.0.0.1:8080
 
 Jug is a small web development framework for R which relies heavily upon the ```httpuv``` package. It's main focus is to make building APIs for your code as easy as possible.
 
-Jug is not supposed to be either an especially performant nor an uber stable framework. Other tools (and languages) might be more suited for that. Nevertheless, it tries to make available a set of functions which allow you to easily create APIs for your R code. The flexibility of Jug means that, in theory, you could built an extensive web framework with it (but I don't especially recommend it).
+Jug is not supposed to be either an especially performant nor an uber stable web framework. Other tools (and languages) might be more suited for that. It's main focus is to easily allow you to create APIs for your R code. However, the flexibility of Jug means that, in theory, you could built an extensive web framework with it.
 
 ## Getting started
 
@@ -46,28 +46,33 @@ Or install the CRAN version:
 install.packags("jug")
 ```
 
+Load the library:
+
+```{r}
+library(jug)
+```
+
 ## The Jug instance
 
-Everything starts with a Jug instance. This instance is created by simply calling ```jug()```:
+Everything starts with a Jug instance. This instance is created by simply calling `jug()`:
 
 ```{r, warning=FALSE, message=FALSE}
-library(jug)
 jug()
 ```
 
-Jug is made to work closely with the piping functionality of ```magrittr``` (```%>%```). The rest of the Jug instance is built up by piping the instance through various functions explained below.
+Jug is made to work closely with the piping functionality of `magrittr` (`%>%`). The configuration of the Jug instance is set up by piping the instance through the various functions explained below.
 
 ## Middleware
 
-In terms of middleware Jug somewhat follows the specification of middleware by ```Express```. In Jug, middleware is a function with access to the __request__ (```req```), __response__ (```res```) and __error__ (```err```) object.
+In terms of middleware, Jug somewhat follows the specification of middleware by `Express`. In Jug, middleware is a function with access to the __request__ (`req`), __response__ (`res`) and __error__ (`err`) object.
 
-Multiple middlewares can be defined. Order in which the middlewares are added matters. A request will start with being passed through the first middleware added (more specifically the functions specified in it - see next paragraph). It will continue to be passed through the added middlewares until a middleware does not return ```NULL```. Whatever will be passed by that middleware will be set as the response body.
+Multiple middlewares can be defined. The order in which the middlewares are added matters. A request will start with being passed through the first middleware added (more specifically the functions specified in it - see next paragraph). It will continue to be passed through the added middlewares until a middleware does not return `NULL` (note: if a value is set using e.g. `res$json("foo")` the body will not be `NULL`). Whatever will be passed by that middleware will be set as the response body. 
 
-Most middleware will accept a ```func``` or ```...``` argument to which respectively a function or multiple functions can be passed. If multiple functions are passed; passing order will be respected. To each function the ```req```, ```res``` and ```err``` objects will be passed (and thus should accept them). The result of evaluating the function will be used as the response body (if the returned object is not null).
+Most middleware will accept a `func` or `...` argument to which respectively a function or multiple functions can be passed. If multiple functions are passed; the order in which they are passed will be respected when processing a request. To each function the `req`, `res` and `err` objects will be passed (and they thus should accept them).
 
 ### Method insensitive middleware
 
-The ```use``` function is a method insensitive middleware specifier. While it is method insensitive, it can be bound to a specific path. If the ```path``` argument (accepts a regex string with ```grepl``` setting ```perl=TRUE```) is set to ```NULL``` it also becomes path insensitive and will process _every_ request.
+The `use` function is a method insensitive middleware specifier. While it is method insensitive, it can be bound to a specific path. If the `path` argument (accepts a regex string with `grepl` setting `perl=TRUE`) is set to `NULL` it also becomes path insensitive and will process _every_ request.
 
 A path insensitive example:
 
@@ -101,8 +106,9 @@ $ curl 127.0.0.1:8080
 test 1,2,3!
 ```
 
-Note that in the above error / missing route handling is missing (the server will crash), more on that later.
+It is however possible to specify a method to bind to using `use` (check out `?use`), this way you can process request methods for which no prespecified middlewares exist.
 
+Note that in the above example error / missing route handling is missing (the server will crash), more on that later.
 
 ### Method sensitive middleware
 
