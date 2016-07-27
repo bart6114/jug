@@ -108,13 +108,13 @@ test 1,2,3!
 
 It is however possible to specify a method to bind to using `use` (check out `?use`), this way you can process request methods for which no prespecified middlewares exist.
 
-Note that in the above example error / missing route handling is missing (the server will crash), more on that later.
+Note that in the above example errors / missing route handling is missing (the server might crash / not respond), more on that later.
 
 ### Method sensitive middleware
 
-In the same style as the request method insensitive middleware, there is request method sensitive middleware available. More specifically, you can use the ```get```, ```post```, ```put``` and ```delete``` functions.
+In the same style as the request method insensitive middleware, there is request method sensitive middleware available. More specifically, you can use the `get`, `post`, `put` and `delete` functions.
 
-This type of middleware is bound to a path using the ```path``` argument. If ```path``` is set to ```NULL``` it will bind to every request to the path, given that it is of the corresponding request type. 
+This type of middleware is bound to a path using the `path` argument. If `path` is set to `NULL` it will bind to every request to the path, given that it is of the corresponding request method. 
 
 ```{r, eval=FALSE}
 jug() %>%
@@ -150,9 +150,9 @@ $ curl 127.0.0.1:8080/my_path
 get test 1,2,3 on path /my_path
 ```
 
-### Protocol sensitive middleware
+### Websocket protocol
 
-By default all middleware convenience function bind to the http protocol. You can however access the jug server through websocket by using the websocket sensitive middleware function ```ws```. Below an example echo'ing the incoming message.
+By default all middleware convenience function bind to the http protocol. You can however access the jug server through websocket by using the websocket sensitive middleware function `ws`. Below an example echo'ing the incoming message.
 
 ```{r, eval=FALSE}
 jug() %>%
@@ -162,13 +162,15 @@ jug() %>%
   serve_it()
 ```
 
-Opening a connection to ```ws://127.0.0.1:8080/echo_message``` and sending e.g. the message ```test``` to it will then return the value ```test```.
+Opening a connection to `ws://127.0.0.1:8080/echo_message` and sending e.g. the message `test` to it will then return the value `test`.
+
+__Please note that websocket support is experimental at this stage.__
 
 ### Including elsewhere defined middleware
 
-You can include middleware that has been defined elsewhere within your current R environment or in a different R file. To do this you can use a ```collector```
+In order to make you code more modular, you can include elsewhere defined middleware into your Jug instance. To do this you can use a combination of the `collector()` and `include()` functions.
 
-Below a ```collector``` is defined locally and ```include```d.
+Below a `collector` is defined locally (in the same R script) and `include`d.
 
 ```{r, eval=FALSE}
  collected_mw<-
@@ -182,9 +184,9 @@ Below a ```collector``` is defined locally and ```include```d.
     serve_it()
 ```
 
-However, it is also possible to ```include``` a ```collector``` that is defined in another .R file.
+However, it is also possible to `include` a `collector` that is defined in another .R file.
 
-Let's say below is the file ```my_middlewares.R```:
+Let's say below is the file `my_middlewares.R`:
 
 ```{r, eval=FALSE}
 library(jug)
@@ -208,7 +210,7 @@ res<-jug() %>%
 
 ### Error handling
 
-A simple error handling middleware (```simple_error_handler```) which catches unbound paths and ```func``` evaluation errors. If no custom error handler is implemented I suggest you add this to your Jug instance.
+A simple error handling middleware (`simple_error_handler` / `simple_error_handler_json`) which catches unbound paths and `func` evaluation errors. If you do not implement a custom error handler, I suggest you add either of these to your Jug instance. The `simple_error_handler` returns an HTML error page while the `simple_error_handler_json` returns a JSON message.
 
 ```{r, eval=FALSE}
 jug() %>%
@@ -229,15 +231,17 @@ $ curl 127.0.0.1:8080
   </body>
 </html>
 ```
-If you want to implement your own custom error handling just have a look at the ```jug::simple_error_handler()``` function.
+If you want to implement your own custom error handling just have a look at the code of these simple error handling middlewares.
+
+Please note that generally you would like the error handler middleware to be attached to the Jug instance after all other middleware has been specified.
 
 ### Easily using your own functions
 
-The main reason Jug was created is to easily allow access to your own custom R functions. The convenience function ```decorate``` is built with this in mind.
+The main reason Jug was created is to easily allow access to your own custom R functions. The convenience function `decorate` is built especially for this purpose.
 
-If you ```decorate``` your own function it will translate all arguments passed in the query string of the request as arguments to your function. It will also pass all headers to the function as arguments. Note that for the passed headers they will be capitalized and prefixed by ```HTTP_``` as per ```httpuv```'s internals. 
+If you `decorate` your own function it will translate all arguments passed in the query string of the request as arguments to your function. It will also pass all headers to the function as arguments. 
 
-If your function does not accept a ```...``` argument, all query/header parameters that are not explicitly requested by your function are dropped. If your function requests a ```req```, ```res``` or ```err``` argument (or ```...```) the corresponding objects will be passed. 
+If your function does not accept a `...` argument, all query/header parameters that are not explicitly requested by your function are dropped. If your function requests a `req`, `res` or `err` argument (or `...`) the corresponding objects will be passed. 
 
 ```{r, eval=FALSE}
 say_hello<-function(name){paste("hello",name,"!")}
@@ -247,6 +251,8 @@ jug() %>%
   serve_it()
 ```
 
+If in the above, you pass a parameter `name` through either the query string or as a header in the GET request, it will return as in the example below.
+
 ```
 $ curl 127.0.0.1:8080/?name=Bart
 hello Bart !
@@ -254,7 +260,7 @@ hello Bart !
 
 ### Static file server
 
-The ```serve_static_file``` middleware allows for serving static files.
+The `serve_static_file` middleware allows for serving static files.
 
 ```{r, eval=FALSE}
 jug() %>%
@@ -262,60 +268,64 @@ jug() %>%
   serve_it()
 ```
 
-The default root directory is the one returned by ```getwd()``` but can be specified by providing a ```root_path``` argument to the ```serve_static_files``` middleware. It transforms a bare ```/``` path to ```index.html```.
+The default root directory is the one returned by `getwd()` but can be specified by providing a `root_path` argument to the `serve_static_files` middleware. It transforms a bare `/` path to `index.html`.
+
+I do not recommend using Jug to serve static files, except for in a testing phase.
 
 ## The request, response and error objects
 
-### Request (```req```) object
+### Request (`req`) object
 
-The ```req``` object contains the request specifications. It has different attributes:
+The `req` object contains the request specifications. It has different attributes:
 
-- ```req$params``` a list of the query parameters contained in the URL
-- ```req$path``` the requested path
-- ```req$method``` the request method
-- ```req$raw``` the raw request object as passsed by ```httpuv```
-- ```req$body``` the request body (has some limitations for now...)
-- ```req$protocol``` either ```http``` or ```websocket```
+- `req$params` a named list of the parameters passed by either the query string, a JSON body, URL parameters or a multipart form
+- `req$path` the request path
+- `req$method` the request method
+- `req$raw` the raw request object as passsed by `httpuv`
+- `req$body` the full request body as a character string
+- `req$protocol` either `http` or `websocket`
+- `req$headers` a named list of the headers in the request (as lowercase and stripped from the `HTTP_` prefix provided by the underlying `httpuv` framework)
 
 It has the following functions attached to it:
 
-- ```req$get_header(key)``` returns the value associated to the specified key in the request (no need to worry about the ```HTTP_``` prefix)
-- ```req$attach(key, value)``` attach a variable to ```req$params```
+- `req$get_header(key)` returns the value associated to the specified key in the request (no need to worry about the `HTTP_` prefix)
+- `req$set_header(key, value)` allows to set / alter a header while processing the request (can be useful to pass data to the next middleware)
+- `req$attach(key, value)` attach a variable to `req$params`
 
-### Response (```res```) object
+### Response (`res`) object
 
-The ```res``` object contains the response specifications. It has different attributes:
+The `res` object contains the response specifications. It has different attributes:
 
-- ```res$headers``` a named list of the set headers
-- ```res$status``` the status of the response (defaults to 200)
-- ```res$body``` the body of the response (is automatically set by the content of the not ```NULL``` returning middleware)
+- `res$headers` a named list of the set headers
+- `res$status` the status of the response (defaults to 200)
+- `res$body` the body of the response (is automatically set to be the content of the not `NULL` returning middleware or by methods such as `res$json()`)
 
 It also has a set of functions:
 
-- ```res$set_header(key, value)``` set a custom header
-- ```res$content_type(type)``` set your own content type (MIME)
-- ```res$set_status(status)``` set the status of the response
-- ```res$text(body)``` to explicitely set the body of the response
-- ```res$json(obj)``` converts an object to JSON, sets it as the body and set the correct content type
-- ```res$plot(plot_obj, base64=TRUE)``` return a plot object (defaults to returning a base64 representation, otherwise returns the actual image)
+- `res$set_header(key, value)` set a custom header
+- `res$content_type(type)` set your own content type (MIME)
+- `res$set_status(status)` set the status of the response
+- `res$text(body)` to explicitely set the body of the response
+- `res$json(obj)` converts an object to JSON, sets it as the body and set the correct content type
+- `res$plot(plot_obj, base64=TRUE)` convenience function to return a plot object as the response body, the returned plot can either be a base64 representation of the image (default) or the actual binary data
 
-### Error (```err```) object
+### Error (`err`) object
 
-The ```err``` object contains a list of errors, accessible through ```err$errrors```. You can add an error to this list by calling ```err$set(error)```. The error will be converted to a character.
+The `err` object contains a list of errors, accessible through `err$errrors`. You can add an error to this list by calling `err$set(error)`. The error will be converted to a character.
 
-Have a look at the ```simple_error_handler``` middleware function see how you can implement a custom error handler.
+Refer to the "Error handling" paragraph for more details.
 
 ## URL dispatching 
 
-The path parameter in the ```get```, ```post```, ... functions is intepreted as a regex pattern.
+The path parameter in the `get`, `post`, ... functions are processed as being regex patterns.
 
-If there are named capture groups in the path definition, they will be attached to the ```req$params``` object. For example the pattern ```/test/(?<id>.*)/(?<id2>.*)``` will result in the variables ```id``` and ```id2``` (with their respective values) being bound to the ```req$params``` object.
+If there are named capture groups in the path definition, they will be attached to the `req$params` object. For example the pattern `/test/(?<id>.*)/(?<id2>.*)` will result in the variables `id` and `id2` (with their respective values) being bound to the `req$params` object.
 
-If a path pattern is not started with a start of string ```^``` regex token __or__ ended with an end of string token ```$```, these will be explicitely inserted at respectively the beginning and end of the path pattern specification. For example the path pattern ```/``` will be converted to ```^/$```.
+If a path pattern is not started with a start of string `^` regex token __or__ ended with an end of string token `$`, these will be explicitely inserted at respectively the beginning and end of the path pattern specification. For example the path pattern `/` will be converted to `^/$`.
 
-## Serving the Jug
+## Starting the Jug instance
 
-Simple call ```serve_it()``` at the end of your piping chain (see Hello World! example).
+Simple call `serve_it()` at the end of your piping chain (see Hello World! example).
 
 ## Further examples
 
