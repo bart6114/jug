@@ -14,8 +14,9 @@ See [http://bart6114.github.io/jug](http://bart6114.github.io/jug) for the devel
 
 ### v0.1.3
 
-- Set `Access-Control-Allow-Origin` header to `*` (i.e. permissive)
+- Refactor request header processing
+- Added CORS functionality
 - Possible to specify `method` for `use` middleware
-- Refactoring of param parsing
+- Refactoring of request param parsing
 - New error handling middleware (JSON response)
 - Additional / refined testing
