@@ -9,6 +9,14 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+_generated using Jug version `r library(jug);sessionInfo()$otherPkgs$jug$Version`_
+
+```{r, eval=FALSE, include=FALSE}
+# used to generate dev version of vignette for gh-pages branch
+# rmarkdown::render("vignettes/jug.Rmd", output_format="html_document", output_dir=normalizePath("..", getwd()), output_options = list(theme="journal"))
+```
+
+
 ## Hello World!
 
 ```{r, eval=FALSE}
