@@ -1,6 +1,6 @@
 Package: jug
 Type: Package
-Title: A simple web framework for R
+Title: A Simple Web Framework For R
 Version: 0.1.3
 Authors@R: person("Bart", "Smeets", email = "bartsmeets86@gmail.com",
   role = c("aut", "cre"))
