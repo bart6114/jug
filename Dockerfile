@@ -1,24 +1,25 @@
 FROM r-base:3.3.1
 
-# Install external dependencies
-RUN apt-get update -qq \
-  && apt-get install -t unstable -y --no-install-recommends \
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
     libcurl4-openssl-dev \
-    libssl-dev \
-    libsqlite3-dev \
-    libxml2-dev \
-    qpdf \
-    vim \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/ \
-  && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
+    libssl-dev
 
-RUN echo 'install.packages(c("devtools"), dependencies=TRUE)' > /tmp/packages.R
-# install packages
-RUN Rscript /tmp/packages.R
-RUN echo 'devtools::install_github("Bart6114/jug", force=TRUE)' > /tmp/packages.R
-RUN Rscript /tmp/packages.R
+# note: devtools is only required if you want to install jug from github
+RUN install2.r --error \
+ devtools
+#  jug
 
-CMD [ "Rscript", "index.r" ]
+# remove below line and add 'jug' the above command in order to use the CRAN version
+RUN Rscript -e "devtools::install_github('bart6114/jug')"
+
+# jug instance configuration
+ENV JUG_HOST 0.0.0.0
+ENV JUG_PORT 8080
+
+# for demo purposes a hello world example is served
+COPY var/hello_world.R .
 
 EXPOSE 8080
+
+CMD [ "Rscript", "hello_world.R" ]
