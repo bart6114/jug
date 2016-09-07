@@ -278,7 +278,43 @@ jug() %>%
 
 The default root directory is the one returned by `getwd()` but can be specified by providing a `root_path` argument to the `serve_static_files` middleware. It transforms a bare `/` path to `index.html`.
 
-I do not recommend using Jug to serve static files, except for in a testing phase.
+Aside from development, I do not recommend using Jug to serve static files.
+
+### CORS functionality
+
+[CORS functionality](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS) is introduced by the `cors()` middleware function.
+
+Consider the following example.
+
+```{r, eval=FALSE}
+jug() %>%
+  cors() %>%
+  get("/", function(req, res, err){
+    "Hello World!"
+  }) %>%
+  serve_it()
+```
+
+```
+$ curl -v 127.0.0.1:8080/
+*   Trying 127.0.0.1...
+* Connected to 127.0.0.1 (127.0.0.1) port 8080 (#0)
+> GET / HTTP/1.1
+> Host: 127.0.0.1:8080
+> User-Agent: curl/7.43.0
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< Content-Type: text/html
+< Access-Control-Allow-Origin: *
+< Access-Control-Allow-Methods: POST,GET,PUT,OPTIONS,DELETE,PATCH
+< Content-Length: 12
+< 
+* Connection #0 to host 127.0.0.1 left intact
+```
+
+As you see this adds some default CORS-headers. Check out `?cors` for the configuration options, note that you can also add CORS headers to a specific path by specifying the `path` parameter. 
+
 
 ## The request, response and error objects
 
