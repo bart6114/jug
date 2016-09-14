@@ -47,8 +47,9 @@ match_path<-function(pattern, path, ...) {
 #' @param content_type the mime type
 parse_params<-function(req, body, query_string, content_type){
   params <- list()
-  if(is.null(content_type)) return(params)
   params <- c(params, webutils::parse_query(query_string))
+
+  if(is.null(content_type)) return(params)
   if(grepl("json", content_type) && nchar(body)>0) params <- c(params, jsonlite::fromJSON(body, simplifyDataFrame = FALSE))
   if(grepl("multipart", content_type)) params <- c(params, mime::parse_multipart(req))
   if(grepl("form-urlencoded", content_type)) params <- c(params, webutils::parse_query(body))

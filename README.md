@@ -12,6 +12,11 @@ See [http://bart6114.github.io/jug](http://bart6114.github.io/jug) for the devel
 
 ## Changes
 
+### v0.1.4 - dev version
+
+- Fixed bug where missing content type would not auto-parse the query string
+
+
 ### v0.1.3
 
 - Refactor request header processing
