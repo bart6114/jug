@@ -57,3 +57,8 @@ parse_params<-function(req, body, query_string, content_type){
 }
 
 
+
+
+#' @importFrom magrittr %>%
+#' @export
+magrittr::`%>%`

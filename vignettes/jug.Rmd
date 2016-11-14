@@ -13,7 +13,7 @@ _generated using Jug version `r library(jug);sessionInfo()$otherPkgs$jug$Version
 
 ```{r, eval=FALSE, include=FALSE}
 # used to generate dev version of vignette for gh-pages branch
-# rmarkdown::render("vignettes/jug.Rmd", output_format="html_document", output_dir=normalizePath("..", getwd()), output_options = list(theme="journal"))
+# rmarkdown::render("jug.Rmd", output_format="html_document", output_options = list(theme="journal"))
 ```
 
 
@@ -174,9 +174,9 @@ Opening a connection to `ws://127.0.0.1:8080/echo_message` and sending e.g. the 
 
 __Please note that websocket support is experimental at this stage.__
 
-### Including elsewhere defined middleware
+### Including elsewhere defined middleware chains
 
-In order to make you code more modular, you can include elsewhere defined middleware into your Jug instance. To do this you can use a combination of the `collector()` and `include()` functions.
+In order to make you code more modular, you can include elsewhere defined middleware chains into your Jug instance. To do this you can use a combination of the `collector()` and `include()` functions.
 
 Below a `collector` is defined locally (in the same R script) and `include`d.
 
@@ -315,6 +315,45 @@ $ curl -v 127.0.0.1:8080/
 
 As you see this adds some default CORS-headers. Check out `?cors` for the configuration options, note that you can also add CORS headers to a specific path by specifying the `path` parameter. 
 
+### Authentication
+
+Currently there is only built-in support for basic authentication (check: https://www.httpwatch.com/httpgallery/authentication/) through the `auth_basic` middleware function. The middleware will check the request for a valid username / password combination. If an invalid combination is passed, it will return a 401 status, a `WWW-Authenticate` header and a text body which states that there was an authentication error.
+
+First you will need to define a function that accepts `username` and `password` arguments. The funtion should return `TRUE` if the combination is valid and `FALSE` if the combination is invalid. A dummy example is shown below. Note, that this function could also check e.g. a database to validate the combo.
+
+```{r, eval=FALSE}
+# dummy account checker
+account_checker <- function(username, password){
+  # do something to verify the username and password and return TRUE if combination OK
+  all(username == "test_user", 
+      password == "test_password")
+}
+```
+
+Next you need to instantiate the `auth_basic` middleware in you middleware chain. The `auth_basic` function accepts as first parameter the username/password validation function. Below two examples are given. The first one shows how to do authentication for a specific path (`/test`).
+
+```{r, eval=FALSE}
+jug() %>%
+  get("/", function(req, res, err){
+    "/ req"
+  }) %>%
+  get("/test", auth_basic(account_checker), function(req, res, err){
+    "/test req"
+  }) %>%
+  serve_it()
+```
+
+The second example below shows how to activate basic authentication for all paths in the jug instance.
+
+```{r, eval=FALSE}
+jug() %>%
+  use(NULL, auth_basic(account_checker)) %>%
+  get("/", function(req, res, err){
+    "/ req"
+  }) %>%
+  serve_it()
+```
+
 
 ## The request, response and error objects
 
@@ -369,7 +408,7 @@ If a path pattern is not started with a start of string `^` regex token __or__ e
 
 ## Starting the Jug instance
 
-Simple call `serve_it()` at the end of your piping chain (see Hello World! example).
+Simply call `serve_it()` at the end of your piping chain (see Hello World! example).
 
 ## Further examples
 

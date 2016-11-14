@@ -17,6 +17,10 @@ See [http://bart6114.github.io/jug](http://bart6114.github.io/jug) for the devel
 
 ## Changes
 
+### v0.1.41
+
+- Added basic authentication functionality through `auth_basic`
+
 ### v0.1.4
 
 - Fixed bug where missing content type would not auto-parse the query string

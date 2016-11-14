@@ -79,3 +79,5 @@ stop_daemon<-function(jug){
 
   jug
 }
+
+
