@@ -4,14 +4,15 @@
 \alias{decorate}
 \title{Convenience function to decorate existing functions}
 \usage{
-decorate(func, content_type = "text/html")
+decorate(func, content_type = "text/html", strict_params = FALSE)
 }
 \arguments{
 \item{func}{the function to decorate}
 
 \item{content_type}{the content type to set on the response object}
+
+\item{strict_params}{if TRUE and not all parameters needed for func}
 }
 \description{
 Convenience function to decorate existing functions
 }
-

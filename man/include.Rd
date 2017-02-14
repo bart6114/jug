@@ -16,4 +16,3 @@ include(jug, collector, source_file = NULL)
 \description{
 Include elsewhere constructed middleware with primary jug instance
 }
-

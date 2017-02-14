@@ -19,4 +19,3 @@ Function to add websocket handling middleware
 \seealso{
 \code{\link{post}}, \code{\link{put}}, \code{\link{delete}}, \code{\link{get}}, \code{\link{get}}
 }
-

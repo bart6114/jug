@@ -9,4 +9,3 @@ new_error()
 \description{
 Create response instance
 }
-

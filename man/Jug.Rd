@@ -9,4 +9,3 @@ jug()
 \description{
 New jug instance
 }
-

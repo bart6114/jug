@@ -9,4 +9,3 @@ collector()
 \description{
 Basically constructs an empty jug instances that will be merged into the primary one later on
 }
-

@@ -17,4 +17,3 @@ An error handler middleware which returns a error description in JSON format
 \seealso{
 simple_error_handler
 }
-

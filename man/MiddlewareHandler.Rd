@@ -12,4 +12,3 @@ MiddlewareHandler
 MiddlewareHandler R6 class definition
 }
 \keyword{datasets}
-

@@ -12,4 +12,3 @@ Response
 Response class
 }
 \keyword{datasets}
-

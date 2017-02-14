@@ -17,4 +17,3 @@ serve_static_files(jug, path = NULL, root_path = getwd())
 Binds to get requests that aren't handled by specified paths.
 Should support all filetypes; returns image and octet-stream types as a raw string.
 }
-

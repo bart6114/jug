@@ -14,4 +14,3 @@ process_test_request(jug, test_request)
 \description{
 Initialize process of test request
 }
-

@@ -21,7 +21,7 @@ The params to this function are slightly different from \code{post}, \code{put} 
 \itemize{
 \item \code{Jug}: Function to add GET-binding middleware
 }}
+
 \seealso{
 \code{\link{post}}, \code{\link{put}}, \code{\link{delete}}, \code{\link{use}}, \code{\link{ws}}
 }
-

@@ -29,4 +29,3 @@ cors(jug, path = NULL, allow_methods = c("POST", "GET", "PUT", "OPTIONS",
 Allows to set CORS-headers as specified in https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS.
 It will also setup the infrastructure in order to receive OPTIONS requests send to \code{path}.
 }
-

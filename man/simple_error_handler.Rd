@@ -19,4 +19,3 @@ An error handler middleware which returns a error description in HTML format
 \seealso{
 simple_error_handler_json
 }
-

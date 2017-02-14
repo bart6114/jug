@@ -12,4 +12,3 @@ Error
 Response class
 }
 \keyword{datasets}
-

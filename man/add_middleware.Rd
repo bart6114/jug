@@ -20,4 +20,3 @@ add_middleware(jug, func, path = NULL, method = NULL, websocket = FALSE)
 \description{
 Internal function to add middleware
 }
-

@@ -14,4 +14,3 @@ auth_basic(account_eval_func, basic_realm = "this_jug_server")
 \description{
 Basic authentication middleware
 }
-

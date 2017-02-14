@@ -19,4 +19,3 @@ Function to add PUT-binding middleware
 \seealso{
 \code{\link{post}}, \code{\link{get}}, \code{\link{delete}}, \code{\link{use}}, \code{\link{ws}}
 }
-

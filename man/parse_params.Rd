@@ -18,4 +18,3 @@ parse_params(req, body, query_string, content_type)
 \description{
 Parse the params passed by the request
 }
-

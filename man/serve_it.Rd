@@ -21,4 +21,3 @@ serve_it(jug, host = "127.0.0.1", port = 8080, daemonized = FALSE,
 \description{
 Start serving the jug instance
 }
-

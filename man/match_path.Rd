@@ -16,4 +16,3 @@ match_path(pattern, path, ...)
 \description{
 adapted from: http://oddhypothesis.blogspot.be/2012/05/regex-named-capture-in-r.html
 }
-

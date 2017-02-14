@@ -12,4 +12,3 @@ stop_daemon(jug)
 \description{
 Stop daemonized server
 }
-
