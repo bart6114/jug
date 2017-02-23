@@ -22,8 +22,8 @@ Response<-
                 self$body<-body
               }
             },
-            json=function(obj){
-              self$body<-jsonlite::toJSON(obj, auto_unbox = TRUE)
+            json=function(obj, auto_unbox = TRUE){
+              self$body<-jsonlite::toJSON(obj, auto_unbox=auto_unbox)
               self$content_type("application/json")
             },
             text=function(text){
