@@ -19,7 +19,7 @@ See [http://bart6114.github.io/jug](http://bart6114.github.io/jug) for the devel
 
 ## v0.1.42
 
-- Ability to specificy `auto-unbox` value for json responses
+- Ability to specify `auto-unbox` value for json responses
 - Added `strict_params` argument to `decorate`
 
 ### v0.1.41
