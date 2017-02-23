@@ -17,12 +17,12 @@ See [http://bart6114.github.io/jug](http://bart6114.github.io/jug) for the devel
 
 ## Changes
 
-## v0.1.42
+### v0.1.6
 
 - Ability to specify `auto-unbox` value for json responses
 - Added `strict_params` argument to `decorate`
 
-### v0.1.41
+### v0.1.5
 
 - Added basic authentication functionality through `auth_basic`
 
