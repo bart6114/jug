@@ -14,6 +14,8 @@ Jug is not supposed to be either an especially performant nor an uber stable web
 
 See [http://bart6114.github.io/jug](http://bart6114.github.io/jug) for the development vignette version.
 
+Plugins:
+- [`jug.parallel`](https://github.com/Bart6114/jug.parallel)
 
 ## Changes
 
