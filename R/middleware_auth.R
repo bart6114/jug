@@ -1,7 +1,7 @@
 #' Basic authentication middleware
 #'
 #' @param account_eval_func a function to which the username and password arguments will be passed and which should return \code{TRUE} for a valid combination and \code{FALSE} for an invalid one.
-#' @param realm the user visible realm that will be returned through the \code{WWW-Authenticate} header in case of an unauthenticated request
+#' @param basic_realm the user visible realm that will be returned through the \code{WWW-Authenticate} header in case of an unauthenticated request
 #'
 #' @export
 auth_basic<-function(account_eval_func, basic_realm = "this_jug_server"){

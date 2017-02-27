@@ -9,7 +9,7 @@ auth_basic(account_eval_func, basic_realm = "this_jug_server")
 \arguments{
 \item{account_eval_func}{a function to which the username and password arguments will be passed and which should return \code{TRUE} for a valid combination and \code{FALSE} for an invalid one.}
 
-\item{realm}{the user visible realm that will be returned through the \code{WWW-Authenticate} header in case of an unauthenticated request}
+\item{basic_realm}{the user visible realm that will be returned through the \code{WWW-Authenticate} header in case of an unauthenticated request}
 }
 \description{
 Basic authentication middleware
