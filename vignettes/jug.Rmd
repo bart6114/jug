@@ -389,7 +389,7 @@ It also has a set of functions:
 - `res$content_type(type)` set your own content type (MIME)
 - `res$set_status(status)` set the status of the response
 - `res$text(body)` to explicitely set the body of the response
-- `res$json(obj)` converts an object to JSON, sets it as the body and set the correct content type
+- `res$json(obj, auto_unbox=TRUE)` converts an object to JSON, sets it as the body and set the correct content type
 - `res$plot(plot_obj, base64=TRUE)` convenience function to return a plot object as the response body, the returned plot can either be a base64 representation of the image (default) or the actual binary data
 
 ### Error (`err`) object
