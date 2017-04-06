@@ -5,16 +5,16 @@
 
 # jug: A Simple Web Framework for R
 
-<img src="var/beer_jug.png" width="64">
+<img src="https://github.com/Bart6114/jug/blob/master/var/beer_jug.png?raw=true" width="64" alt="jug">
 
+jug is a small web development framework for R which relies heavily upon the ```httpuv``` package. It’s main focus is to make building APIs for your code as easy as possible.
 
-Jug is a small web development framework for R which relies heavily upon the ```httpuv``` package. It’s main focus is to make building APIs for your code as easy as possible.
+jug is not supposed to be either an especially performant nor an uber stable web framework. Other tools (and languages) might be more suited for that. It focuses on maximizing the ease with wich you can create web APIs for your R code. However, the flexibility of jug means that, in theory, you could built an extensive web framework with it.
 
-Jug is not supposed to be either an especially performant nor an uber stable web framework. Other tools (and languages) might be more suited for that. It focuses on maximizing the ease with wich you can create web APIs for your R code. However, the flexibility of Jug means that, in theory, you could built an extensive web framework with it.
-
-See [http://bart6114.github.io/jug](http://bart6114.github.io/jug) for the development vignette version.
+Check out [http://bart6114.github.io/jug](http://bart6114.github.io/jug) for the vignette documentation.
 
 Plugins:
+
 - [`jug.parallel`](https://github.com/Bart6114/jug.parallel)
 
 ## Changes

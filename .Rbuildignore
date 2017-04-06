@@ -6,3 +6,4 @@ test_files
 ^\.travis\.yml$
 var
 Dockerfile
+^docs$
