@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Getting started with Jug • jug</title>
+<title>Getting started with jug • jug</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
@@ -54,7 +54,7 @@
       </header><div class="row">
   <div class="col-md-9">
     <div class="page-header toc-ignore">
-      <h1>Getting started with Jug</h1>
+      <h1>Getting started with jug</h1>
                         <h4 class="author">Bart Smeets</h4>
             
             <h4 class="date">2017-04-06</h4>
@@ -63,7 +63,7 @@
     
     
 <div class="contents">
-<p><em>generated using Jug version 0.1.6</em></p>
+<p><em>generated using jug version 0.1.6</em></p>
 <div id="hello-world" class="section level2">
 <h2 class="hasAnchor">
 <a href="#hello-world" class="anchor"></a>Hello World!</h2>
@@ -79,9 +79,9 @@
 </div>
 <div id="what-is-jug" class="section level2">
 <h2 class="hasAnchor">
-<a href="#what-is-jug" class="anchor"></a>What is Jug?</h2>
-<p>Jug is a small web development framework for R which relies heavily upon the <code>httpuv</code> package. It’s main focus is to make building APIs for your code as easy as possible.</p>
-<p>Jug is not supposed to be either an especially performant nor an uber stable web framework. Other tools (and languages) might be more suited for that. It’s main focus is to easily allow you to create APIs for your R code. However, the flexibility of Jug means that, in theory, you could built an extensive web framework with it.</p>
+<a href="#what-is-jug" class="anchor"></a>What is jug?</h2>
+<p>jug is a small web development framework for R which relies heavily upon the <code>httpuv</code> package. It’s main focus is to make building APIs for your code as easy as possible.</p>
+<p>jug is not supposed to be either an especially performant nor an uber stable web framework. Other tools (and languages) might be more suited for that. It’s main focus is to easily allow you to create APIs for your R code. However, the flexibility of jug means that, in theory, you could built an extensive web framework with it.</p>
 </div>
 <div id="getting-started" class="section level2">
 <h2 class="hasAnchor">
@@ -95,16 +95,16 @@
 </div>
 <div id="the-jug-instance" class="section level2">
 <h2 class="hasAnchor">
-<a href="#the-jug-instance" class="anchor"></a>The Jug instance</h2>
-<p>Everything starts with a Jug instance. This instance is created by simply calling <code><a href="../reference/Jug.html">jug()</a></code>:</p>
+<a href="#the-jug-instance" class="anchor"></a>The jug instance</h2>
+<p>Everything starts with a jug instance. This instance is created by simply calling <code><a href="../reference/Jug.html">jug()</a></code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Jug.html">jug</a></span>()</code></pre></div>
 <pre><code>## A Jug instance with 0 middlewares attached</code></pre>
-<p>Jug is made to work closely with the piping functionality of <code>magrittr</code> (<code>%&gt;%</code>). The configuration of the Jug instance is set up by piping the instance through the various functions explained below.</p>
+<p>jug is made to work closely with the piping functionality of <code>magrittr</code> (<code>%&gt;%</code>). The configuration of the jug instance is set up by piping the instance through the various functions explained below.</p>
 </div>
 <div id="middleware" class="section level2">
 <h2 class="hasAnchor">
 <a href="#middleware" class="anchor"></a>Middleware</h2>
-<p>In terms of middleware, Jug somewhat follows the specification of middleware by <code>Express</code>. In Jug, middleware is a function with access to the <strong>request</strong> (<code>req</code>), <strong>response</strong> (<code>res</code>) and <strong>error</strong> (<code>err</code>) object.</p>
+<p>In terms of middleware, jug somewhat follows the specification of middleware by <code>Express</code>. In jug, middleware is a function with access to the <strong>request</strong> (<code>req</code>), <strong>response</strong> (<code>res</code>) and <strong>error</strong> (<code>err</code>) object.</p>
 <p>Multiple middlewares can be defined. The order in which the middlewares are added matters. A request will start with being passed through the first middleware added (more specifically the functions specified in it - see next paragraph). It will continue to be passed through the added middlewares until a middleware does not return <code>NULL</code> (note: if a value is set using e.g. <code>res$json("foo")</code> the body will not be <code>NULL</code>). Whatever will be passed by that middleware will be set as the response body.</p>
 <p>Most middleware will accept a <code>func</code> or <code>...</code> argument to which respectively a function or multiple functions can be passed. If multiple functions are passed; the order in which they are passed will be respected when processing a request. To each function the <code>req</code>, <code>res</code> and <code>err</code> objects will be passed (and they thus should accept them).</p>
 <div id="method-insensitive-middleware" class="section level3">
@@ -175,7 +175,7 @@ get test 1,2,3 on path /my_path</code></pre>
 <div id="including-elsewhere-defined-middleware-chains" class="section level3">
 <h3 class="hasAnchor">
 <a href="#including-elsewhere-defined-middleware-chains" class="anchor"></a>Including elsewhere defined middleware chains</h3>
-<p>In order to make you code more modular, you can include elsewhere defined middleware chains into your Jug instance. To do this you can use a combination of the <code><a href="../reference/collector.html">collector()</a></code> and <code><a href="../reference/include.html">include()</a></code> functions.</p>
+<p>In order to make you code more modular, you can include elsewhere defined middleware chains into your jug instance. To do this you can use a combination of the <code><a href="../reference/collector.html">collector()</a></code> and <code><a href="../reference/include.html">include()</a></code> functions.</p>
 <p>Below a <code>collector</code> is defined locally (in the same R script) and <code>include</code>d.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> collected_mw&lt;-
 <span class="st">    </span><span class="kw"><a href="../reference/collector.html">collector</a></span>() %&gt;%
@@ -207,7 +207,7 @@ collected_mw&lt;-
 <div id="error-handling" class="section level3">
 <h3 class="hasAnchor">
 <a href="#error-handling" class="anchor"></a>Error handling</h3>
-<p>A simple error handling middleware (<code>simple_error_handler</code> / <code>simple_error_handler_json</code>) which catches unbound paths and <code>func</code> evaluation errors. If you do not implement a custom error handler, I suggest you add either of these to your Jug instance. The <code>simple_error_handler</code> returns an HTML error page while the <code>simple_error_handler_json</code> returns a JSON message.</p>
+<p>A simple error handling middleware (<code>simple_error_handler</code> / <code>simple_error_handler_json</code>) which catches unbound paths and <code>func</code> evaluation errors. If you do not implement a custom error handler, I suggest you add either of these to your jug instance. The <code>simple_error_handler</code> returns an HTML error page while the <code>simple_error_handler_json</code> returns a JSON message.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Jug.html">jug</a></span>() %&gt;%
 <span class="st">  </span><span class="kw"><a href="../reference/simple_error_handler.html">simple_error_handler</a></span>() %&gt;%
 <span class="st">  </span><span class="kw"><a href="../reference/serve_it.html">serve_it</a></span>()</code></pre></div>
@@ -223,12 +223,12 @@ collected_mw&lt;-
   &lt;/body&gt;
 &lt;/html&gt;</code></pre>
 <p>If you want to implement your own custom error handling just have a look at the code of these simple error handling middlewares.</p>
-<p>Please note that generally you would like the error handler middleware to be attached to the Jug instance after all other middleware has been specified.</p>
+<p>Please note that generally you would like the error handler middleware to be attached to the jug instance after all other middleware has been specified.</p>
 </div>
 <div id="easily-using-your-own-functions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#easily-using-your-own-functions" class="anchor"></a>Easily using your own functions</h3>
-<p>The main reason Jug was created is to easily allow access to your own custom R functions. The convenience function <code>decorate</code> is built especially for this purpose.</p>
+<p>The main reason jug was created is to easily allow access to your own custom R functions. The convenience function <code>decorate</code> is built especially for this purpose.</p>
 <p>If you <code>decorate</code> your own function it will translate all arguments passed in the query string of the request as arguments to your function. It will also pass all headers to the function as arguments.</p>
 <p>If your function does not accept a <code>...</code> argument, all query/header parameters that are not explicitly requested by your function are dropped. If your function requests a <code>req</code>, <code>res</code> or <code>err</code> argument (or <code>...</code>) the corresponding objects will be passed.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">say_hello&lt;-function(name){<span class="kw">paste</span>(<span class="st">"hello"</span>,name,<span class="st">"!"</span>)}
@@ -248,7 +248,7 @@ hello Bart !</code></pre>
 <span class="st">  </span><span class="kw"><a href="../reference/serve_static_files.html">serve_static_files</a></span>() %&gt;%
 <span class="st">  </span><span class="kw"><a href="../reference/serve_it.html">serve_it</a></span>()</code></pre></div>
 <p>The default root directory is the one returned by <code>getwd()</code> but can be specified by providing a <code>root_path</code> argument to the <code>serve_static_files</code> middleware. It transforms a bare <code>/</code> path to <code>index.html</code>.</p>
-<p>Aside from development, I do not recommend using Jug to serve static files.</p>
+<p>Aside from development, I do not recommend using jug to serve static files.</p>
 </div>
 <div id="cors-functionality" class="section level3">
 <h3 class="hasAnchor">
@@ -387,7 +387,7 @@ account_checker &lt;-<span class="st"> </span>function(username, password){
 </div>
 <div id="starting-the-jug-instance" class="section level2">
 <h2 class="hasAnchor">
-<a href="#starting-the-jug-instance" class="anchor"></a>Starting the Jug instance</h2>
+<a href="#starting-the-jug-instance" class="anchor"></a>Starting the jug instance</h2>
 <p>Simply call <code><a href="../reference/serve_it.html">serve_it()</a></code> at the end of your piping chain (see Hello World! example).</p>
 </div>
 <div id="further-examples" class="section level2">
@@ -403,14 +403,14 @@ account_checker &lt;-<span class="st"> </span>function(username, password){
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#hello-world">Hello World!</a></li>
-      <li><a href="#what-is-jug">What is Jug?</a></li>
+      <li><a href="#what-is-jug">What is jug?</a></li>
       <li><a href="#getting-started">Getting started</a></li>
-      <li><a href="#the-jug-instance">The Jug instance</a></li>
+      <li><a href="#the-jug-instance">The jug instance</a></li>
       <li><a href="#middleware">Middleware</a></li>
       <li><a href="#predefined-middleware">Predefined middleware</a></li>
       <li><a href="#the-request-response-and-error-objects">The request, response and error objects</a></li>
       <li><a href="#url-dispatching">URL dispatching</a></li>
-      <li><a href="#starting-the-jug-instance">Starting the Jug instance</a></li>
+      <li><a href="#starting-the-jug-instance">Starting the jug instance</a></li>
       <li><a href="#further-examples">Further examples</a></li>
       </ul>
 </div>
