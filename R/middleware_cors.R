@@ -40,7 +40,10 @@ cors<-function(
   func<-function(req, res, err){
 
     if(req$method == "OPTIONS"){
-      res$set_header("Allow", allow_methods)
+      res$set_header("Access-Control-Allow-Methods", allow_methods)
+      res$set_header("Access-Control-Allow-Origin", allow_origin)
+      res$set_header("Access-Control-Allow-Headers", allow_headers)
+
       return("") # equals stop processing
     }
 

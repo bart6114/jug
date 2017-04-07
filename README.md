@@ -19,6 +19,10 @@ Plugins:
 
 ## Changes
 
+### v0.1.6.9000
+
+- Fixed CORS preflight request bug (issue #15)
+
 ### v0.1.6
 
 - Ability to specify `auto-unbox` value for json responses
