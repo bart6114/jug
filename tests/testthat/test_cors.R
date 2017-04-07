@@ -2,6 +2,21 @@ library(jug)
 
 context("testing CORS functionality")
 
+test_req_OPTIONS <-RawTestRequest$new()
+test_req_OPTIONS$method("OPTIONS")
+
+test_that("Preflight request receives the right headers",{
+
+  res<-jug() %>%
+    cors("/", allow_headers = "Authorization") %>%
+    process_test_request(test_req_OPTIONS$req)
+
+  expect_true('Access-Control-Allow-Origin' %in% names(res$headers))
+  expect_true('Access-Control-Allow-Methods' %in% names(res$headers))
+  expect_true('Access-Control-Allow-Headers' %in% names(res$headers))
+
+})
+
 test_req<-RawTestRequest$new()
 
 test_that("Access-Control-Allow-Origin default is set to permissive",{
