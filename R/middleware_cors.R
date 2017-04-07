@@ -39,12 +39,16 @@ cors<-function(
 
   func<-function(req, res, err){
 
-    lapply(names(headers), function(header_name) res$set_header(header_name, headers[[header_name]]))
-      
     if(req$method == "OPTIONS"){
-      return("") 
-      } else
-      return(NULL)
+      res$set_header("Access-Control-Allow-Methods", allow_methods)
+      res$set_header("Access-Control-Allow-Origin", allow_origin)
+      res$set_header("Access-Control-Allow-Headers", allow_headers)
+
+      return("") # equals stop processing
+    }
+
+    lapply(names(headers), function(header_name) res$set_header(header_name, headers[[header_name]]))
+    return(NULL)
   }
 
   add_middleware(jug, func, path=path, method=NULL)
