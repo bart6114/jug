@@ -19,7 +19,7 @@ Plugins:
 
 ## Changes
 
-### v0.1.6.9000
+### v0.1.7
 
 - Fixed CORS preflight request bug (issue #15)
 

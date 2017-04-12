@@ -410,7 +410,7 @@ If a path pattern is not started with a start of string `^` regex token __or__ e
 
 Simply call `serve_it()` at the end of your piping chain (see [Hello World!](#hello) example).
 
-## Further examples
+## Practical examples
 
 ### Minimal CRUD TODO app
 
