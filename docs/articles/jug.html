@@ -57,7 +57,7 @@
       <h1>Getting started with jug</h1>
                         <h4 class="author">Bart Smeets</h4>
             
-            <h4 class="date">2017-04-06</h4>
+            <h4 class="date">2017-04-12</h4>
           </div>
 
     
@@ -66,7 +66,7 @@
 <p><em>generated using jug version 0.1.6</em></p>
 <div id="hello-world" class="section level2">
 <h2 class="hasAnchor">
-<a href="#hello-world" class="anchor"></a>Hello World!</h2>
+<a href="#hello-world" class="anchor"></a><a name="hello"></a>Hello World!</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(jug)
 
 <span class="kw"><a href="../reference/Jug.html">jug</a></span>() %&gt;%
@@ -388,12 +388,86 @@ account_checker &lt;-<span class="st"> </span>function(username, password){
 <div id="starting-the-jug-instance" class="section level2">
 <h2 class="hasAnchor">
 <a href="#starting-the-jug-instance" class="anchor"></a>Starting the jug instance</h2>
-<p>Simply call <code><a href="../reference/serve_it.html">serve_it()</a></code> at the end of your piping chain (see Hello World! example).</p>
+<p>Simply call <code><a href="../reference/serve_it.html">serve_it()</a></code> at the end of your piping chain (see <a href="#hello">Hello World!</a> example).</p>
 </div>
-<div id="further-examples" class="section level2">
+<div id="practical-examples" class="section level2">
 <h2 class="hasAnchor">
-<a href="#further-examples" class="anchor"></a>Further examples</h2>
-<p><a href="https://github.com/Bart6114/jug-crud-example">Minimal CRUD TODO app</a></p>
+<a href="#practical-examples" class="anchor"></a>Practical examples</h2>
+<div id="minimal-crud-todo-app" class="section level3">
+<h3 class="hasAnchor">
+<a href="#minimal-crud-todo-app" class="anchor"></a>Minimal CRUD TODO app</h3>
+<p>A minimal TODO app built in Angular with a jug backend.</p>
+<p>Clone the repository to check it out: <a href="https://github.com/Bart6114/jug-crud-example">github.com/Bart6114/jug-crud-example</a></p>
+</div>
+<div id="exposing-a-machine-learning-model" class="section level3">
+<h3 class="hasAnchor">
+<a href="#exposing-a-machine-learning-model" class="anchor"></a>Exposing a machine learning model</h3>
+<p>Let’s train (in a very simplistic way) a linear regression model on the <code>mtcars</code> dataset and assume that our objective is to predict the miles per gallon or <code>mpg</code> variable based on the inputs <code>gear</code> and <code>hp</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(mtcars)</code></pre></div>
+<pre><code>##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mpg_model&lt;-
+<span class="st">  </span><span class="kw">lm</span>(mpg~gear+hp, <span class="dt">data=</span>mtcars)
+
+<span class="kw">summary</span>(mpg_model)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ gear + hp, data = mtcars)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.7977 -2.4288 -0.7685  2.2405  7.5943 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 17.755144   3.241809   5.477 6.74e-06 ***
+## gear         3.176520   0.762584   4.165 0.000255 ***
+## hp          -0.063931   0.008206  -7.791 1.36e-08 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 3.108 on 29 degrees of freedom
+## Multiple R-squared:  0.7513, Adjusted R-squared:  0.7341 
+## F-statistic: 43.79 on 2 and 29 DF,  p-value: 1.731e-09</code></pre>
+<p>As we went through a lot of hard work to end up with this model (/s), we now want to expose it through an API. This way we allow other people or applications to make predictions using this model.</p>
+<p>As a first step we need to build a minimal prediction function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">predict_mpg &lt;-<span class="st"> </span>function(gear, hp){
+  <span class="kw">predict</span>(mpg_model, 
+          <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">gear=</span><span class="kw">as.numeric</span>(gear), 
+                               <span class="dt">hp=</span><span class="kw">as.numeric</span>(hp)))[[<span class="dv">1</span>]]
+}</code></pre></div>
+<p>We can test the function by supplying the <code>gear</code> and <code>hp</code> arguments.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict_mpg</span>(<span class="dt">gear =</span> <span class="dv">4</span>, <span class="dt">hp =</span> <span class="dv">80</span>)</code></pre></div>
+<pre><code>## [1] 25.34671</code></pre>
+<p>Now, to expose this function as a we API, we need to build a <code>jug</code> instance. We can use the built-in <code>decorate</code> middleware to ease the integration of the <code>predict_mpg</code> function. Below, a minimal example is shown.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Jug.html">jug</a></span>() %&gt;%
+<span class="st">  </span><span class="kw"><a href="../reference/post.html">post</a></span>(<span class="st">"/predict-mpg"</span>, <span class="kw"><a href="../reference/decorate.html">decorate</a></span>(predict_mpg)) %&gt;%
+<span class="st">  </span><span class="kw"><a href="../reference/simple_error_handler_json.html">simple_error_handler_json</a></span>() %&gt;%
+<span class="st">  </span><span class="kw"><a href="../reference/serve_it.html">serve_it</a></span>()</code></pre></div>
+<pre><code>Serving the jug at http://127.0.0.1:8080</code></pre>
+<p>We can now send a http POST request to the <code>http://127.0.0.1:8080/predict-mpg</code> url and it will return the predicted value! It works out of the box with either the parameters in a JSON body, as <code>multipart/form-data</code> or as a <code>x-www-form-urlencoded</code>.</p>
+<p><strong>JSON body</strong></p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">curl</span> -X POST \
+  http://127.0.0.1:8080/predict-mpg \
+  -H <span class="st">'content-type: application/json'</span> \
+  -d <span class="st">'{"hp": 80, "gear": 4}'</span></code></pre></div>
+<p><strong>multipart form</strong></p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">curl</span> -X POST \
+  http://127.0.0.1:8080/predict-mpg \
+  -H <span class="st">'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'</span> \
+  -F hp=80 \
+  -F gear=4</code></pre></div>
+<p><strong>urlencode form</strong></p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">curl</span> -X POST \
+  http://127.0.0.1:8080/predict-mpg \
+  -H <span class="st">'content-type: application/x-www-form-urlencoded'</span> \
+  -d <span class="st">'gear=4&amp;hp=80'</span></code></pre></div>
+</div>
 </div>
 </div>
   </div>
@@ -402,7 +476,8 @@ account_checker &lt;-<span class="st"> </span>function(username, password){
         <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#hello-world">Hello World!</a></li>
+<li>
+<a href="#hello-world"></a><a name="hello"></a>Hello World!</li>
       <li><a href="#what-is-jug">What is jug?</a></li>
       <li><a href="#getting-started">Getting started</a></li>
       <li><a href="#the-jug-instance">The jug instance</a></li>
@@ -411,7 +486,7 @@ account_checker &lt;-<span class="st"> </span>function(username, password){
       <li><a href="#the-request-response-and-error-objects">The request, response and error objects</a></li>
       <li><a href="#url-dispatching">URL dispatching</a></li>
       <li><a href="#starting-the-jug-instance">Starting the jug instance</a></li>
-      <li><a href="#further-examples">Further examples</a></li>
+      <li><a href="#practical-examples">Practical examples</a></li>
       </ul>
 </div>
       </div>
