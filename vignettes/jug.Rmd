@@ -17,7 +17,7 @@ _generated using jug version `r library(jug);sessionInfo()$otherPkgs$jug$Version
 ```
 
 
-## Hello World!
+## <a name="hello"></a>Hello World!
 
 ```{r, eval=FALSE}
 library(jug)
@@ -408,8 +408,90 @@ If a path pattern is not started with a start of string `^` regex token __or__ e
 
 ## Starting the jug instance
 
-Simply call `serve_it()` at the end of your piping chain (see Hello World! example).
+Simply call `serve_it()` at the end of your piping chain (see [Hello World!](#hello) example).
 
 ## Further examples
 
-[Minimal CRUD TODO app](https://github.com/Bart6114/jug-crud-example)
+### Minimal CRUD TODO app
+
+A minimal TODO app built in Angular with a jug backend. 
+
+Clone the repository to check it out: [github.com/Bart6114/jug-crud-example](https://github.com/Bart6114/jug-crud-example)
+
+### Exposing a machine learning model
+
+Let's train (in a very simplistic way) a linear regression model on the `mtcars` dataset and assume that our objective is to predict the miles per gallon or `mpg` variable based on the inputs `gear` and `hp`.
+
+```{r}
+head(mtcars)
+
+mpg_model<-
+  lm(mpg~gear+hp, data=mtcars)
+
+summary(mpg_model)
+```
+
+As we went through a lot of hard work to end up with this model (/s), we now want to expose it through an API. This way we allow other people or applications to make predictions using this model.
+
+As a first step we need to build a minimal prediction function. 
+
+```{r}
+predict_mpg <- function(gear, hp){
+  predict(mpg_model, 
+          newdata = data.frame(gear=as.numeric(gear), 
+                               hp=as.numeric(hp)))[[1]]
+}
+```
+
+We can test the function by supplying the `gear` and `hp` arguments.
+
+```{r}
+predict_mpg(gear = 4, hp = 80)
+```
+
+Now, to expose this function as a we API, we need to build a `jug` instance. We can use the built-in `decorate` middleware to ease the integration of the `predict_mpg` function. Below, a minimal example is shown.
+
+```{r, eval=F}
+jug() %>%
+  post("/predict-mpg", decorate(predict_mpg)) %>%
+  simple_error_handler_json() %>%
+  serve_it()
+```
+```
+Serving the jug at http://127.0.0.1:8080
+```
+
+We can now send a http POST request to the `http://127.0.0.1:8080/predict-mpg` url and it will return the predicted value! It works out of the box with either the parameters in a JSON body, as `multipart/form-data` or as a `x-www-form-urlencoded`.
+
+**JSON body**
+
+```sh
+curl -X POST \
+  http://127.0.0.1:8080/predict-mpg \
+  -H 'content-type: application/json' \
+  -d '{"hp": 80, "gear": 4}'
+```
+
+**multipart form**
+
+```sh
+curl -X POST \
+  http://127.0.0.1:8080/predict-mpg \
+  -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
+  -F hp=80 \
+  -F gear=4
+```
+
+**urlencode form**
+
+```sh
+curl -X POST \
+  http://127.0.0.1:8080/predict-mpg \
+  -H 'content-type: application/x-www-form-urlencoded' \
+  -d 'gear=4&hp=80'
+```
+
+
+
+
+
