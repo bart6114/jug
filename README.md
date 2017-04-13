@@ -22,6 +22,7 @@ Plugins:
 ### v0.1.7
 
 - Fixed CORS preflight request bug (issue #15)
+- Fixed masking of base::get
 
 ### v0.1.6
 
