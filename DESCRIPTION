@@ -5,7 +5,8 @@ Version: 0.1.7
 Authors@R: person("Bart", "Smeets", email = "bartsmeets86@gmail.com",
   role = c("aut", "cre"))
 URL: https://github.com/Bart6114/jug
-Description: A set of functions to ease the building of web APIs.
+Description: jug is a web framework aimed at easily building APIs. It is mostly aimed at exposing R functions, 
+    models and visualizations to third-parties by way of http requests.
 License: MIT + file LICENSE
 LazyData: TRUE
 Depends:
