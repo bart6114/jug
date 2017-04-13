@@ -80,17 +80,36 @@
     </div>
 
     
-    <p>New jug instance</p>
+    <p>Creates a new jug instance which can be build upon with other functions (middlewares).</p>
     
 
     <pre><span class='fu'>jug</span>()</pre>
         
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='co'>## Not run: ------------------------------------</span>
+<span class='co'># # This Hello World example will serve a jug instance on the default port.</span>
+<span class='co'># # The jug instance will return "Hello World!" if a GET request is send to it.</span>
+<span class='co'># jug() %&gt;%</span>
+<span class='co'>#  get("/", function(req, res, err) "Hello World!" ) %&gt;%</span>
+<span class='co'>#  simple_error_handler_json() %&gt;%</span>
+<span class='co'>#  serve_it(verbose=TRUE)</span>
+<span class='co'>## ---------------------------------------------</span>
+
+
+
+<span class='co'>## Not run: ------------------------------------</span>
+<span class='co'># # Introduction to jug</span>
+<span class='co'># vignette("jug", package="jug")</span>
+<span class='co'>## ---------------------------------------------</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-                </ul>
+            
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

@@ -50,6 +50,7 @@ Jug<-R6::R6Class("Jug",
 #'
 #' @examples
 #' \donttest{
+#' \dontrun{
 #' # This Hello World example will serve a jug instance on the default port.
 #' # The jug instance will return "Hello World!" if a GET request is send to it.
 #' jug() %>%
@@ -57,10 +58,13 @@ Jug<-R6::R6Class("Jug",
 #'  simple_error_handler_json() %>%
 #'  serve_it(verbose=TRUE)
 #' }
+#' }
 #'
 #' \donttest{
+#' \dontrun{
 #' # Introduction to jug
 #' vignette("jug", package="jug")
+#' }
 #' }
 #'
 #' @export
