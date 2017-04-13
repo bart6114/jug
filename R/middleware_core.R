@@ -126,7 +126,12 @@ add_middleware<-function(jug, func, path=NULL, method=NULL, websocket=FALSE){
 #'
 #' @seealso \code{\link{post}}, \code{\link{put}}, \code{\link{delete}}, \code{\link{use}}, \code{\link{ws}}
 #' @export
+#' @export
 get<-function(object, ...) UseMethod("get")
+
+#' @export
+get.default <- function(object, ...) base::get(object, ...)
+
 
 #' @describeIn get Function to add GET-binding middleware
 #' @export

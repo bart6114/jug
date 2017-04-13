@@ -11,12 +11,6 @@ vignette: >
 
 _generated using jug version `r library(jug);sessionInfo()$otherPkgs$jug$Version`_
 
-```{r, eval=FALSE, include=FALSE}
-# used to generate dev version of vignette for gh-pages branch
-# rmarkdown::render("jug.Rmd", output_format="html_document", output_options = list(theme="journal"))
-```
-
-
 ## <a name="hello"></a>Hello World!
 
 ```{r, eval=FALSE}

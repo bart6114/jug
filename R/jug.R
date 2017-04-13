@@ -46,6 +46,23 @@ Jug<-R6::R6Class("Jug",
 
 #' New jug instance
 #'
+#' Creates a new jug instance which can be build upon with other functions (middlewares).
+#'
+#' @examples
+#' \donttest{
+#' # This Hello World example will serve a jug instance on the default port.
+#' # The jug instance will return "Hello World!" if a GET request is send to it.
+#' jug() %>%
+#'  get("/", function(req, res, err) "Hello World!" ) %>%
+#'  simple_error_handler_json() %>%
+#'  serve_it(verbose=TRUE)
+#' }
+#'
+#' \donttest{
+#' # Introduction to jug
+#' vignette("jug", package="jug")
+#' }
+#'
 #' @export
 jug<-function(){
   Jug$new()
