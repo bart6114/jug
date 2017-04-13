@@ -11,7 +11,7 @@ jug is a small web development framework for R which relies heavily upon the ```
 
 jug is not supposed to be either an especially performant nor an uber stable web framework. Other tools (and languages) might be more suited for that. It focuses on maximizing the ease with wich you can create web APIs for your R code. However, the flexibility of jug means that, in theory, you could built an extensive web framework with it.
 
-Check out [http://bart6114.github.io/jug](http://bart6114.github.io/jug) for the vignette documentation.
+Check out [http://bart6114.github.io/jug/articles/jug.html](http://bart6114.github.io/jug/articles/jug.html) for the vignette documentation.
 
 Plugins:
 
