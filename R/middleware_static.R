@@ -14,8 +14,10 @@ serve_static_files<-function(jug, path=NULL, root_path=getwd()){
     if(req$path == "/") req$path<-"index.html"
 
     file_path <- paste0(root_path, '/', req$path)
-
-    if(file.exists(file_path)){
+    
+    bound <- ifelse(is.null(path), TRUE, substr(req$path, 2, nchar(path) + 1) == path)
+    
+    if(file.exists(file_path) & bound){
       mime_type <- mime::guess_type(file_path)
       res$content_type(mime_type)
 
