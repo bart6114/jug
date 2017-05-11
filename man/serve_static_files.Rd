@@ -14,6 +14,12 @@ serve_static_files(jug, path = NULL, root_path = getwd())
 \item{root_path}{the file path to set as root for the file server}
 }
 \description{
-Binds to get requests that aren't handled by specified paths.
-Should support all filetypes; returns image and octet-stream types as a raw string.
+Binds to get requests that aren't handled by specified paths. Should support
+all filetypes; returns image and octet-stream types as a raw string. \cr\cr
+Note: the \code{path} argument is not related to the file being served. If
+\code{path} is given, the static file middleware will bind to \code{path},
+however for finding the files on the local filesystem it will strip
+\code{path} from the file location. For example, let's assume
+\code{path='my_path'}, the following url \code{/my_path/file/to/serve.html}
+will serve the file \code{file/to/serve.html} from the \code{root_path} folder.
 }
