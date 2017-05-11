@@ -19,6 +19,9 @@ Plugins:
 
 ## Changes
 
+### v0.1.7.900
+- Adjustment to `serve_static_files`: removed link between `path` and file served
+
 ### v0.1.7
 
 - Fixed CORS preflight request bug (issue #15)
