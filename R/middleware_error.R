@@ -49,6 +49,7 @@ simple_error_handler_json<-function(jug, path=NULL){
       if(getOption("jug.verbose")) cat("ERROR:\n", errs_string, "\n")
 
       res$json(list(status="error", status_code=500L, error=errs_string))
+      res$set_header("Access-Control-Allow-Origin", '*')
     } else {
       res$status=404L
       res$json(list(status="page not found", status_code=404L))
