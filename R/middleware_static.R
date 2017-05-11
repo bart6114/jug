@@ -11,11 +11,20 @@
 serve_static_files<-function(jug, path=NULL, root_path=getwd()){
   get(jug, path = NULL, function(req, res, err){
 
-    if(req$path == "/") req$path<-"index.html"
+    if(substring(req$path, nchar(req$path)) == "/"){
+      req$path <- paste0(req$path, "index.html")
+    }
 
-    file_path <- paste0(root_path, '/', req$path)
+    if(is.null(path)){
+      file_path <- paste0(root_path, '/', req$path)
+    } else {
+      partial_file_path <- gsub(paste0('.*', path, '(.*)'), '\\1', req$path)
+      file_path <- paste0(root_path, '/', partial_file_path)
+    }
 
-    if(file.exists(file_path)){
+    bound <- ifelse(is.null(path), TRUE, substr(req$path, 2, nchar(path) + 1) == path)
+
+    if(file.exists(file_path) & bound){
       mime_type <- mime::guess_type(file_path)
       res$content_type(mime_type)
 
