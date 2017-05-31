@@ -4,7 +4,7 @@
 \alias{serve_static_files}
 \title{Middleware to serve static files}
 \usage{
-serve_static_files(jug, path = NULL, root_path = getwd())
+serve_static_files(jug, path = NULL, root_path = getwd(), unproxy = NULL)
 }
 \arguments{
 \item{jug}{the jug instance}
@@ -12,14 +12,22 @@ serve_static_files(jug, path = NULL, root_path = getwd())
 \item{path}{the path to bind to, default = NULL (all paths)}
 
 \item{root_path}{the file path to set as root for the file server}
+
+\item{unproxy}{the ProxyPass component of the path to be removed}
 }
 \description{
 Binds to get requests that aren't handled by specified paths. Should support
-all filetypes; returns image and octet-stream types as a raw string. \cr\cr
+all filetypes; returns image, octet-stream and pdf types as a raw string.
+}
+\details{
 Note: the \code{path} argument is not related to the file being served. If
 \code{path} is given, the static file middleware will bind to \code{path},
 however for finding the files on the local filesystem it will strip
 \code{path} from the file location. For example, let's assume
 \code{path='my_path'}, the following url \code{/my_path/file/to/serve.html}
 will serve the file \code{file/to/serve.html} from the \code{root_path} folder.
+
+The \code{unproxy} argument allows you to remove extra path components
+that might be set up in your apache config file. These path components
+exist only in URLs and are not reflected in file paths.
 }
