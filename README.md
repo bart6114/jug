@@ -20,7 +20,7 @@ Plugins:
 ## Changes
 
 ### v0.1.7.901
-- Adjustment to `serve_static_files`: add `unproxy` argument; add `pdf` to binary types
+- Adjustment to `serve_static_files`: add `pdf` to binary types
 
 ### v0.1.7.900
 - Adjustment to `serve_static_files`: removed link between `path` and file served
