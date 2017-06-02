@@ -36,7 +36,7 @@ serve_static_files<-function(jug, path=NULL, root_path=getwd()){
 
       data <- readBin(file_path, 'raw', n=file.info(file_path)$size)
 
-      if(grepl("image|octet", mime_type)){ # making a lot of assumptions here
+      if(grepl("image|octet|pdf", mime_type)){ # making a lot of assumptions here
         return(data)
 
       } else {
