@@ -443,7 +443,7 @@ We can test the function by supplying the `gear` and `hp` arguments.
 predict_mpg(gear = 4, hp = 80)
 ```
 
-Now, to expose this function as a we API, we need to build a `jug` instance. We can use the built-in `decorate` middleware to ease the integration of the `predict_mpg` function. Below, a minimal example is shown.
+Now, to expose this function as a web API, we need to build a `jug` instance. We can use the built-in `decorate` middleware to ease the integration of the `predict_mpg` function. Below, a minimal example is shown.
 
 ```{r, eval=F}
 jug() %>%
