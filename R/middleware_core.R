@@ -7,10 +7,17 @@ MiddlewareHandler<-
   R6Class("MiddlewareHandler",
           public=list(
             middlewares=c(),
+            listeners=c(),
 
             add_middleware=function(mw){
               self$middlewares<-c(self$middlewares, mw)
-
+            },
+            add_listener=function(listener){
+              self$listeners<-c(self$listeners, listener)
+            },
+            process_event=function(event, ...){
+              listeners = Filter(function(l) l$event == event, self$listeners)
+              lapply(listeners, function(l) l$func(...))
             },
             invoke=function(req, ws_message = NULL, ws_binary = NULL){
               res<-Response$new()
@@ -73,7 +80,9 @@ MiddlewareHandler<-
               # check for empty body after full processing and do a clean stop
               if(is.null(res$body)) stop("Request not handled or no body set by any middleware")
 
+              self$process_event("finish", req, res, err)
               res$structured(req$protocol)
+
             }
           )
   )
@@ -98,6 +107,29 @@ Middleware<-
           ))
 
 
+Listener<-
+  R6Class("Listener",
+          public=list(
+            event=NULL,
+            func=NULL,
+            initialize=function(func, event){
+              self$func=func
+              self$event=event
+            }
+          ))
+
+
+add_listener<-function(jug, func, event){
+  mw<-Listener$new(func, event)
+  jug$middleware_handler$add_listener(mw)
+
+  jug
+}
+
+#' @export
+on <- function(jug, event, func, ...){
+  add_listener(jug, func, event)
+}
 
 
 
