@@ -44,6 +44,103 @@ Jug<-R6::R6Class("Jug",
 )
 
 
+
+#' RequestHandler R6 class definition
+#'
+#' @import R6
+RequestHandler<-
+  R6Class("RequestHandler",
+          public=list(
+            middlewares=c(),
+            listeners=c(),
+
+            add_middleware=function(mw){
+              self$middlewares<-c(self$middlewares, mw)
+            },
+            add_listener=function(listener){
+              self$listeners<-c(self$listeners, listener)
+            },
+            process_event=function(event, ...){
+              listeners = Filter(function(l) l$event == event, self$listeners)
+              lapply(listeners, function(l) l$func(event, ...))
+            },
+            invoke=function(req, ws_message = NULL, ws_binary = NULL){
+              res<-Response$new()
+              req<-Request$new(req)
+              err<-new_error()
+
+              body<-NULL
+
+              self$process_event("start", req, res, err)
+
+
+              for(mw in self$middlewares){
+
+                # if there are named capture groups in the path, add them to req$params
+                path_processed<-match_path(mw$path, req$path)
+
+                req$add_params(path_processed$params)
+
+                # REFACTOR!
+
+                if(any(
+                  (req$protocol=="http" && any(
+                    path_processed$match && (mw$method == req$method),
+                    path_processed$match && is.null(mw$method),
+                    is.null(mw$path) && (mw$method == req$method),
+                    is.null(mw$path) && is.null(mw$method)
+                  )),
+                  (req$protocol=="websocket" && any(
+                    path_processed$match,
+                    is.null(mw$path)
+                  ))
+                )){
+
+
+                  body<-
+                    try(
+                      switch(req$protocol,
+                             "http"=mw$func(req=req, res=res, err=err),
+                             "websocket"=mw$func(binary=ws_binary, message=ws_message, res=res, err=err)),
+                      silent=TRUE
+                    )
+
+                  if('try-error' %in% class(body)){
+                    # process it further (should be catched by errorhandler)
+                    self$process_event("error", req, res, err, as.character(body))
+                    err$set(as.character(body))
+                    body<-NULL
+                  }
+
+                  # if return values is not NULL, use it as body (unless set explicitely)
+                  if(is.null(res$body) && !is.null(body)) res$set_body(body)
+
+                  if(!is.null(res$body)){
+                    break
+                  }
+                }
+              }
+
+              if(getOption("jug.verbose")){
+                cat(toupper(req$protocol), "|", req$path,"-", req$method, "-", res$status, "\n" ,sep = " ")
+              }
+
+              # check for empty body after full processing and do a clean stop
+              if(is.null(res$body)){
+                err_msg <- "Request not handled or no body set by any middleware"
+                self$process_event("error", req, res, err, err_msg)
+                stop(err_msg)
+              }
+
+              self$process_event("finish", req, res, err)
+              res$structured(req$protocol)
+
+            }
+          )
+  )
+
+
+
 #' New jug instance
 #'
 #' Creates a new jug instance which can be build upon with other functions (middlewares).
