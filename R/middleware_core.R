@@ -17,7 +17,7 @@ MiddlewareHandler<-
             },
             process_event=function(event, ...){
               listeners = Filter(function(l) l$event == event, self$listeners)
-              lapply(listeners, function(l) l$func(...))
+              lapply(listeners, function(l) l$func(event, ...))
             },
             invoke=function(req, ws_message = NULL, ws_binary = NULL){
               res<-Response$new()
@@ -25,6 +25,8 @@ MiddlewareHandler<-
               err<-new_error()
 
               body<-NULL
+
+              self$process_event("start", req, res, err)
 
 
               for(mw in self$middlewares){
@@ -60,6 +62,7 @@ MiddlewareHandler<-
 
                   if('try-error' %in% class(body)){
                     # process it further (should be catched by errorhandler)
+                    self$process_event("error", req, res, err, as.character(body))
                     err$set(as.character(body))
                     body<-NULL
                   }
@@ -78,7 +81,11 @@ MiddlewareHandler<-
               }
 
               # check for empty body after full processing and do a clean stop
-              if(is.null(res$body)) stop("Request not handled or no body set by any middleware")
+              if(is.null(res$body)){
+                err_msg <- "Request not handled or no body set by any middleware"
+                self$process_event("error", req, res, err, err_msg)
+                stop(err_msg)
+              }
 
               self$process_event("finish", req, res, err)
               res$structured(req$protocol)
