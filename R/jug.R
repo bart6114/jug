@@ -3,16 +3,16 @@
 #' @importFrom magrittr %>%
 Jug<-R6::R6Class("Jug",
              public=list(
-               middleware_handler=NULL,
+               request_handler=NULL,
                daemon_obj=NULL,
                app_definition=function(){
                  list(
                    call=function(req){
-                     self$middleware_handler$invoke(req)
+                     self$request_handler$invoke(req)
                    },
                    onWSOpen=function(ws){
                      ws$onMessage(function(binary, message) {
-                       ws$send(self$middleware_handler$invoke(ws$request,
+                       ws$send(self$request_handler$invoke(ws$request,
                                                               ws_message=message,
                                                               ws_binary=binary)
                        )
@@ -21,10 +21,10 @@ Jug<-R6::R6Class("Jug",
                  )
                },
                add_collected_middelware=function(collector){
-                 self$middleware_handler$add_middleware(collector$middleware_handler$middlewares)
+                 self$request_handler$add_middleware(collector$request_handler$middlewares)
                },
                initialize=function(){
-                 self$middleware_handler=MiddlewareHandler$new()
+                 self$request_handler=RequestHandler$new()
                  options("jug.verbose"=FALSE) # set early for testing purposes were serve_it isn't called
                },
                start=function(host, port, daemonized){
@@ -37,7 +37,7 @@ Jug<-R6::R6Class("Jug",
 
                },
                print=function(...){
-                 cat("A Jug instance with ",length(self$middleware_handler$middlewares)," middlewares attached\n", sep="")
+                 cat("A Jug instance with ",length(self$request_handler$middlewares)," middlewares attached\n", sep="")
                  invisible(self)
                }
              )

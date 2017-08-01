@@ -57,5 +57,5 @@ RawTestRequest<-R6Class("RawTestRequest", public=list(
 #'
 #' @export
 process_test_request<-function(jug, test_request){
-  jug$middleware_handler$invoke(test_request)
+  jug$request_handler$invoke(test_request)
 }

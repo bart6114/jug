@@ -1,10 +1,10 @@
 library(R6)
 
-#' MiddlewareHandler R6 class definition
+#' RequestHandler R6 class definition
 #'
 #' @import R6
-MiddlewareHandler<-
-  R6Class("MiddlewareHandler",
+RequestHandler<-
+  R6Class("RequestHandler",
           public=list(
             middlewares=c(),
             listeners=c(),
@@ -128,7 +128,7 @@ Listener<-
 
 add_listener<-function(jug, func, event){
   mw<-Listener$new(func, event)
-  jug$middleware_handler$add_listener(mw)
+  jug$request_handler$add_listener(mw)
 
   jug
 }
@@ -151,7 +151,7 @@ add_middleware<-function(jug, func, path=NULL, method=NULL, websocket=FALSE){
   method<-if(!is.null(method)) toupper(method) else NULL
   mw<-Middleware$new(func, path, method, websocket)
 
-  jug$middleware_handler$add_middleware(mw)
+  jug$request_handler$add_middleware(mw)
 
   jug
 }
