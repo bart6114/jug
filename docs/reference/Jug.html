@@ -23,9 +23,10 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -51,10 +52,16 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../articles/jug.html">Get Started</a>
+</li>
+<li>
+  <a href="../reference/index.html">Reference</a>
 </li>
       </ul>
       
@@ -83,26 +90,21 @@
     <p>Creates a new jug instance which can be build upon with other functions (middlewares).</p>
     
 
-    <pre><span class='fu'>jug</span>()</pre>
+    <pre class="usage"><span class='fu'>jug</span>()</pre>
         
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># # This Hello World example will serve a jug instance on the default port.</span>
-<span class='co'># # The jug instance will return "Hello World!" if a GET request is send to it.</span>
-<span class='co'># jug() %&gt;%</span>
-<span class='co'>#  get("/", function(req, res, err) "Hello World!" ) %&gt;%</span>
-<span class='co'>#  simple_error_handler_json() %&gt;%</span>
-<span class='co'>#  serve_it(verbose=TRUE)</span>
-<span class='co'>## ---------------------------------------------</span>
-
-
-
-<span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># # Introduction to jug</span>
-<span class='co'># vignette("jug", package="jug")</span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+    <pre class="examples"><div class='input'><span class='co'># This Hello World example will serve a jug instance on the default port.</span>
+<span class='co'># The jug instance will return "Hello World!" if a GET request is send to it.</span>
+<span class='co'># The result of this has to be piped to 'serve_it()' in order to launch the API.</span>
+<span class='fu'>jug</span>() <span class='kw'>%&gt;%</span>
+ <span class='fu'><a href='get.html'>get</a></span>(<span class='st'>"/"</span>, <span class='kw'>function</span>(<span class='no'>req</span>, <span class='no'>res</span>, <span class='no'>err</span>) <span class='st'>"Hello World!"</span> ) <span class='kw'>%&gt;%</span>
+ <span class='fu'><a href='simple_error_handler_json.html'>simple_error_handler_json</a></span>()</div><div class='output co'>#&gt; A Jug instance with 2 middlewares attached</div><div class='input'>
+</div><div class='input'>
+</div><div class='input'><span class='co'># Introduction to jug</span>
+<span class='fu'>vignette</span>(<span class='st'>"jug"</span>, <span class='kw'>package</span><span class='kw'>=</span><span class='st'>"jug"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: vignette ‘jug’ not found</span></div><div class='input'>
+</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

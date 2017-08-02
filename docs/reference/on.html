@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Helper function to extract regex named capture groups from string — match_path • jug</title>
+<title>Function to add an event listener — on • jug</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,31 +83,39 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Helper function to extract regex named capture groups from string</h1>
+    <h1>Function to add an event listener</h1>
     </div>
 
     
-    <p>adapted from: http://oddhypothesis.blogspot.be/2012/05/regex-named-capture-in-r.html</p>
+    <p>Function to add an event listener</p>
     
 
-    <pre class="usage"><span class='fu'>match_path</span>(<span class='no'>pattern</span>, <span class='no'>path</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>on</span>(<span class='no'>jug</span>, <span class='no'>event</span>, <span class='no'>func</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>pattern</th>
-      <td><p>regex pattern</p></td>
+      <th>jug</th>
+      <td><p>the jug instance</p></td>
     </tr>
     <tr>
-      <th>path</th>
-      <td><p>the path to test the regex pattern against</p></td>
+      <th>event</th>
+      <td><p>the event to bind to (one of <code>start</code>, <code>finish</code> or <code>error</code>)</p></td>
+    </tr>
+    <tr>
+      <th>func</th>
+      <td><p>the function to pass the <code>req</code>, <code>res</code>, <code>err</code> and (if <code>error</code> event) the <code>err_msg</code> to</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>arguments passed to <code>regexpr</code></p></td>
+      <td><p>extra arguments to pass to the listener function</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <p><code><a href='post.html'>post</a></code>, <code><a href='put.html'>put</a></code>, <code><a href='delete.html'>delete</a></code>, <code><a href='use.html'>use</a></code>, <code><a href='ws.html'>ws</a></code></p>
     
 
   </div>
@@ -115,7 +123,9 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#see-also">See also</a></li>
+          </ul>
 
   </div>
 </div>

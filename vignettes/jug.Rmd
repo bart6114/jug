@@ -348,6 +348,49 @@ jug() %>%
   serve_it()
 ```
 
+## Event listeners
+
+The concept of event listeners have been available since version 0.1.7.902. As middelwares did not suffice to implement a robust logger, the concept of events and event listeners was introduced. Currently _listeners_ can bind to events, an example is given below:
+
+```{r, eval=FALSE}
+jug() %>%
+  get("/", function(req,res,err){"foo"}) %>%
+  on("finish", function(req, res, err){
+    print("the finish event was received; request processing finished!")}
+    ) %>%
+  serve_it()
+```
+
+Three events are available currently:
+
+- `start`: this event is triggered once a new request is received
+- `finish`: this event is triggered once a request has been fully processed
+- `error`: this event is triggered once an error is being raised inside a middleware
+
+The `start` and `finish` event will pass the current state of the `req`, `res` and `err` objects to the listener functions. The `error` event will pass a fourth argument, namely a character representation of the error message.
+
+##  Predefined event listeners
+
+### Logger
+
+A logger based on `futile.logger` is available through `logger`.
+
+An example is given below:
+
+```{r, eval=FALSE}
+jug() %>%
+  get("/", function(req,res,err){"foo"}) %>%
+  get("/err", function(req,res,err){stop("bar")}) %>%
+  logger(threshold = futile.logger::DEBUG, log_file='logfile.log', console=TRUE) %>%
+  simple_error_handler_json() %>%
+  serve_it()
+```
+
+In the above example, the logger threshold is set at `futile.logger::DEBUG` meaning that we will receive detailed information during the execution. A visual distinction will be made based on the type of message send, e.g. `INFO` (on path `/`) or `ERROR` (on path `/err`).
+
+In this example, the logger will write to `logfile.log` __and__ will output to the console. 
+
+For more information on the logger thresholds, have a look at the documentation of the `futile.logger` package.
 
 ## The request, response and error objects
 

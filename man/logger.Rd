@@ -2,16 +2,20 @@
 % Please edit documentation in R/listener_logger.R
 \name{logger}
 \alias{logger}
-\title{Basic logging middleware}
+\title{Basic logger}
 \usage{
 logger(jug, threshold = futile.logger::DEBUG, log_file = NULL,
   console = TRUE)
 }
 \arguments{
-\item{log_file}{the text file to which the log will be appended}
+\item{jug}{a jug instance}
 
-\item{log_msg_func}{the function which returns the content of the log message, expects a function that allows to pass a \code{req}, \code{res} and \code{err} argument}
+\item{threshold}{the threhold as from what type of message to activate the logger (check the documentation of \pkg{futile.logger} for possibilities)}
+
+\item{log_file}{if given, the file to which the log is written}
+
+\item{console}{if TRUE will (also) print to console}
 }
 \description{
-Basic logging middleware
+This logger uses futile.logger to implement logging functionality
 }

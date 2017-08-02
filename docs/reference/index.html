@@ -23,9 +23,10 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -51,10 +52,16 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../articles/jug.html">Get Started</a>
+</li>
+<li>
+  <a href="../reference/index.html">Reference</a>
 </li>
       </ul>
       
@@ -78,7 +85,7 @@
     <div class="page-header">
       <h1>
         Reference
-        <small>version&nbsp;0.1.7</small>
+        <small>version&nbsp;0.1.7.902</small>
       </h1>
     </div>
 
@@ -98,6 +105,12 @@
           </th>
         </tr>
         <tr>
+          <!--  -->
+          <td>
+            <p><code><a href="add_listener.html">add_listener</a></code> </p>
+          </td>
+          <td><p>Internal function to add listeners</p></td>
+        </tr><tr>
           <!--  -->
           <td>
             <p><code><a href="add_middleware.html">add_middleware</a></code> </p>
@@ -142,7 +155,7 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="get.html">get</a></code> <code><a href="get.html">get.Jug</a></code> </p>
+            <p><code><a href="get.html">get</a></code> </p>
           </td>
           <td><p>Function to add GET-binding middleware</p></td>
         </tr><tr>
@@ -160,6 +173,18 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="Listener.html">Listener</a></code> </p>
+          </td>
+          <td><p>Middleware class</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="logger.html">logger</a></code> </p>
+          </td>
+          <td><p>Basic logger</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="match_path.html">match_path</a></code> </p>
           </td>
           <td><p>Helper function to extract regex named capture groups from string</p></td>
@@ -172,15 +197,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="MiddlewareHandler.html">MiddlewareHandler</a></code> </p>
-          </td>
-          <td><p>MiddlewareHandler R6 class definition</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="new_error.html">new_error</a></code> </p>
           </td>
           <td><p>Create response instance</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="on.html">on</a></code> </p>
+          </td>
+          <td><p>Function to add an event listener</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -217,6 +242,12 @@
             <p><code><a href="Request.html">Request</a></code> </p>
           </td>
           <td><p>Request class</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="RequestHandler.html">RequestHandler</a></code> </p>
+          </td>
+          <td><p>RequestHandler R6 class definition</p></td>
         </tr><tr>
           <!--  -->
           <td>

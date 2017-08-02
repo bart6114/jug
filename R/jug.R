@@ -150,10 +150,10 @@ RequestHandler<-
 #' \dontrun{
 #' # This Hello World example will serve a jug instance on the default port.
 #' # The jug instance will return "Hello World!" if a GET request is send to it.
+#' # The result of this has to be piped to 'serve_it()' in order to launch the API.
 #' jug() %>%
 #'  get("/", function(req, res, err) "Hello World!" ) %>%
-#'  simple_error_handler_json() %>%
-#'  serve_it(verbose=TRUE)
+#'  simple_error_handler_json()
 #' }
 #' }
 #'

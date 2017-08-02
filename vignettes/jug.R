@@ -134,6 +134,22 @@ jug()
 #    }) %>%
 #    serve_it()
 
+## ---- eval=FALSE---------------------------------------------------------
+#  jug() %>%
+#    get("/", function(req,res,err){"foo"}) %>%
+#    on("finish", function(req, res, err){
+#      print("the finish event was received; request processing finished!")}
+#      ) %>%
+#    serve_it()
+
+## ---- eval=FALSE---------------------------------------------------------
+#  jug() %>%
+#    get("/", function(req,res,err){"foo"}) %>%
+#    get("/err", function(req,res,err){stop("bar")}) %>%
+#    logger(threshold = futile.logger::DEBUG, log_file='logfile.log', console=TRUE) %>%
+#    simple_error_handler_json() %>%
+#    serve_it()
+
 ## ------------------------------------------------------------------------
 head(mtcars)
 

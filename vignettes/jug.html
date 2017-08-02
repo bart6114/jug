@@ -12,7 +12,7 @@
 
 <meta name="author" content="Bart Smeets" />
 
-<meta name="date" content="2017-04-13" />
+<meta name="date" content="2017-08-02" />
 
 <title>Getting started with jug</title>
 
@@ -70,20 +70,20 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Getting started with jug</h1>
 <h4 class="author"><em>Bart Smeets</em></h4>
-<h4 class="date"><em>2017-04-13</em></h4>
+<h4 class="date"><em>2017-08-02</em></h4>
 
 
 
-<p><em>generated using jug version 0.1.7</em></p>
+<p><em>generated using jug version 0.1.7.902</em></p>
 <div id="hello-world" class="section level2">
 <h2><a name="hello"></a>Hello World!</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(jug)
 
-<span class="kw">jug</span>() %&gt;%
-<span class="st">  </span><span class="kw">get</span>(<span class="st">&quot;/&quot;</span>, function(req, res, err){
+<span class="kw">jug</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">get</span>(<span class="st">&quot;/&quot;</span>, <span class="cf">function</span>(req, res, err){
     <span class="st">&quot;Hello World!&quot;</span>
-  }) %&gt;%
-<span class="st">  </span><span class="kw">simple_error_handler_json</span>() %&gt;%
+  }) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">simple_error_handler_json</span>() <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">serve_it</span>()</code></pre></div>
 <pre><code>Serving the jug at http://127.0.0.1:8080</code></pre>
 </div>
@@ -95,7 +95,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="getting-started" class="section level2">
 <h2>Getting started</h2>
 <p>To install the latest version use <code>devtools</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">&quot;Bart6114/jug&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;Bart6114/jug&quot;</span>)</code></pre></div>
 <p>Or install the CRAN version:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packags</span>(<span class="st">&quot;jug&quot;</span>)</code></pre></div>
 <p>Load the library:</p>
@@ -117,18 +117,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3>Method insensitive middleware</h3>
 <p>The <code>use</code> function is a method insensitive middleware specifier. While it is method insensitive, it can be bound to a specific path. If the <code>path</code> argument (accepts a regex string with <code>grepl</code> setting <code>perl=TRUE</code>) is set to <code>NULL</code> it also becomes path insensitive and will process <em>every</em> request.</p>
 <p>A path insensitive example:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">jug</span>() %&gt;%
-<span class="st">  </span><span class="kw">use</span>(<span class="dt">path =</span> <span class="ot">NULL</span>, function(req, res, err){
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">jug</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">use</span>(<span class="dt">path =</span> <span class="ot">NULL</span>, <span class="cf">function</span>(req, res, err){
     <span class="st">&quot;test 1,2,3!&quot;</span>
-    }) %&gt;%
+    }) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">serve_it</span>()</code></pre></div>
 <pre><code>$ curl 127.0.0.1:8080/xyz
 test 1,2,3!</code></pre>
 <p>The same example, but path sensitive:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">jug</span>() %&gt;%
-<span class="st">  </span><span class="kw">use</span>(<span class="dt">path =</span> <span class="st">&quot;/&quot;</span>, function(req, res, err){
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">jug</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">use</span>(<span class="dt">path =</span> <span class="st">&quot;/&quot;</span>, <span class="cf">function</span>(req, res, err){
     <span class="st">&quot;test 1,2,3!&quot;</span>
-    }) %&gt;%
+    }) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">serve_it</span>()</code></pre></div>
 <pre><code>$ curl 127.0.0.1:8080/xyz
 curl: (52) Empty reply from server
@@ -142,21 +142,21 @@ test 1,2,3!</code></pre>
 <h3>Method sensitive middleware</h3>
 <p>In the same style as the request method insensitive middleware, there is request method sensitive middleware available. More specifically, you can use the <code>get</code>, <code>post</code>, <code>put</code> and <code>delete</code> functions.</p>
 <p>This type of middleware is bound to a path using the <code>path</code> argument. If <code>path</code> is set to <code>NULL</code> it will bind to every request to the path, given that it is of the corresponding request method.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">jug</span>() %&gt;%
-<span class="st">  </span><span class="kw">get</span>(<span class="dt">path =</span> <span class="st">&quot;/&quot;</span>, function(req, res, err){
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">jug</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">get</span>(<span class="dt">path =</span> <span class="st">&quot;/&quot;</span>, <span class="cf">function</span>(req, res, err){
     <span class="st">&quot;get test 1,2,3!&quot;</span>
-    }) %&gt;%
+    }) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">serve_it</span>()</code></pre></div>
 <pre><code>$ curl 127.0.0.1:8080
 get test 1,2,3!</code></pre>
 <p>Middlewares are meant to be chained, so to bind different functions to different paths:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">jug</span>() %&gt;%
-<span class="st">  </span><span class="kw">get</span>(<span class="dt">path =</span> <span class="st">&quot;/&quot;</span>, function(req, res, err){
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">jug</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">get</span>(<span class="dt">path =</span> <span class="st">&quot;/&quot;</span>, <span class="cf">function</span>(req, res, err){
     <span class="st">&quot;get test 1,2,3 on path /&quot;</span>
-    }) %&gt;%
-<span class="st">  </span><span class="kw">get</span>(<span class="dt">path =</span> <span class="st">&quot;/my_path&quot;</span>, function(req, res, err){
+    }) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">get</span>(<span class="dt">path =</span> <span class="st">&quot;/my_path&quot;</span>, <span class="cf">function</span>(req, res, err){
     <span class="st">&quot;get test 1,2,3 on path /my_path&quot;</span>
-    }) %&gt;%
+    }) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">serve_it</span>()</code></pre></div>
 <pre><code>$ curl 127.0.0.1:8080
 get test 1,2,3 on path /
@@ -167,10 +167,10 @@ get test 1,2,3 on path /my_path</code></pre>
 <div id="websocket-protocol" class="section level3">
 <h3>Websocket protocol</h3>
 <p>By default all middleware convenience function bind to the http protocol. You can however access the jug server through websocket by using the websocket sensitive middleware function <code>ws</code>. Below an example echo’ing the incoming message.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">jug</span>() %&gt;%
-<span class="st">   </span><span class="kw">ws</span>(<span class="st">&quot;/echo_message&quot;</span>, function(binary, message, res, err){
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">jug</span>() <span class="op">%&gt;%</span>
+<span class="st">   </span><span class="kw">ws</span>(<span class="st">&quot;/echo_message&quot;</span>, <span class="cf">function</span>(binary, message, res, err){
     message
-  }) %&gt;%
+  }) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">serve_it</span>()</code></pre></div>
 <p>Opening a connection to <code>ws://127.0.0.1:8080/echo_message</code> and sending e.g. the message <code>test</code> to it will then return the value <code>test</code>.</p>
 <p><strong>Please note that websocket support is experimental at this stage.</strong></p>
@@ -180,26 +180,26 @@ get test 1,2,3 on path /my_path</code></pre>
 <p>In order to make you code more modular, you can include elsewhere defined middleware chains into your jug instance. To do this you can use a combination of the <code>collector()</code> and <code>include()</code> functions.</p>
 <p>Below a <code>collector</code> is defined locally (in the same R script) and <code>include</code>d.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> collected_mw&lt;-
-<span class="st">    </span><span class="kw">collector</span>() %&gt;%
-<span class="st">    </span><span class="kw">get</span>(<span class="st">&quot;/&quot;</span>, function(req,res,err){
+<span class="st">    </span><span class="kw">collector</span>() <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">get</span>(<span class="st">&quot;/&quot;</span>, <span class="cf">function</span>(req,res,err){
       <span class="kw">return</span>(<span class="st">&quot;test&quot;</span>)
     })
 
-  res&lt;-<span class="kw">jug</span>() %&gt;%
-<span class="st">    </span><span class="kw">include</span>(collected_mw) %&gt;%
+  res&lt;-<span class="kw">jug</span>() <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">include</span>(collected_mw) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">serve_it</span>()</code></pre></div>
 <p>However, it is also possible to <code>include</code> a <code>collector</code> that is defined in another .R file.</p>
 <p>Let’s say below is the file <code>my_middlewares.R</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(jug)
 
 collected_mw&lt;-
-<span class="st">  </span><span class="kw">collector</span>() %&gt;%
-<span class="st">  </span><span class="kw">get</span>(<span class="st">&quot;/&quot;</span>, function(req,res,err){
+<span class="st">  </span><span class="kw">collector</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">get</span>(<span class="st">&quot;/&quot;</span>, <span class="cf">function</span>(req,res,err){
     <span class="kw">return</span>(<span class="st">&quot;test2&quot;</span>)
   })</code></pre></div>
 <p>We can include it as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res&lt;-<span class="kw">jug</span>() %&gt;%
-<span class="st">  </span><span class="kw">include</span>(collected_mw, <span class="st">&quot;my_middlewares.R&quot;</span>) %&gt;%
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res&lt;-<span class="kw">jug</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">include</span>(collected_mw, <span class="st">&quot;my_middlewares.R&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">serve_it</span>()</code></pre></div>
 </div>
 </div>
@@ -208,8 +208,8 @@ collected_mw&lt;-
 <div id="error-handling" class="section level3">
 <h3>Error handling</h3>
 <p>A simple error handling middleware (<code>simple_error_handler</code> / <code>simple_error_handler_json</code>) which catches unbound paths and <code>func</code> evaluation errors. If you do not implement a custom error handler, I suggest you add either of these to your jug instance. The <code>simple_error_handler</code> returns an HTML error page while the <code>simple_error_handler_json</code> returns a JSON message.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">jug</span>() %&gt;%
-<span class="st">  </span><span class="kw">simple_error_handler</span>() %&gt;%
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">jug</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">simple_error_handler</span>() <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">serve_it</span>()</code></pre></div>
 <pre><code>$ curl 127.0.0.1:8080
 &lt;!DOCTYPE html&gt;
@@ -230,10 +230,10 @@ collected_mw&lt;-
 <p>The main reason jug was created is to easily allow access to your own custom R functions. The convenience function <code>decorate</code> is built especially for this purpose.</p>
 <p>If you <code>decorate</code> your own function it will translate all arguments passed in the query string of the request as arguments to your function. It will also pass all headers to the function as arguments.</p>
 <p>If your function does not accept a <code>...</code> argument, all query/header parameters that are not explicitly requested by your function are dropped. If your function requests a <code>req</code>, <code>res</code> or <code>err</code> argument (or <code>...</code>) the corresponding objects will be passed.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">say_hello&lt;-function(name){<span class="kw">paste</span>(<span class="st">&quot;hello&quot;</span>,name,<span class="st">&quot;!&quot;</span>)}
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">say_hello&lt;-<span class="cf">function</span>(name){<span class="kw">paste</span>(<span class="st">&quot;hello&quot;</span>,name,<span class="st">&quot;!&quot;</span>)}
 
-<span class="kw">jug</span>() %&gt;%
-<span class="st">  </span><span class="kw">get</span>(<span class="st">&quot;/&quot;</span>, <span class="kw">decorate</span>(say_hello)) %&gt;%
+<span class="kw">jug</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">get</span>(<span class="st">&quot;/&quot;</span>, <span class="kw">decorate</span>(say_hello)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">serve_it</span>()</code></pre></div>
 <p>If in the above, you pass a parameter <code>name</code> through either the query string or as a header in the GET request, it will return as in the example below.</p>
 <pre><code>$ curl 127.0.0.1:8080/?name=Bart
@@ -242,8 +242,8 @@ hello Bart !</code></pre>
 <div id="static-file-server" class="section level3">
 <h3>Static file server</h3>
 <p>The <code>serve_static_file</code> middleware allows for serving static files.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">jug</span>() %&gt;%
-<span class="st">  </span><span class="kw">serve_static_files</span>() %&gt;%
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">jug</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">serve_static_files</span>() <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">serve_it</span>()</code></pre></div>
 <p>The default root directory is the one returned by <code>getwd()</code> but can be specified by providing a <code>root_path</code> argument to the <code>serve_static_files</code> middleware. It transforms a bare <code>/</code> path to <code>index.html</code>.</p>
 <p>Aside from development, I do not recommend using jug to serve static files.</p>
@@ -252,11 +252,11 @@ hello Bart !</code></pre>
 <h3>CORS functionality</h3>
 <p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS">CORS functionality</a> is introduced by the <code>cors()</code> middleware function.</p>
 <p>Consider the following example.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">jug</span>() %&gt;%
-<span class="st">  </span><span class="kw">cors</span>() %&gt;%
-<span class="st">  </span><span class="kw">get</span>(<span class="st">&quot;/&quot;</span>, function(req, res, err){
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">jug</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">cors</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">get</span>(<span class="st">&quot;/&quot;</span>, <span class="cf">function</span>(req, res, err){
     <span class="st">&quot;Hello World!&quot;</span>
-  }) %&gt;%
+  }) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">serve_it</span>()</code></pre></div>
 <pre><code>$ curl -v 127.0.0.1:8080/
 *   Trying 127.0.0.1...
@@ -280,27 +280,61 @@ hello Bart !</code></pre>
 <p>Currently there is only built-in support for basic authentication (check: <a href="https://www.httpwatch.com/httpgallery/authentication/" class="uri">https://www.httpwatch.com/httpgallery/authentication/</a>) through the <code>auth_basic</code> middleware function. The middleware will check the request for a valid username / password combination. If an invalid combination is passed, it will return a 401 status, a <code>WWW-Authenticate</code> header and a text body which states that there was an authentication error.</p>
 <p>First you will need to define a function that accepts <code>username</code> and <code>password</code> arguments. The funtion should return <code>TRUE</code> if the combination is valid and <code>FALSE</code> if the combination is invalid. A dummy example is shown below. Note, that this function could also check e.g. a database to validate the combo.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># dummy account checker</span>
-account_checker &lt;-<span class="st"> </span>function(username, password){
+account_checker &lt;-<span class="st"> </span><span class="cf">function</span>(username, password){
   <span class="co"># do something to verify the username and password and return TRUE if combination OK</span>
-  <span class="kw">all</span>(username ==<span class="st"> &quot;test_user&quot;</span>, 
-      password ==<span class="st"> &quot;test_password&quot;</span>)
+  <span class="kw">all</span>(username <span class="op">==</span><span class="st"> &quot;test_user&quot;</span>, 
+      password <span class="op">==</span><span class="st"> &quot;test_password&quot;</span>)
 }</code></pre></div>
 <p>Next you need to instantiate the <code>auth_basic</code> middleware in you middleware chain. The <code>auth_basic</code> function accepts as first parameter the username/password validation function. Below two examples are given. The first one shows how to do authentication for a specific path (<code>/test</code>).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">jug</span>() %&gt;%
-<span class="st">  </span><span class="kw">get</span>(<span class="st">&quot;/&quot;</span>, function(req, res, err){
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">jug</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">get</span>(<span class="st">&quot;/&quot;</span>, <span class="cf">function</span>(req, res, err){
     <span class="st">&quot;/ req&quot;</span>
-  }) %&gt;%
-<span class="st">  </span><span class="kw">get</span>(<span class="st">&quot;/test&quot;</span>, <span class="kw">auth_basic</span>(account_checker), function(req, res, err){
+  }) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">get</span>(<span class="st">&quot;/test&quot;</span>, <span class="kw">auth_basic</span>(account_checker), <span class="cf">function</span>(req, res, err){
     <span class="st">&quot;/test req&quot;</span>
-  }) %&gt;%
+  }) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">serve_it</span>()</code></pre></div>
 <p>The second example below shows how to activate basic authentication for all paths in the jug instance.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">jug</span>() %&gt;%
-<span class="st">  </span><span class="kw">use</span>(<span class="ot">NULL</span>, <span class="kw">auth_basic</span>(account_checker)) %&gt;%
-<span class="st">  </span><span class="kw">get</span>(<span class="st">&quot;/&quot;</span>, function(req, res, err){
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">jug</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">use</span>(<span class="ot">NULL</span>, <span class="kw">auth_basic</span>(account_checker)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">get</span>(<span class="st">&quot;/&quot;</span>, <span class="cf">function</span>(req, res, err){
     <span class="st">&quot;/ req&quot;</span>
-  }) %&gt;%
+  }) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">serve_it</span>()</code></pre></div>
+</div>
+</div>
+<div id="event-listeners" class="section level2">
+<h2>Event listeners</h2>
+<p>The concept of event listeners have been available since version 0.1.7.902. As middelwares did not suffice to implement a robust logger, the concept of events and event listeners was introduced. Currently <em>listeners</em> can bind to events, an example is given below:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">jug</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">get</span>(<span class="st">&quot;/&quot;</span>, <span class="cf">function</span>(req,res,err){<span class="st">&quot;foo&quot;</span>}) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">on</span>(<span class="st">&quot;finish&quot;</span>, <span class="cf">function</span>(req, res, err){
+    <span class="kw">print</span>(<span class="st">&quot;the finish event was received; request processing finished!&quot;</span>)}
+    ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">serve_it</span>()</code></pre></div>
+<p>Three events are available currently:</p>
+<ul>
+<li><code>start</code>: this event is triggered once a new request is received</li>
+<li><code>finish</code>: this event is triggered once a request has been fully processed</li>
+<li><code>error</code>: this event is triggered once an error is being raised inside a middleware</li>
+</ul>
+<p>The <code>start</code> and <code>finish</code> event will pass the current state of the <code>req</code>, <code>res</code> and <code>err</code> objects to the listener functions. The <code>error</code> event will pass a fourth argument, namely a character representation of the error message.</p>
+</div>
+<div id="predefined-event-listeners" class="section level2">
+<h2>Predefined event listeners</h2>
+<div id="logger" class="section level3">
+<h3>Logger</h3>
+<p>A logger based on <code>futile.logger</code> is available through <code>logger</code>.</p>
+<p>An example is given below:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">jug</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">get</span>(<span class="st">&quot;/&quot;</span>, <span class="cf">function</span>(req,res,err){<span class="st">&quot;foo&quot;</span>}) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">get</span>(<span class="st">&quot;/err&quot;</span>, <span class="cf">function</span>(req,res,err){<span class="kw">stop</span>(<span class="st">&quot;bar&quot;</span>)}) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">logger</span>(<span class="dt">threshold =</span> futile.logger<span class="op">::</span>DEBUG, <span class="dt">log_file=</span><span class="st">'logfile.log'</span>, <span class="dt">console=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">simple_error_handler_json</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">serve_it</span>()</code></pre></div>
+<p>In the above example, the logger threshold is set at <code>futile.logger::DEBUG</code> meaning that we will receive detailed information during the execution. A visual distinction will be made based on the type of message send, e.g. <code>INFO</code> (on path <code>/</code>) or <code>ERROR</code> (on path <code>/err</code>).</p>
+<p>In this example, the logger will write to <code>logfile.log</code> <strong>and</strong> will output to the console.</p>
+<p>For more information on the logger thresholds, have a look at the documentation of the <code>futile.logger</code> package.</p>
 </div>
 </div>
 <div id="the-request-response-and-error-objects" class="section level2">
@@ -377,7 +411,7 @@ account_checker &lt;-<span class="st"> </span>function(username, password){
 ## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
 ## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mpg_model&lt;-
-<span class="st">  </span><span class="kw">lm</span>(mpg~gear+hp, <span class="dt">data=</span>mtcars)
+<span class="st">  </span><span class="kw">lm</span>(mpg<span class="op">~</span>gear<span class="op">+</span>hp, <span class="dt">data=</span>mtcars)
 
 <span class="kw">summary</span>(mpg_model)</code></pre></div>
 <pre><code>## 
@@ -401,7 +435,7 @@ account_checker &lt;-<span class="st"> </span>function(username, password){
 ## F-statistic: 43.79 on 2 and 29 DF,  p-value: 1.731e-09</code></pre>
 <p>As we went through a lot of hard work to end up with this model (/s), we now want to expose it through an API. This way we allow other people or applications to make predictions using this model.</p>
 <p>As a first step we need to build a minimal prediction function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">predict_mpg &lt;-<span class="st"> </span>function(gear, hp){
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">predict_mpg &lt;-<span class="st"> </span><span class="cf">function</span>(gear, hp){
   <span class="kw">predict</span>(mpg_model, 
           <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">gear=</span><span class="kw">as.numeric</span>(gear), 
                                <span class="dt">hp=</span><span class="kw">as.numeric</span>(hp)))[[<span class="dv">1</span>]]
@@ -409,26 +443,26 @@ account_checker &lt;-<span class="st"> </span>function(username, password){
 <p>We can test the function by supplying the <code>gear</code> and <code>hp</code> arguments.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict_mpg</span>(<span class="dt">gear =</span> <span class="dv">4</span>, <span class="dt">hp =</span> <span class="dv">80</span>)</code></pre></div>
 <pre><code>## [1] 25.34671</code></pre>
-<p>Now, to expose this function as a we API, we need to build a <code>jug</code> instance. We can use the built-in <code>decorate</code> middleware to ease the integration of the <code>predict_mpg</code> function. Below, a minimal example is shown.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">jug</span>() %&gt;%
-<span class="st">  </span><span class="kw">post</span>(<span class="st">&quot;/predict-mpg&quot;</span>, <span class="kw">decorate</span>(predict_mpg)) %&gt;%
-<span class="st">  </span><span class="kw">simple_error_handler_json</span>() %&gt;%
+<p>Now, to expose this function as a web API, we need to build a <code>jug</code> instance. We can use the built-in <code>decorate</code> middleware to ease the integration of the <code>predict_mpg</code> function. Below, a minimal example is shown.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">jug</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">post</span>(<span class="st">&quot;/predict-mpg&quot;</span>, <span class="kw">decorate</span>(predict_mpg)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">simple_error_handler_json</span>() <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">serve_it</span>()</code></pre></div>
 <pre><code>Serving the jug at http://127.0.0.1:8080</code></pre>
 <p>We can now send a http POST request to the <code>http://127.0.0.1:8080/predict-mpg</code> url and it will return the predicted value! It works out of the box with either the parameters in a JSON body, as <code>multipart/form-data</code> or as a <code>x-www-form-urlencoded</code>.</p>
 <p><strong>JSON body</strong></p>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">curl</span> -X POST \
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">curl</span> -X POST \
   http://127.0.0.1:8080/predict-mpg \
   -H <span class="st">'content-type: application/json'</span> \
   -d <span class="st">'{&quot;hp&quot;: 80, &quot;gear&quot;: 4}'</span></code></pre></div>
 <p><strong>multipart form</strong></p>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">curl</span> -X POST \
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">curl</span> -X POST \
   http://127.0.0.1:8080/predict-mpg \
   -H <span class="st">'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'</span> \
   -F hp=80 \
   -F gear=4</code></pre></div>
 <p><strong>urlencode form</strong></p>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">curl</span> -X POST \
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">curl</span> -X POST \
   http://127.0.0.1:8080/predict-mpg \
   -H <span class="st">'content-type: application/x-www-form-urlencoded'</span> \
   -d <span class="st">'gear=4&amp;hp=80'</span></code></pre></div>
@@ -442,7 +476,7 @@ account_checker &lt;-<span class="st"> </span>function(username, password){
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

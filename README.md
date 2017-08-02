@@ -19,6 +19,11 @@ Plugins:
 
 ## Changes
 
+### v0.1.7.902
+- Introduction of events and event listeners (check e.g. the `on` function)
+- Introduction of the `logger`, a predefined event listener based on futile.logger
+- Enabled ByteCompile on installation
+
 ### v0.1.7.901
 - Adjustment to `serve_static_files`: add `pdf` to binary types
 

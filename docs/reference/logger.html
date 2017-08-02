@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Helper function to extract regex named capture groups from string — match_path • jug</title>
+<title>Basic logger — logger • jug</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,29 +83,34 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Helper function to extract regex named capture groups from string</h1>
+    <h1>Basic logger</h1>
     </div>
 
     
-    <p>adapted from: http://oddhypothesis.blogspot.be/2012/05/regex-named-capture-in-r.html</p>
+    <p>This logger uses futile.logger to implement logging functionality</p>
     
 
-    <pre class="usage"><span class='fu'>match_path</span>(<span class='no'>pattern</span>, <span class='no'>path</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>logger</span>(<span class='no'>jug</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw pkg'>futile.logger</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/futile.logger/topics/logger.options'>DEBUG</a></span>, <span class='kw'>log_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>console</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>pattern</th>
-      <td><p>regex pattern</p></td>
+      <th>jug</th>
+      <td><p>a jug instance</p></td>
     </tr>
     <tr>
-      <th>path</th>
-      <td><p>the path to test the regex pattern against</p></td>
+      <th>threshold</th>
+      <td><p>the threhold as from what type of message to activate the logger (check the documentation of <span class="pkg">futile.logger</span> for possibilities)</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>arguments passed to <code>regexpr</code></p></td>
+      <th>log_file</th>
+      <td><p>if given, the file to which the log is written</p></td>
+    </tr>
+    <tr>
+      <th>console</th>
+      <td><p>if TRUE will (also) print to console</p></td>
     </tr>
     </table>
     
