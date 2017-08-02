@@ -1,7 +1,11 @@
-#' Basic logging middleware
+#' Basic logger
 #'
-#' @param log_file the text file to which the log will be appended
-#' @param log_msg_func the function which returns the content of the log message, expects a function that allows to pass a \code{req}, \code{res} and \code{err} argument
+#' This logger uses futile.logger to implement logging functionality
+#'
+#' @param jug a jug instance
+#' @param threshold the threhold as from what type of message to activate the logger (check the documentation of \pkg{futile.logger} for possibilities)
+#' @param log_file if given, the file to which the log is written
+#' @param console if TRUE will (also) print to console
 #'
 #' @export
 logger<-function(jug, threshold = futile.logger::DEBUG, log_file = NULL, console = TRUE){
@@ -31,7 +35,7 @@ logger<-function(jug, threshold = futile.logger::DEBUG, log_file = NULL, console
   on(jug, event="error", func = function(event, req, res, err, err_msg){
     msg <- paste(toupper(req$protocol), "|", req$path,"-", req$method, "- error encountered:", "\n" ,
                err_msg, sep = " ")
-    futile.logger::flog.info(msg, name = "jug")
+    futile.logger::flog.error(msg, name = "jug")
   })
 }
 

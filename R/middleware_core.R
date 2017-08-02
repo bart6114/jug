@@ -19,32 +19,6 @@ Middleware<-
           ))
 
 
-Listener<-
-  R6Class("Listener",
-          public=list(
-            event=NULL,
-            func=NULL,
-            initialize=function(func, event){
-              self$func=func
-              self$event=event
-            }
-          ))
-
-
-add_listener<-function(jug, func, event){
-  mw<-Listener$new(func, event)
-  jug$request_handler$add_listener(mw)
-
-  jug
-}
-
-#' @export
-on <- function(jug, event, func, ...){
-  add_listener(jug, func, event)
-}
-
-
-
 #' Internal function to add middleware
 #'
 #' @param jug the jug instance
@@ -69,7 +43,6 @@ add_middleware<-function(jug, func, path=NULL, method=NULL, websocket=FALSE){
 #' @param ... first argument should be the \code{path} followed by middelware functions (order matters) to bind to the path (will receive the params \code{req}, \code{res} and \code{err})
 #'
 #' @seealso \code{\link{post}}, \code{\link{put}}, \code{\link{delete}}, \code{\link{use}}, \code{\link{ws}}
-#' @export
 #' @export
 get<-function(object, ...) UseMethod("get")
 
